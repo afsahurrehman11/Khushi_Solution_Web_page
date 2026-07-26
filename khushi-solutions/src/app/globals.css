@@ -1,0 +1,305 @@
+@import "tailwindcss";
+
+/* ============================================================
+   KHUSHI SOLUTIONS — DESIGN TOKEN SYSTEM
+   Based on KHUSHI-SOLUTIONS-DESIGN-SYSTEM.md
+   ============================================================ */
+
+@theme inline {
+  /* --- Brand Colors --- */
+  --color-primary: #2C64B4;
+  --color-primary-hover: #204B87;
+  --color-primary-active: #15325A;
+  --color-primary-light: #EAF0F7;
+  --color-primary-dark: #0E2039;
+
+  /* --- Green System --- */
+  --color-secondary: #7DC242;
+  --color-secondary-hover: #639A34;
+  --color-secondary-light: #F2F9EC;
+  --color-accent-green: #5FA534;
+  --color-accent-light: #DFF0D1;
+
+  /* --- Neutrals --- */
+  --color-surface: #F8FAFC;
+  --color-white: #FFFFFF;
+  --color-border: #E2E8F0;
+  --color-border-subtle: #F1F5F9;
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748B;
+  --color-text-inverse: #FFFFFF;
+
+  /* --- Semantic --- */
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  --color-info: #3B82F6;
+
+  /* --- Shadows --- */
+  --shadow-xs: 0 1px 2px rgba(15,23,42,0.04);
+  --shadow-sm: 0 4px 12px rgba(15,23,42,0.05);
+  --shadow-md: 0 12px 32px rgba(15,23,42,0.08);
+  --shadow-lg: 0 24px 60px rgba(15,23,42,0.12);
+
+  /* --- Border Radius --- */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* --- Spacing (8-point system) --- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --space-40: 160px;
+
+  /* --- Container --- */
+  --container-max: 1216px;
+
+  /* --- Fonts --- */
+  --font-heading: "General Sans", "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "Fira Code", monospace;
+
+  /* --- Animation Timing --- */
+  --ease-primary: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-micro: 150ms;
+  --duration-ui: 300ms;
+  --duration-reveal: 500ms;
+  --duration-hero: 800ms;
+}
+
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  color: var(--color-text-primary);
+}
+
+.text-display {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+}
+
+.text-h1 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-size: clamp(2.25rem, 4vw, 3rem);
+}
+
+.text-h2 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-size: clamp(1.875rem, 3.5vw, 2.5rem);
+}
+
+.text-h3 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.25;
+  font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+}
+
+.text-h4 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.35;
+  font-size: clamp(1.125rem, 2vw, 1.25rem);
+}
+
+.text-body-lg {
+  font-size: 1.125rem;
+  line-height: 1.65;
+}
+
+.text-body {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.text-small {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.text-technical {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   CONTAINER
+   ============================================================ */
+
+.container-main {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .container-main {
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-main {
+    padding-left: var(--space-8);
+    padding-right: var(--space-8);
+  }
+}
+
+/* ============================================================
+   SECTION SPACING
+   ============================================================ */
+
+.section-padding {
+  padding-top: var(--space-16);
+  padding-bottom: var(--space-16);
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-top: var(--space-20);
+    padding-bottom: var(--space-20);
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-24);
+  }
+}
+
+/* ============================================================
+   DOT GRID PATTERN
+   ============================================================ */
+
+.dot-grid {
+  background-image: radial-gradient(
+    circle,
+    rgba(44, 100, 180, 0.08) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+.dot-grid-green {
+  background-image: radial-gradient(
+    circle,
+    rgba(125, 194, 66, 0.08) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+/* ============================================================
+   FOCUS STATES
+   ============================================================ */
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* ============================================================
+   MAX READABLE WIDTH
+   ============================================================ */
+
+.max-readable {
+  max-width: 680px;
+}
+
+.max-hero-text {
+  max-width: 780px;
+}
