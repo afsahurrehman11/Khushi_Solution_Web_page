@@ -4,46 +4,31 @@ import HeroSection from '@/components/sections/HeroSection';
 import AboutSection from '@/components/sections/AboutSection';
 import ProductOverview from '@/components/sections/ProductOverview';
 import ProofSection from '@/components/sections/ProofSection';
+import FAQSection from '@/components/sections/FAQSection';
 import ContactSection from '@/components/sections/ContactSection';
-import SectionSeparator from '@/components/ui/SectionSeparator';
+import FloatingActionButton from '@/components/ui/FloatingActionButton';
 
-/*
- * Main Single-Page Website
- * Compact homepage structure for v2.1
- */
+export const metadata = {
+  title: 'Khushi Solutions — Software That Runs Real Businesses',
+  description: 'Delivery platforms and school management systems — built and proven in production.',
+};
+
 export default function Home() {
   return (
-    <>
+    <div className="premium-bg">
       <Navbar />
 
       <main>
-        {/* 1. Hero */}
         <HeroSection />
-
-        <SectionSeparator variant="darkTransition" direction="down" fromColor="var(--color-surface)" />
-
-        {/* 2. Company Introduction */}
         <AboutSection />
-
-        <SectionSeparator variant="fade" direction="down" fromColor="var(--color-surface)" toColor="var(--color-white)" />
-
-        {/* 3. Product Overview */}
         <ProductOverview />
-
-        <SectionSeparator variant="fade" direction="down" fromColor="var(--color-white)" toColor="var(--color-surface)" />
-
-        {/* 4. Why Khushi Solutions */}
         <ProofSection />
-
-        <SectionSeparator variant="darkTransition" direction="down" fromColor="var(--color-surface)" />
-
-        {/* 5. Contact */}
+        <FAQSection />
         <ContactSection />
-        
-        <SectionSeparator variant="line" theme="dark" />
       </main>
 
       <Footer />
-    </>
+      <FloatingActionButton />
+    </div>
   );
 }

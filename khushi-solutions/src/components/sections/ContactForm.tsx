@@ -21,7 +21,7 @@ const initialForm: FormData = {
   message: '',
 };
 
-export default function ContactForm() {
+export default function ContactForm({ dark = false }: { dark?: boolean }) {
   const [form, setForm] = useState<FormData>(initialForm);
   const [status, setStatus] = useState<FormStatus>('idle');
   const [errors, setErrors] = useState<Partial<FormData>>({});
@@ -96,21 +96,27 @@ export default function ContactForm() {
     );
   }
 
-  const inputBase =
-    'w-full h-[46px] px-4 bg-white border border-border rounded-[var(--radius-sm)] text-text-primary text-sm placeholder:text-text-muted/60 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-colors duration-200';
-  const errorInput = 'border-error focus:border-error focus:ring-error/20';
+  const inputBase = dark
+    ? 'w-full h-[46px] px-4 rounded-[var(--radius-sm)] text-sm text-white placeholder:text-white/40 focus:outline-none transition-colors duration-200 focus:ring-1'
+    : 'w-full h-[46px] px-4 bg-white border border-border rounded-[var(--radius-sm)] text-text-primary text-sm placeholder:text-text-muted/60 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-colors duration-200';
+  const inputStyle = dark
+    ? { background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)' }
+    : {};
+  const inputFocusClass = dark ? 'focus:ring-secondary/40' : 'focus:ring-primary/20';
+  const errorInput = dark ? 'border-red-400/60 focus:ring-red-400/30' : 'border-error focus:border-error focus:ring-error/20';
+  const labelClass = dark ? 'text-small font-medium block mb-1.5 text-white/70' : 'text-small text-text-secondary font-medium block mb-1.5';
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white rounded-[var(--radius-lg)] p-6 md:p-8 shadow-[var(--shadow-md)]"
+      className={`p-6 md:p-8 ${dark ? '' : 'bg-white rounded-[var(--radius-lg)] shadow-[var(--shadow-md)]'}`}
       noValidate
     >
       <div className="flex flex-col gap-4">
         {/* Name */}
         <div>
-          <label htmlFor="contact-name" className="text-small text-text-secondary font-medium block mb-1.5">
-            Name <span className="text-error">*</span>
+          <label htmlFor="contact-name" className={labelClass}>
+            Name <span style={{ color: '#f87171' }}>*</span>
           </label>
           <input
             id="contact-name"
@@ -118,30 +124,30 @@ export default function ContactForm() {
             value={form.name}
             onChange={(e) => handleChange('name', e.target.value)}
             className={`${inputBase} ${errors.name ? errorInput : ''}`}
+            style={inputStyle}
             placeholder="Your full name"
             required
           />
-          {errors.name && <p className="text-xs text-error mt-1">{errors.name}</p>}
+          {errors.name && <p className="text-xs mt-1" style={{ color: '#f87171' }}>{errors.name}</p>}
         </div>
 
         {/* Phone + Email row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="contact-phone" className="text-small text-text-secondary font-medium block mb-1.5">
-              Phone
-            </label>
+            <label htmlFor="contact-phone" className={labelClass}>Phone</label>
             <input
               id="contact-phone"
               type="tel"
               value={form.phone}
               onChange={(e) => handleChange('phone', e.target.value)}
               className={inputBase}
+              style={inputStyle}
               placeholder="+92 XXX XXXXXXX"
             />
           </div>
           <div>
-            <label htmlFor="contact-email" className="text-small text-text-secondary font-medium block mb-1.5">
-              Email <span className="text-error">*</span>
+            <label htmlFor="contact-email" className={labelClass}>
+              Email <span style={{ color: '#f87171' }}>*</span>
             </label>
             <input
               id="contact-email"
@@ -149,17 +155,18 @@ export default function ContactForm() {
               value={form.email}
               onChange={(e) => handleChange('email', e.target.value)}
               className={`${inputBase} ${errors.email ? errorInput : ''}`}
+              style={inputStyle}
               placeholder="you@company.com"
               required
             />
-            {errors.email && <p className="text-xs text-error mt-1">{errors.email}</p>}
+            {errors.email && <p className="text-xs mt-1" style={{ color: '#f87171' }}>{errors.email}</p>}
           </div>
         </div>
 
         {/* Subject */}
         <div>
-          <label htmlFor="contact-subject" className="text-small text-text-secondary font-medium block mb-1.5">
-            Subject <span className="text-error">*</span>
+          <label htmlFor="contact-subject" className={labelClass}>
+            Subject <span style={{ color: '#f87171' }}>*</span>
           </label>
           <input
             id="contact-subject"
@@ -167,16 +174,17 @@ export default function ContactForm() {
             value={form.subject}
             onChange={(e) => handleChange('subject', e.target.value)}
             className={`${inputBase} ${errors.subject ? errorInput : ''}`}
+            style={inputStyle}
             placeholder="What is this about?"
             required
           />
-          {errors.subject && <p className="text-xs text-error mt-1">{errors.subject}</p>}
+          {errors.subject && <p className="text-xs mt-1" style={{ color: '#f87171' }}>{errors.subject}</p>}
         </div>
 
         {/* Message */}
         <div>
-          <label htmlFor="contact-message" className="text-small text-text-secondary font-medium block mb-1.5">
-            Message <span className="text-error">*</span>
+          <label htmlFor="contact-message" className={labelClass}>
+            Message <span style={{ color: '#f87171' }}>*</span>
           </label>
           <textarea
             id="contact-message"
@@ -184,17 +192,23 @@ export default function ContactForm() {
             onChange={(e) => handleChange('message', e.target.value)}
             rows={5}
             className={`${inputBase} h-auto py-3 resize-none ${errors.message ? errorInput : ''}`}
+            style={inputStyle}
             placeholder="Tell us about your project or question..."
             required
           />
-          {errors.message && <p className="text-xs text-error mt-1">{errors.message}</p>}
+          {errors.message && <p className="text-xs mt-1" style={{ color: '#f87171' }}>{errors.message}</p>}
         </div>
 
         {/* Error banner */}
         {status === 'error' && (
-          <div className="flex items-center gap-2 p-3 bg-error/5 border border-error/20 rounded-[var(--radius-sm)]">
-            <AlertCircle className="w-4 h-4 text-error shrink-0" />
-            <p className="text-small text-error">
+          <div
+            className="flex items-center gap-2 p-3 rounded-[var(--radius-sm)]"
+            style={dark
+              ? { background: 'rgba(248,113,113,0.1)', border: '1px solid rgba(248,113,113,0.2)' }
+              : { background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.2)' }}
+          >
+            <AlertCircle className="w-4 h-4 shrink-0" style={{ color: '#f87171' }} />
+            <p className="text-small" style={{ color: dark ? '#f87171' : '#EF4444' }}>
               Something went wrong. Please try again or contact us directly via email.
             </p>
           </div>
@@ -204,7 +218,7 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={status === 'submitting'}
-          className="inline-flex items-center justify-center gap-2 h-[46px] px-6 w-full sm:w-auto self-start bg-primary text-white font-medium text-sm rounded-[var(--radius-sm)] hover:bg-primary-hover disabled:opacity-60 disabled:cursor-not-allowed transition-colors duration-200 mt-2"
+          className={`btn-primary-gradient inline-flex items-center justify-center gap-2 h-[46px] px-6 w-full sm:w-auto self-start text-sm disabled:opacity-60 disabled:cursor-not-allowed mt-2`}
         >
           {status === 'submitting' ? (
             <>

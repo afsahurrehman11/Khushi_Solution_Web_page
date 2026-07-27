@@ -1,24 +1,29 @@
 @import "tailwindcss";
 
 /* ============================================================
-   KHUSHI SOLUTIONS — DESIGN TOKEN SYSTEM v2.1
-   Revised: Stronger contrast, visible accents, premium shadows
+   KHUSHI SOLUTIONS — DESIGN TOKEN SYSTEM v3.0
+   Dark premium canvas with animated gradient background
    ============================================================ */
 
 @theme inline {
   /* --- Brand Colors --- */
   --color-primary: #2C64B4;
-  --color-primary-hover: #204B87;
+  --color-primary-hover: #3B7FD8;
   --color-primary-active: #15325A;
-  --color-primary-light: #DCE8F5;
+  --color-primary-light: rgba(44, 100, 180, 0.15);
   --color-primary-dark: #0E2039;
 
   /* --- Green System --- */
-  --color-secondary: #7DC242;
-  --color-secondary-hover: #639A34;
-  --color-secondary-light: #E5F2D8;
-  --color-accent-green: #5FA534;
-  --color-accent-light: #DFF0D1;
+  --color-secondary: #10b981;
+  --color-secondary-hover: #059669;
+  --color-secondary-light: rgba(16, 185, 129, 0.15);
+  --color-accent-green: #10b981;
+  --color-accent-light: rgba(16, 185, 129, 0.1);
+
+  /* --- Canvas Colors (dark premium) --- */
+  --color-canvas-deep: #020617;
+  --color-canvas-teal: #0f766e;
+  --color-canvas-blue: #1d4ed8;
 
   /* --- Neutrals --- */
   --color-surface: #F8FAFC;
@@ -36,11 +41,18 @@
   --color-error: #EF4444;
   --color-info: #3B82F6;
 
-  /* --- Shadows (strengthened) --- */
+  /* --- Glass tokens --- */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.10);
+  --glass-blur: 16px;
+
+  /* --- Shadows --- */
   --shadow-xs: 0 1px 2px rgba(15,23,42,0.05);
   --shadow-sm: 0 4px 16px rgba(15,23,42,0.07);
   --shadow-md: 0 12px 36px rgba(15,23,42,0.10);
   --shadow-lg: 0 24px 60px rgba(15,23,42,0.14);
+  --shadow-glow-green: 0 0 30px rgba(16, 185, 129, 0.25);
+  --shadow-glow-blue: 0 0 30px rgba(44, 100, 180, 0.25);
 
   /* --- Border Radius --- */
   --radius-xs: 4px;
@@ -95,14 +107,170 @@ html {
 }
 
 body {
-  background-color: var(--color-surface);
-  color: var(--color-text-primary);
+  color: var(--color-text-inverse);
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  /* No background-color — the .premium-bg canvas handles it */
+}
+
+/* ============================================================
+   PREMIUM ANIMATED BACKGROUND CANVAS
+   ============================================================ */
+
+@keyframes premiumLoop {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Softened gradient — reduced saturation & brightness variance */
+.premium-bg {
+  background: linear-gradient(
+    135deg,
+    #050c1a 0%,
+    #091428 18%,
+    #0b1e40 32%,
+    #0d3048 48%,
+    #0f3d5c 62%,
+    #0b2a48 76%,
+    #091428 90%,
+    #050c1a 100%
+  );
+  background-size: 300% 300%;
+  animation: premiumLoop 22s ease-in-out infinite;
+  min-height: 100dvh;
+}
+
+/* ============================================================
+   GLASSMORPHISM CARD UTILITY
+   ============================================================ */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+
+/* ============================================================
+   NEON GLOW CARD BORDERS (product cards)
+   Uses ::before pseudo for animated gradient border ring
+   ============================================================ */
+
+.neon-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+@keyframes neonBorderSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.neon-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: calc(var(--radius-lg) + 2px);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    #10b981 60deg,
+    #2C64B4 120deg,
+    transparent 180deg,
+    transparent 240deg,
+    #1d4ed8 300deg,
+    #10b981 360deg
+  );
+  animation: neonBorderSpin 4s linear infinite;
+  z-index: -1;
+  opacity: 0.6;
+}
+
+.neon-card::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: calc(var(--radius-lg) - 1px);
+  background: rgba(2, 6, 23, 0.85);
+  z-index: -1;
+}
+
+.neon-card:hover::before {
+  opacity: 1;
+  animation-duration: 2s;
+}
+
+/* ============================================================
+   GRADIENT UNDERLINE CTA
+   ============================================================ */
+
+.cta-underline {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cta-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #10b981, #2C64B4);
+  border-radius: 9999px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cta-underline:hover::after {
+  width: 100%;
+}
+
+/* ============================================================
+   SECTION — FULL VIEWPORT (100dvh)
+   ============================================================ */
+
+.section-full {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+
+/* Shorter sections that still use dynamic viewport unit */
+.section-padding {
+  padding-top: var(--space-16);
+  padding-bottom: var(--space-16);
+}
+
+@media (min-width: 768px) {
+  .section-padding {
+    padding-top: var(--space-20);
+    padding-bottom: var(--space-20);
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-24);
+  }
 }
 
 /* ============================================================
@@ -111,7 +279,7 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
-  color: var(--color-text-primary);
+  color: var(--color-text-inverse);
 }
 
 .text-display {
@@ -119,7 +287,7 @@ h1, h2, h3, h4 {
   font-weight: 700;
   line-height: 1.08;
   letter-spacing: -0.03em;
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
 }
 
 .text-h1 {
@@ -203,72 +371,49 @@ h1, h2, h3, h4 {
 }
 
 /* ============================================================
-   SECTION SPACING
-   ============================================================ */
-
-.section-padding {
-  padding-top: var(--space-16);
-  padding-bottom: var(--space-16);
-}
-
-@media (min-width: 768px) {
-  .section-padding {
-    padding-top: var(--space-20);
-    padding-bottom: var(--space-20);
-  }
-}
-
-@media (min-width: 1024px) {
-  .section-padding {
-    padding-top: var(--space-24);
-    padding-bottom: var(--space-24);
-  }
-}
-
-/* ============================================================
    DOT GRID PATTERN
    ============================================================ */
 
 .dot-grid {
   background-image: radial-gradient(
     circle,
-    rgba(44, 100, 180, 0.08) 1px,
+    rgba(255, 255, 255, 0.06) 1px,
     transparent 1px
   );
-  background-size: 24px 24px;
-}
-
-.dot-grid-green {
-  background-image: radial-gradient(
-    circle,
-    rgba(125, 194, 66, 0.08) 1px,
-    transparent 1px
-  );
-  background-size: 24px 24px;
+  background-size: 28px 28px;
 }
 
 /* ============================================================
-   HERO ANIMATED GRADIENT BACKGROUND
+   HERO CAROUSEL (right column auto-scroll)
    ============================================================ */
 
-@keyframes hero-gradient-drift {
+@keyframes carouselScroll {
   0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
+    transform: translateX(0);
   }
   100% {
-    background-position: 0% 50%;
+    transform: translateX(-50%);
   }
 }
 
-.hero-gradient {
-  background: 
-    radial-gradient(ellipse at 20% 50%, rgba(44, 100, 180, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 50%, rgba(95, 165, 52, 0.05) 0%, transparent 50%);
-  background-size: 200% 200%;
-  animation: hero-gradient-drift 24s ease-in-out infinite;
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: carouselScroll 24s linear infinite;
+}
+
+.carousel-track:hover {
+  animation-play-state: paused;
+}
+
+.carousel-item-tilt {
+  transform: perspective(800px) rotateY(-8deg) rotateX(3deg);
+  transition: transform 0.4s ease;
+}
+
+.carousel-item-tilt:hover {
+  transform: perspective(800px) rotateY(-3deg) rotateX(1deg) scale(1.02);
 }
 
 /* ============================================================
@@ -276,7 +421,7 @@ h1, h2, h3, h4 {
    ============================================================ */
 
 :focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-secondary);
   outline-offset: 2px;
   border-radius: var(--radius-xs);
 }
@@ -301,20 +446,20 @@ h1, h2, h3, h4 {
    ============================================================ */
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-surface);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* ============================================================
@@ -327,4 +472,26 @@ h1, h2, h3, h4 {
 
 .max-hero-text {
   max-width: 780px;
+}
+
+/* ============================================================
+   GREEN GRADIENT BUTTON
+   ============================================================ */
+
+.btn-primary-gradient {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.btn-primary-gradient:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.45);
+}
+
+.btn-primary-gradient:active {
+  transform: scale(0.98);
 }
