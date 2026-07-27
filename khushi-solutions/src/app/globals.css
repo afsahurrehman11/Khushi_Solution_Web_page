@@ -1,36 +1,36 @@
 @import "tailwindcss";
 
 /* ============================================================
-   KHUSHI SOLUTIONS — DESIGN TOKEN SYSTEM v3.0
-   Dark premium canvas with animated gradient background
+   KHUSHI SOLUTIONS — DESIGN TOKEN SYSTEM v4.0
+   Neumorphic Light 3D Theme (Pearl Off-White + Mint Azure Mesh)
    ============================================================ */
 
 @theme inline {
-  /* --- Brand Colors --- */
+  /* --- Brand Colors (Desaturated for light mode) --- */
   --color-primary: #2C64B4;
-  --color-primary-hover: #3B7FD8;
+  --color-primary-hover: #1e4a8a;
   --color-primary-active: #15325A;
-  --color-primary-light: rgba(44, 100, 180, 0.15);
+  --color-primary-light: rgba(44, 100, 180, 0.08);
   --color-primary-dark: #0E2039;
 
   /* --- Green System --- */
-  --color-secondary: #10b981;
-  --color-secondary-hover: #059669;
-  --color-secondary-light: rgba(16, 185, 129, 0.15);
-  --color-accent-green: #10b981;
-  --color-accent-light: rgba(16, 185, 129, 0.1);
+  --color-secondary: #059669;
+  --color-secondary-hover: #047857;
+  --color-secondary-light: rgba(5, 150, 105, 0.08);
+  --color-accent-green: #059669;
+  --color-accent-light: rgba(5, 150, 105, 0.08);
 
-  /* --- Canvas Colors (dark premium) --- */
-  --color-canvas-deep: #020617;
-  --color-canvas-teal: #0f766e;
-  --color-canvas-blue: #1d4ed8;
+  /* --- Canvas Colors (Pearl Off-White) --- */
+  --color-canvas-base: #F8FAFC;
+  --color-canvas-mint: rgba(167, 243, 208, 0.25);
+  --color-canvas-azure: rgba(186, 230, 253, 0.25);
 
-  /* --- Neutrals --- */
-  --color-surface: #F8FAFC;
+  /* --- Neutrals (Inverted for light mode) --- */
+  --color-surface: #FFFFFF;
   --color-white: #FFFFFF;
   --color-border: #E2E8F0;
   --color-border-subtle: #F1F5F9;
-  --color-text-primary: #0F172A;
+  --color-text-primary: #0F172A; /* Dark slate */
   --color-text-secondary: #475569;
   --color-text-muted: #64748B;
   --color-text-inverse: #FFFFFF;
@@ -41,18 +41,17 @@
   --color-error: #EF4444;
   --color-info: #3B82F6;
 
-  /* --- Glass tokens --- */
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.10);
+  /* --- Neumorphic Glass Tokens --- */
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.8);
   --glass-blur: 16px;
 
-  /* --- Shadows --- */
-  --shadow-xs: 0 1px 2px rgba(15,23,42,0.05);
-  --shadow-sm: 0 4px 16px rgba(15,23,42,0.07);
-  --shadow-md: 0 12px 36px rgba(15,23,42,0.10);
-  --shadow-lg: 0 24px 60px rgba(15,23,42,0.14);
-  --shadow-glow-green: 0 0 30px rgba(16, 185, 129, 0.25);
-  --shadow-glow-blue: 0 0 30px rgba(44, 100, 180, 0.25);
+  /* --- Shadows (Neumorphic 3D soft light drop) --- */
+  --shadow-xs: 0 1px 2px rgba(15,23,42,0.02);
+  --shadow-sm: 0 4px 16px rgba(15,23,42,0.04);
+  --shadow-md: 0 12px 36px rgba(15,23,42,0.06);
+  --shadow-lg: 0 24px 60px rgba(15,23,42,0.08);
+  --shadow-neu-inner: inset 0 2px 4px rgba(255, 255, 255, 1), 0 8px 24px rgba(15,23,42,0.06);
 
   /* --- Border Radius --- */
   --radius-xs: 4px;
@@ -63,7 +62,7 @@
   --radius-2xl: 24px;
   --radius-full: 9999px;
 
-  /* --- Spacing (8-point system) --- */
+  /* --- Spacing --- */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -76,8 +75,6 @@
   --space-16: 64px;
   --space-20: 80px;
   --space-24: 96px;
-  --space-32: 128px;
-  --space-40: 160px;
 
   /* --- Container --- */
   --container-max: 1216px;
@@ -86,13 +83,6 @@
   --font-heading: "General Sans", "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", "Fira Code", monospace;
-
-  /* --- Animation Timing --- */
-  --ease-primary: cubic-bezier(0.4, 0, 0.2, 1);
-  --duration-micro: 150ms;
-  --duration-ui: 300ms;
-  --duration-reveal: 500ms;
-  --duration-hero: 800ms;
 }
 
 /* ============================================================
@@ -101,117 +91,94 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px;
+  scroll-padding-top: 100px;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
 
 body {
-  color: var(--color-text-inverse);
+  color: var(--color-text-primary);
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  /* No background-color — the .premium-bg canvas handles it */
+  background-color: var(--color-canvas-base);
+}
+
+/* Custom Cursor Constraints */
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  a, button, input, textarea, select {
+    cursor: none;
+  }
 }
 
 /* ============================================================
-   PREMIUM ANIMATED BACKGROUND CANVAS
+   NEUMORPHIC MESH GRADIENT CANVAS
    ============================================================ */
 
-@keyframes premiumLoop {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+@keyframes meshShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-/* Softened gradient — reduced saturation & brightness variance */
 .premium-bg {
-  background: linear-gradient(
-    135deg,
-    #050c1a 0%,
-    #091428 18%,
-    #0b1e40 32%,
-    #0d3048 48%,
-    #0f3d5c 62%,
-    #0b2a48 76%,
-    #091428 90%,
-    #050c1a 100%
-  );
-  background-size: 300% 300%;
-  animation: premiumLoop 22s ease-in-out infinite;
+  background: var(--color-canvas-base);
+  position: relative;
   min-height: 100dvh;
 }
 
+.premium-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 15% 50%, var(--color-canvas-azure), transparent 25%),
+              radial-gradient(circle at 85% 30%, var(--color-canvas-mint), transparent 25%);
+  background-size: 200% 200%;
+  animation: meshShift 20s ease-in-out infinite alternate;
+}
+
+/* Fix z-index for direct children of premium-bg so they sit above pseudo element */
+.premium-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
 /* ============================================================
-   GLASSMORPHISM CARD UTILITY
+   GLASSMORPHISM & NEUMORPHIC CARDS
    ============================================================ */
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-neu-inner);
 }
 
-/* ============================================================
-   NEON GLOW CARD BORDERS (product cards)
-   Uses ::before pseudo for animated gradient border ring
-   ============================================================ */
-
-.neon-card {
-  position: relative;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
-
-@keyframes neonBorderSpin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.neon-card::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: calc(var(--radius-lg) + 2px);
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    #10b981 60deg,
-    #2C64B4 120deg,
-    transparent 180deg,
-    transparent 240deg,
-    #1d4ed8 300deg,
-    #10b981 360deg
-  );
-  animation: neonBorderSpin 4s linear infinite;
-  z-index: -1;
-  opacity: 0.6;
-}
-
-.neon-card::after {
-  content: '';
-  position: absolute;
-  inset: 1px;
-  border-radius: calc(var(--radius-lg) - 1px);
-  background: rgba(2, 6, 23, 0.85);
-  z-index: -1;
-}
-
-.neon-card:hover::before {
-  opacity: 1;
-  animation-duration: 2s;
+/* Enhanced contrast Why Us cards */
+.neu-card-strong {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    inset 0 2px 6px rgba(255,255,255,1), 
+    inset 0 0 0 1px rgba(255,255,255,0.5),
+    0 12px 32px rgba(15,23,42,0.08);
 }
 
 /* ============================================================
@@ -232,7 +199,7 @@ body {
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #10b981, #2C64B4);
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
   border-radius: 9999px;
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -242,7 +209,7 @@ body {
 }
 
 /* ============================================================
-   SECTION — FULL VIEWPORT (100dvh)
+   SECTION — FULL VIEWPORT
    ============================================================ */
 
 .section-full {
@@ -253,7 +220,6 @@ body {
   align-items: stretch;
 }
 
-/* Shorter sections that still use dynamic viewport unit */
 .section-padding {
   padding-top: var(--space-16);
   padding-bottom: var(--space-16);
@@ -279,11 +245,10 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
-  color: var(--color-text-inverse);
+  color: var(--color-text-primary);
 }
 
 .text-display {
-  font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.08;
   letter-spacing: -0.03em;
@@ -291,7 +256,6 @@ h1, h2, h3, h4 {
 }
 
 .text-h1 {
-  font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -299,7 +263,6 @@ h1, h2, h3, h4 {
 }
 
 .text-h2 {
-  font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.02em;
@@ -307,17 +270,9 @@ h1, h2, h3, h4 {
 }
 
 .text-h3 {
-  font-family: var(--font-heading);
   font-weight: 600;
   line-height: 1.25;
   font-size: clamp(1.375rem, 2.5vw, 1.75rem);
-}
-
-.text-h4 {
-  font-family: var(--font-heading);
-  font-weight: 600;
-  line-height: 1.35;
-  font-size: clamp(1.125rem, 2vw, 1.25rem);
 }
 
 .text-body-lg {
@@ -341,6 +296,23 @@ h1, h2, h3, h4 {
   line-height: 1.4;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+/* Highly visible eyebrow pill */
+.eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: rgba(15, 23, 42, 0.04);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  color: var(--color-text-primary);
 }
 
 /* ============================================================
@@ -371,125 +343,57 @@ h1, h2, h3, h4 {
 }
 
 /* ============================================================
-   DOT GRID PATTERN
-   ============================================================ */
-
-.dot-grid {
-  background-image: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.06) 1px,
-    transparent 1px
-  );
-  background-size: 28px 28px;
-}
-
-/* ============================================================
-   HERO CAROUSEL (right column auto-scroll)
-   ============================================================ */
-
-@keyframes carouselScroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.carousel-track {
-  display: flex;
-  gap: 20px;
-  width: max-content;
-  animation: carouselScroll 24s linear infinite;
-}
-
-.carousel-track:hover {
-  animation-play-state: paused;
-}
-
-.carousel-item-tilt {
-  transform: perspective(800px) rotateY(-8deg) rotateX(3deg);
-  transition: transform 0.4s ease;
-}
-
-.carousel-item-tilt:hover {
-  transform: perspective(800px) rotateY(-3deg) rotateX(1deg) scale(1.02);
-}
-
-/* ============================================================
-   FOCUS STATES
-   ============================================================ */
-
-:focus-visible {
-  outline: 2px solid var(--color-secondary);
-  outline-offset: 2px;
-  border-radius: var(--radius-xs);
-}
-
-/* ============================================================
-   REDUCED MOTION
-   ============================================================ */
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* ============================================================
-   SCROLLBAR
+   SCROLLBAR & LOCOMOTIVE
    ============================================================ */
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.02);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: var(--radius-full);
+  background: #94A3B8; /* Solid slate/dark gray thumb */
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: #475569;
+}
+
+/* Locomotive scrollbar explicit styles */
+.c-scrollbar {
+  width: 8px !important;
+  background: transparent !important;
+}
+.c-scrollbar_thumb {
+  background-color: #94A3B8 !important;
+  border-radius: 9999px !important;
+  opacity: 1 !important;
+}
+.c-scrollbar_thumb:hover {
+  background-color: #475569 !important;
 }
 
 /* ============================================================
-   MAX READABLE WIDTH
-   ============================================================ */
-
-.max-readable {
-  max-width: 680px;
-}
-
-.max-hero-text {
-  max-width: 780px;
-}
-
-/* ============================================================
-   GREEN GRADIENT BUTTON
+   GREEN GRADIENT BUTTON (Reused across theme)
    ============================================================ */
 
 .btn-primary-gradient {
   background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: white;
+  color: white !important; /* Force white text */
   font-weight: 600;
-  border-radius: var(--radius-sm);
+  border-radius: 9999px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
 }
 
 .btn-primary-gradient:hover {
   transform: scale(1.04);
-  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.45);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.35);
 }
 
 .btn-primary-gradient:active {

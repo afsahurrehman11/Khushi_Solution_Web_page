@@ -67,6 +67,8 @@ export const metadata: Metadata = {
   ),
 };
 
+import CustomCursor from '@/components/ui/CustomCursor';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -90,6 +92,7 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
+        <CustomCursor />
         {children}
       </body>
     </html>

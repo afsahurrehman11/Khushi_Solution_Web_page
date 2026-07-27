@@ -7,6 +7,8 @@ import ProofSection from '@/components/sections/ProofSection';
 import FAQSection from '@/components/sections/FAQSection';
 import ContactSection from '@/components/sections/ContactSection';
 import FloatingActionButton from '@/components/ui/FloatingActionButton';
+import LocomotiveScrollProvider from '@/components/layout/LocomotiveScrollProvider';
+import GlowingBubblesBackground from '@/components/ui/GlowingBubblesBackground';
 
 export const metadata = {
   title: 'Khushi Solutions — Software That Runs Real Businesses',
@@ -15,20 +17,27 @@ export const metadata = {
 
 export default function Home() {
   return (
-    <div className="premium-bg">
-      <Navbar />
+    <LocomotiveScrollProvider>
+      <div className="premium-bg">
+        <Navbar />
 
-      <main>
-        <HeroSection />
-        <AboutSection />
-        <ProductOverview />
-        <ProofSection />
-        <FAQSection />
-        <ContactSection />
-      </main>
+        <main data-scroll-container>
+          {/* Unified Hero + About wrapper with continuous interactive glowing bubbles & bottom fade mask */}
+          <div className="relative overflow-hidden">
+            <GlowingBubblesBackground />
+            <HeroSection />
+            <AboutSection />
+          </div>
 
-      <Footer />
-      <FloatingActionButton />
-    </div>
+          <ProductOverview />
+          <ProofSection />
+          <FAQSection />
+          <ContactSection />
+        </main>
+
+        <Footer />
+        <FloatingActionButton />
+      </div>
+    </LocomotiveScrollProvider>
   );
 }

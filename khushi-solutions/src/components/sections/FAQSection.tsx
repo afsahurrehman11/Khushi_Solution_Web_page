@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Minus, MessageCircle, Layers, Settings, Users } from 'lucide-react';
+import { Plus, MessageCircle, Layers, Settings, Users } from 'lucide-react';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 
 interface FAQItem {
@@ -55,36 +55,35 @@ function FAQRow({ item, isOpen, onToggle }: { item: FAQItem; isOpen: boolean; on
 
   return (
     <div
-      className="rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer group"
+      className="rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer group bg-white shadow-sm hover:shadow-md"
       style={{
-        background: isOpen ? 'rgba(255,255,255,0.09)' : 'rgba(255,255,255,0.04)',
         border: isOpen
-          ? '1px solid rgba(16,185,129,0.35)'
-          : '1px solid rgba(255,255,255,0.08)',
-        boxShadow: isOpen ? '0 0 24px rgba(16,185,129,0.08)' : 'none',
+          ? '1px solid rgba(5,150,105,0.4)'
+          : '1px solid var(--color-border)',
+        background: isOpen ? '#ffffff' : 'rgba(255,255,255,0.7)',
       }}
     >
       <button
         onClick={onToggle}
-        className="w-full flex items-center gap-4 px-5 py-4 md:px-6 md:py-5 text-left"
+        className="w-full flex items-center gap-4 px-5 py-4 md:px-6 md:py-5 text-left transition-colors duration-200 group-hover:bg-slate-50/50"
         aria-expanded={isOpen}
       >
         {/* Icon bubble */}
         <div
-          className="shrink-0 w-9 h-9 rounded-xl flex items-center justify-center transition-colors duration-300"
+          className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 shadow-sm"
           style={{
-            background: isOpen ? 'rgba(16,185,129,0.15)' : 'rgba(255,255,255,0.06)',
-            border: isOpen ? '1px solid rgba(16,185,129,0.3)' : '1px solid rgba(255,255,255,0.1)',
-            color: isOpen ? '#34d399' : 'rgba(255,255,255,0.5)',
+            background: isOpen ? 'var(--color-secondary)' : '#F1F5F9',
+            color: isOpen ? '#ffffff' : 'var(--color-text-muted)',
+            border: isOpen ? 'none' : '1px solid var(--color-border)',
           }}
         >
-          <Icon className="w-4 h-4 transition-colors duration-300" strokeWidth={1.75} />
+          <Icon className="w-4 h-4 transition-colors duration-300" strokeWidth={2} />
         </div>
 
         {/* Question */}
         <span
-          className="flex-1 text-base font-semibold transition-colors duration-200"
-          style={{ color: isOpen ? 'white' : 'rgba(255,255,255,0.8)', fontFamily: 'var(--font-heading)' }}
+          className="flex-1 text-base font-bold transition-colors duration-200 text-text-primary"
+          style={{ fontFamily: 'var(--font-heading)' }}
         >
           {item.question}
         </span>
@@ -93,10 +92,13 @@ function FAQRow({ item, isOpen, onToggle }: { item: FAQItem; isOpen: boolean; on
         <motion.div
           animate={{ rotate: isOpen ? 45 : 0 }}
           transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-          className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center"
-          style={{ background: isOpen ? 'rgba(16,185,129,0.15)' : 'rgba(255,255,255,0.06)' }}
+          className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center border border-border"
+          style={{ 
+            background: isOpen ? 'var(--color-secondary)' : '#F8FAFC',
+            borderColor: isOpen ? 'var(--color-secondary)' : 'var(--color-border)',
+          }}
         >
-          <Plus className="w-4 h-4 text-white" strokeWidth={2} />
+          <Plus className="w-4 h-4" strokeWidth={2} style={{ color: isOpen ? '#ffffff' : 'var(--color-text-muted)' }} />
         </motion.div>
       </button>
 
@@ -111,8 +113,7 @@ function FAQRow({ item, isOpen, onToggle }: { item: FAQItem; isOpen: boolean; on
             style={{ overflow: 'hidden' }}
           >
             <div
-              className="px-5 pb-5 md:px-6 md:pb-6 pl-[72px]"
-              style={{ color: 'rgba(255,255,255,0.65)' }}
+              className="px-5 pb-5 md:px-6 md:pb-6 pl-[76px] text-text-secondary"
             >
               <p className="text-base leading-relaxed">{item.answer}</p>
             </div>
@@ -132,37 +133,29 @@ export default function FAQSection() {
     <section id="faq" className="section-padding">
       <div className="container-main">
         <ScrollReveal>
-          <span
-            className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase"
-            style={{
-              background: 'rgba(44,100,180,0.1)',
-              border: '1px solid rgba(44,100,180,0.3)',
-              color: '#60a5fa',
-              letterSpacing: '0.12em',
-            }}
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block" />
+          <span className="eyebrow-pill">
+            <span className="w-2 h-2 rounded-full bg-primary inline-block" />
             FAQ
           </span>
         </ScrollReveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
           {/* Left header */}
-          <div className="lg:col-span-4 xl:col-span-3">
+          <div className="lg:col-span-4 xl:col-span-4">
             <ScrollReveal delay={0.08}>
-              <h2 className="text-h2 text-white mb-4">
+              <h2 className="text-h2 text-text-primary mb-4">
                 Commonly Asked Questions
               </h2>
             </ScrollReveal>
             <ScrollReveal delay={0.12}>
-              <p className="text-base" style={{ color: 'rgba(255,255,255,0.6)' }}>
+              <p className="text-body-lg text-text-secondary max-w-sm">
                 Everything you need to know about our products and how to get started.
               </p>
             </ScrollReveal>
           </div>
 
           {/* FAQ rows */}
-          <div className="lg:col-span-8 xl:col-span-9 flex flex-col gap-3">
+          <div className="lg:col-span-8 xl:col-span-8 flex flex-col gap-3">
             {faqs.map((item, i) => (
               <ScrollReveal key={item.id} delay={0.06 * i}>
                 <FAQRow

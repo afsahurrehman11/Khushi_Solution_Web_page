@@ -5,6 +5,7 @@ import { motion, type Variants, AnimatePresence } from 'framer-motion';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
 const stagger: Variants = {
   hidden: {},
@@ -49,19 +50,7 @@ export default function HeroSection() {
   const [currentFrame, setCurrentFrame] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const autoPlayRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-
-  /* Mouse parallax */
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (!bgRef.current) return;
-    const xPct = (e.clientX / window.innerWidth) * 30;
-    const yPct = (e.clientY / window.innerHeight) * 20;
-    bgRef.current.style.backgroundPosition = `${xPct}% ${yPct}%`;
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [handleMouseMove]);
+  const { scrollTo } = useSmoothScroll();
 
   /* Auto-play */
   useEffect(() => {
@@ -85,56 +74,50 @@ export default function HeroSection() {
 
   const frame = carouselFrames[currentFrame];
 
+  const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    scrollTo('#contact');
+  };
+  const handleProductClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    scrollTo('#products');
+  };
+
   return (
     <section
       id="hero"
       ref={bgRef}
-      className="relative section-full pt-[72px] overflow-hidden"
-      style={{ backgroundPosition: '15% 50%' }}
+      className="relative pt-28 lg:pt-32 pb-14 lg:pb-20 overflow-hidden"
     >
-      {/* Dot grid overlay */}
-      <div className="absolute inset-0 dot-grid pointer-events-none" aria-hidden="true" />
-
-      {/* Ambient glows */}
-      <div className="absolute top-1/3 left-1/5 w-[600px] h-[600px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse, rgba(16,185,129,0.07) 0%, transparent 70%)' }} aria-hidden="true" />
-      <div className="absolute bottom-1/4 right-1/5 w-[500px] h-[500px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse, rgba(29,78,216,0.09) 0%, transparent 70%)' }} aria-hidden="true" />
-
-      <div className="container-main relative z-10 flex-1 flex items-center">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center w-full py-16 lg:py-0">
+      <div className="container-main relative z-10">
+        {/* Strict mobile stacking: flex-col-reverse ensures text is below carousel on mobile, or standard 2-col on desktop */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center w-full py-2 flex-col-reverse lg:flex-row flex lg:grid">
 
           {/* LEFT — Text + CTA */}
-          <motion.div variants={stagger} initial="hidden" animate="visible" className="flex flex-col items-start">
+          <motion.div variants={stagger} initial="hidden" animate="visible" className="flex flex-col items-start w-full">
             {/* Eyebrow */}
             <motion.span
               variants={fadeLeft}
-              className="inline-flex items-center gap-2 mb-5 px-3 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase"
-              style={{
-                background: 'rgba(16,185,129,0.1)',
-                border: '1px solid rgba(16,185,129,0.3)',
-                color: '#34d399',
-                letterSpacing: '0.12em',
-              }}
+              className="eyebrow-pill"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-secondary inline-block" />
+              <span className="w-2 h-2 rounded-full bg-secondary inline-block" />
               KHUSHI SOLUTIONS
             </motion.span>
 
             <motion.h1
               variants={fadeLeft}
-              className="text-white mb-5"
+              className="mb-5 text-text-primary"
               style={{
                 fontFamily: 'var(--font-heading)',
-                fontWeight: 700,
-                fontSize: 'clamp(2.6rem, 5.5vw, 4.25rem)',
-                lineHeight: 1.08,
+                fontWeight: 800,
+                fontSize: 'clamp(2.25rem, 4.5vw, 4rem)', /* Fluid typography scaling down for mobile */
+                lineHeight: 1.1,
                 letterSpacing: '-0.03em',
               }}
             >
               Software That Runs{' '}
               <span style={{
-                background: 'linear-gradient(135deg, #34d399 0%, #2C64B4 100%)',
+                background: 'linear-gradient(135deg, #059669 0%, #2C64B4 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -143,20 +126,19 @@ export default function HeroSection() {
               </span>
             </motion.h1>
 
-            <motion.p variants={fadeLeft} className="text-base mb-8 max-w-[460px] leading-relaxed"
-              style={{ color: 'rgba(255,255,255,0.68)' }}>
+            <motion.p variants={fadeLeft} className="text-body-lg mb-8 max-w-[480px] text-text-secondary">
               Delivery platforms and school management systems — built and proven in production.
             </motion.p>
 
-            <motion.div variants={fadeLeft} className="flex flex-col sm:flex-row gap-3">
-              <Link href="#products"
-                className="btn-primary-gradient inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-full">
+            <motion.div variants={fadeLeft} className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <Link href="#products" onClick={handleProductClick}
+                className="btn-primary-gradient inline-flex items-center justify-center gap-2 px-7 py-3.5 text-sm font-semibold rounded-full w-full sm:w-auto">
                 See Our Products
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link href="/#contact"
-                className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white/80 hover:text-white rounded-full transition-colors"
-                style={{ border: '1px solid rgba(255,255,255,0.12)' }}>
+              <Link href="/#contact" onClick={handleContactClick}
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 text-sm font-semibold text-text-primary hover:bg-slate-200/50 rounded-full transition-colors w-full sm:w-auto"
+                style={{ border: '1px solid var(--color-border)' }}>
                 Contact Us
               </Link>
             </motion.div>
@@ -169,34 +151,33 @@ export default function HeroSection() {
             animate="visible"
             className="relative w-full"
           >
-            {/* Outer frame with accent border */}
+            {/* Outer Neumorphic frame */}
             <div
-              className="relative w-full rounded-2xl overflow-hidden"
+              className="relative w-full rounded-2xl overflow-hidden bg-white"
               style={{
-                border: `1px solid ${frame.accent}30`,
-                boxShadow: `0 0 0 1px ${frame.accent}15, 0 24px 60px rgba(0,0,0,0.5)`,
+                border: '1px solid var(--color-border)',
+                boxShadow: 'var(--shadow-md)',
               }}
             >
-              {/* Browser chrome bar */}
-              <div className="flex items-center gap-1.5 px-4 py-2.5"
-                style={{ background: 'rgba(4,10,28,0.9)', borderBottom: `1px solid ${frame.accent}20` }}>
-                <div className="w-2.5 h-2.5 rounded-full bg-white/15" />
-                <div className="w-2.5 h-2.5 rounded-full bg-white/15" />
-                <div className="w-2.5 h-2.5 rounded-full bg-white/15" />
-                <span className="text-xs ml-2 font-mono font-medium" style={{ color: frame.accent, opacity: 0.8 }}>
+              {/* Browser chrome bar - Light mode */}
+              <div className="flex items-center gap-1.5 px-4 py-3 bg-slate-50 border-b border-border">
+                <div className="w-2.5 h-2.5 rounded-full bg-slate-300" />
+                <div className="w-2.5 h-2.5 rounded-full bg-slate-300" />
+                <div className="w-2.5 h-2.5 rounded-full bg-slate-300" />
+                <span className="text-xs ml-2 font-mono font-medium text-text-muted">
                   {frame.label}
                 </span>
               </div>
 
-              {/* STRICT 16/9 bounding box — all images forced to fill this */}
-              <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
+              {/* STRICT 16/9 aspect-video bounding box — all images forced to fit */}
+              <div className="relative w-full aspect-video bg-slate-100">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentFrame}
-                    initial={{ opacity: 0, scale: 1.02 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4, ease: 'easeOut' }}
                     className="absolute inset-0"
                   >
                     <Image
@@ -213,7 +194,7 @@ export default function HeroSection() {
             </div>
 
             {/* Manual navigation — arrows + dots below the frame */}
-            <div className="flex items-center justify-between mt-4 px-1">
+            <div className="flex items-center justify-between mt-5 px-1">
               {/* Dot indicators */}
               <div className="flex items-center gap-2">
                 {carouselFrames.map((f, i) => (
@@ -223,31 +204,29 @@ export default function HeroSection() {
                     aria-label={`Go to slide ${i + 1}`}
                     className="transition-all duration-300 rounded-full"
                     style={{
-                      width: i === currentFrame ? '24px' : '6px',
-                      height: '6px',
-                      background: i === currentFrame ? frame.accent : 'rgba(255,255,255,0.2)',
+                      width: i === currentFrame ? '24px' : '8px',
+                      height: '8px',
+                      background: i === currentFrame ? 'var(--color-primary)' : 'var(--color-border)',
                     }}
                   />
                 ))}
               </div>
 
-              {/* Arrow buttons */}
+              {/* Arrow buttons - Light mode styling */}
               <div className="flex items-center gap-2">
                 <button
                   onClick={prev}
                   aria-label="Previous"
-                  className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-                  style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}
+                  className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-105 hover:bg-slate-100 text-text-primary bg-white shadow-sm border border-border"
                 >
-                  <ChevronLeft className="w-4 h-4 text-white" />
+                  <ChevronLeft className="w-5 h-5" />
                 </button>
                 <button
                   onClick={next}
                   aria-label="Next"
-                  className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-                  style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}
+                  className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-105 hover:bg-slate-100 text-text-primary bg-white shadow-sm border border-border"
                 >
-                  <ChevronRight className="w-4 h-4 text-white" />
+                  <ChevronRight className="w-5 h-5" />
                 </button>
               </div>
             </div>

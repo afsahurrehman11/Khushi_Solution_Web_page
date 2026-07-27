@@ -25,29 +25,36 @@ const erpWorkflow = [
 
 export default function HowItWorks({ product }: HowItWorksProps) {
   const workflow = product.id === 'bites' ? bitesWorkflow : erpWorkflow;
-  const accentText = product.accent === 'blue' ? 'text-primary' : 'text-secondary';
-  const accentBg = product.accent === 'blue' ? 'bg-primary' : 'bg-secondary';
-  const accentBorderFull = product.accent === 'blue' ? 'border-primary/20' : 'border-secondary/20';
+  const accentColor = product.accent === 'blue' ? 'var(--color-primary)' : 'var(--color-secondary)';
 
   return (
-    <section className="bg-primary-dark section-padding overflow-hidden">
-      <div className="container-main">
-        <ScrollReveal>
-          <span className="text-technical text-white/50 inline-block mb-3">
-            HOW IT WORKS
-          </span>
-        </ScrollReveal>
-
-        <ScrollReveal delay={0.08}>
-          <h2 className="text-h2 text-white max-w-[520px] mb-12 md:mb-16">
-            The {product.name} Workflow
-          </h2>
-        </ScrollReveal>
+    <section className="section-padding bg-slate-50 overflow-hidden">
+      <div className="container-main relative z-10">
+        <div className="text-center flex flex-col items-center mb-16 md:mb-20">
+          <ScrollReveal>
+            <span className="eyebrow-pill">
+              <span className="w-2 h-2 rounded-full inline-block" style={{ background: accentColor }} />
+              WORKFLOW
+            </span>
+          </ScrollReveal>
+          
+          <ScrollReveal delay={0.1}>
+            <h2 className="text-h2 text-text-primary max-w-[600px] mb-4">
+              How {product.name} Works
+            </h2>
+          </ScrollReveal>
+          
+          <ScrollReveal delay={0.2}>
+            <p className="text-body-lg text-text-secondary max-w-[500px]">
+              A complete operational flow from administration to field execution.
+            </p>
+          </ScrollReveal>
+        </div>
 
         {/* Responsive vertical flow diagram */}
         <div className="max-w-[800px] mx-auto relative">
           {/* Central Line for Desktop */}
-          <div className="hidden md:block absolute left-1/2 top-4 bottom-4 w-px bg-white/10 -translate-x-1/2" />
+          <div className="hidden md:block absolute left-1/2 top-4 bottom-4 w-px bg-slate-200 -translate-x-1/2" />
 
           <div className="flex flex-col gap-6 md:gap-12 relative z-10">
             {workflow.map((node, i) => {
@@ -58,14 +65,14 @@ export default function HowItWorks({ product }: HowItWorksProps) {
                     
                     {/* Content Box */}
                     <div className="w-full md:w-1/2">
-                      <div className={`p-6 rounded-[var(--radius-lg)] border ${accentBorderFull} bg-white/5 backdrop-blur-sm relative group transition-all duration-300 hover:bg-white/10`}>
-                        <div className={`absolute top-4 ${isEven ? 'right-4' : 'left-4 md:right-auto md:left-4'} text-3xl font-heading font-bold text-white/10 group-hover:text-white/20 transition-colors`}>
+                      <div className="p-6 rounded-[var(--radius-xl)] bg-white border border-border shadow-sm relative group transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+                        <div className={`absolute top-4 ${isEven ? 'right-4' : 'left-4 md:right-auto md:left-4'} text-3xl font-heading font-bold text-slate-100 group-hover:text-slate-200 transition-colors`}>
                           0{i + 1}
                         </div>
-                        <h4 className={`text-h4 text-white mb-2 ${accentText}`}>
+                        <h4 className="text-h4 text-text-primary mb-2" style={{ color: accentColor }}>
                           {node.label}
                         </h4>
-                        <p className="text-body text-white/70">
+                        <p className="text-body text-text-secondary">
                           {node.sublabel}
                         </p>
                       </div>
@@ -73,7 +80,7 @@ export default function HowItWorks({ product }: HowItWorksProps) {
 
                     {/* Timeline Node (Desktop only) */}
                     <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center justify-center">
-                      <div className={`w-3 h-3 rounded-full ${accentBg} ring-4 ring-primary-dark shadow-[0_0_15px_rgba(255,255,255,0.2)]`} />
+                      <div className="w-3 h-3 rounded-full shadow-[0_0_15px_rgba(15,23,42,0.1)]" style={{ background: accentColor, border: '4px solid white' }} />
                     </div>
 
                     {/* Spacer for other half */}

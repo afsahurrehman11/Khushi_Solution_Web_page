@@ -1,74 +1,76 @@
 'use client';
 
-import { Mail, Phone, MapPin } from 'lucide-react';
-import ScrollReveal from '@/components/ui/ScrollReveal';
+import { Mail, MapPin, Phone } from 'lucide-react';
 import ContactForm from './ContactForm';
+import ScrollReveal from '@/components/ui/ScrollReveal';
 
 export default function ContactSection() {
-  const email = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'contact@khushisolutions.com';
-  const phone = process.env.NEXT_PUBLIC_CONTACT_PHONE || '+92 XXX XXXXXXX';
-  const address = process.env.NEXT_PUBLIC_COMPANY_ADDRESS || 'Lahore, Pakistan';
-
   return (
     <section id="contact" className="section-padding">
       <div className="container-main">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+          
           {/* Left */}
           <div className="lg:col-span-7">
             <ScrollReveal>
-              <span
-                className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase"
-                style={{
-                  background: 'rgba(16,185,129,0.1)',
-                  border: '1px solid rgba(16,185,129,0.3)',
-                  color: '#34d399',
-                  letterSpacing: '0.12em',
-                }}
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-secondary inline-block" />
+              <span className="eyebrow-pill">
+                <span className="w-2 h-2 rounded-full bg-secondary inline-block" />
                 CONTACT
               </span>
             </ScrollReveal>
             <ScrollReveal delay={0.08}>
-              <h2 className="text-h2 text-white mb-4">Get in Touch</h2>
+              <h2 className="text-h2 text-text-primary mb-4">Get in Touch</h2>
             </ScrollReveal>
             <ScrollReveal delay={0.12}>
-              <p className="text-body-lg max-w-[440px] mb-10" style={{ color: 'rgba(255,255,255,0.75)' }}>
-                Have a project in mind or want to learn more about our platforms? We&apos;d love to hear from you.
+              <p className="text-body-lg text-text-secondary max-w-[500px] mb-10">
+                Ready to upgrade your operations? Send us a message and our technical team will get back to you within 24 hours.
               </p>
             </ScrollReveal>
+            
             <ScrollReveal delay={0.16}>
-              <div className="flex flex-col gap-5">
-                <div className="flex items-center gap-3">
-                  <Mail className="w-5 h-5 shrink-0" strokeWidth={1.5} style={{ color: 'rgba(255,255,255,0.4)' }} />
-                  <a href={`mailto:${email}`} className="text-body hover:text-white transition-colors" style={{ color: 'rgba(255,255,255,0.8)' }}>
-                    {email}
-                  </a>
+              <div className="flex flex-col gap-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-slate-100 border border-border text-text-primary">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-text-primary mb-1 uppercase tracking-wider">Email Us</h4>
+                    <p className="text-text-secondary">contact@khushisolutions.com</p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 shrink-0" strokeWidth={1.5} style={{ color: 'rgba(255,255,255,0.4)' }} />
-                  <a href={`tel:${phone.replace(/\s/g, '')}`} className="text-body hover:text-white transition-colors" style={{ color: 'rgba(255,255,255,0.8)' }}>
-                    {phone}
-                  </a>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-slate-100 border border-border text-text-primary">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-text-primary mb-1 uppercase tracking-wider">Call Us</h4>
+                    <p className="text-text-secondary">+92 300 1234567</p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <MapPin className="w-5 h-5 shrink-0" strokeWidth={1.5} style={{ color: 'rgba(255,255,255,0.4)' }} />
-                  <span className="text-body" style={{ color: 'rgba(255,255,255,0.8)' }}>{address}</span>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-slate-100 border border-border text-text-primary">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-text-primary mb-1 uppercase tracking-wider">Location</h4>
+                    <p className="text-text-secondary">Lahore, Pakistan<br />Available for remote deployment globally.</p>
+                  </div>
                 </div>
               </div>
             </ScrollReveal>
           </div>
 
-          {/* Right — Form */}
+          {/* Right — Form Container */}
           <div className="lg:col-span-5">
-            <ScrollReveal delay={0.2}>
-              <div
-                className="glass-card rounded-[var(--radius-lg)] overflow-hidden"
-              >
-                <ContactForm dark />
+            <ScrollReveal delay={0.2} className="h-full">
+              <div className="glass-card rounded-[var(--radius-xl)] p-6 md:p-8 h-full shadow-sm">
+                <ContactForm />
               </div>
             </ScrollReveal>
           </div>
+
         </div>
       </div>
     </section>

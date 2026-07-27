@@ -53,68 +53,62 @@ export default function AboutSection() {
           {/* Left Column */}
           <div className="lg:col-span-7 xl:col-span-8 flex flex-col justify-center">
             <ScrollReveal>
-              <span
-                className="inline-flex items-center gap-2 mb-4 px-3 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase"
-                style={{
-                  background: 'rgba(16,185,129,0.1)',
-                  border: '1px solid rgba(16,185,129,0.3)',
-                  color: '#34d399',
-                  letterSpacing: '0.12em',
-                }}
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-secondary inline-block" />
+              <span className="eyebrow-pill">
+                <span className="w-2 h-2 rounded-full bg-secondary inline-block" />
                 ABOUT
               </span>
             </ScrollReveal>
 
             <ScrollReveal delay={0.1}>
-              <h2 className="text-h2 text-white mb-4">We Build Software That Works</h2>
+              <h2 className="text-h2 text-text-primary mb-6 lg:mb-8 max-w-[640px]">
+                We build the software that your business actually needs.
+              </h2>
             </ScrollReveal>
 
             <ScrollReveal delay={0.15}>
-              <p className="text-body-lg max-w-[600px] mb-10" style={{ color: 'rgba(255,255,255,0.75)' }}>
-                {company.aboutStatement}
+              <p className="text-body-lg text-text-secondary max-w-[600px] mb-8">
+                Khushi Solutions is a software company focused on real-world operations. We don&apos;t build disposable marketing sites; we engineer production-grade platforms. Our software manages thousands of daily deliveries and handles the administration of major educational institutions.
               </p>
             </ScrollReveal>
 
-            {/* Counter Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
-              {company.facts.map((fact) => (
-                <AnimatedCounterCard
-                  key={fact.label}
-                  label={fact.label}
-                  valueStr={fact.value}
-                  description={fact.description}
-                />
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 mt-8">
+              {company.facts.map((fact, i) => (
+                <ScrollReveal key={fact.label} delay={0.2 + (i * 0.1)}>
+                  <div className="relative pl-5 border-l-2" style={{ borderColor: 'var(--color-primary)' }}>
+                    <div className="text-3xl lg:text-4xl font-bold mb-1 text-text-primary" style={{ fontFamily: 'var(--font-heading)' }}>
+                      {fact.value}
+                    </div>
+                    <div className="text-sm font-medium text-text-secondary uppercase tracking-wider">
+                      {fact.label}
+                    </div>
+                  </div>
+                </ScrollReveal>
               ))}
             </div>
           </div>
 
-          {/* Right Column — Image slot */}
-          <div className="lg:col-span-5 xl:col-span-4 flex justify-center lg:justify-end mt-4 lg:mt-0">
-            <ScrollReveal delay={0.2} className="w-full max-w-[400px]">
+          {/* Right Column - Experience visualization */}
+          <div className="lg:col-span-5 xl:col-span-4 lg:col-start-8 xl:col-start-9 hidden lg:flex items-center justify-center">
+            <ScrollReveal delay={0.3} className="w-full">
               <div
-                className="relative w-full aspect-[4/3] rounded-[var(--radius-lg)] overflow-hidden"
+                className="relative w-full aspect-square rounded-full flex items-center justify-center bg-white"
                 style={{
-                  border: '1px solid rgba(255,255,255,0.12)',
-                  boxShadow: '0 24px 60px rgba(0,0,0,0.4)',
+                  border: '1px solid var(--color-border)',
+                  boxShadow: 'var(--shadow-md)',
                 }}
               >
-                {!imageError ? (
-                  <Image
-                    src="/images/company/about.webp"
-                    alt="Khushi Solutions Team"
-                    fill
-                    className="object-cover"
-                    onError={() => setImageError(true)}
-                  />
-                ) : (
-                  <ImagePlaceholder
-                    label="Company Image"
-                    accentColor="blue"
-                    className="w-full h-full border-none"
-                  />
-                )}
+                {/* Core animated rings */}
+                <div className="absolute inset-4 rounded-full border border-dashed border-border animate-[spin_20s_linear_infinite]" />
+                <div className="absolute inset-8 rounded-full border border-slate-200 animate-[spin_15s_linear_infinite_reverse]" />
+                
+                <div className="text-center z-10 relative">
+                  <div className="text-6xl font-bold mb-2 text-text-primary" style={{ fontFamily: 'var(--font-heading)' }}>
+                    10+
+                  </div>
+                  <div className="text-sm font-medium text-text-muted uppercase tracking-wider">
+                    Years Combined<br />Experience
+                  </div>
+                </div>
               </div>
             </ScrollReveal>
           </div>

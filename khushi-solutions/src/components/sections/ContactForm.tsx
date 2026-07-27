@@ -1,238 +1,152 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
-import { Send, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 
-interface FormData {
-  name: string;
-  phone: string;
-  email: string;
-  subject: string;
-  message: string;
-}
+export default function ContactForm() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
-type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
-
-const initialForm: FormData = {
-  name: '',
-  phone: '',
-  email: '',
-  subject: '',
-  message: '',
-};
-
-export default function ContactForm({ dark = false }: { dark?: boolean }) {
-  const [form, setForm] = useState<FormData>(initialForm);
-  const [status, setStatus] = useState<FormStatus>('idle');
-  const [errors, setErrors] = useState<Partial<FormData>>({});
-
-  function validate(): boolean {
-    const newErrors: Partial<FormData> = {};
-
-    if (!form.name.trim()) newErrors.name = 'Name is required';
-    if (!form.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      newErrors.email = 'Please enter a valid email';
-    }
-    if (!form.subject.trim()) newErrors.subject = 'Subject is required';
-    if (!form.message.trim()) newErrors.message = 'Message is required';
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  }
-
-  async function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!validate()) return;
+    setIsSubmitting(true);
+    setStatus('idle');
+    setErrorMessage('');
 
-    setStatus('submitting');
+    const formData = new FormData(e.currentTarget);
 
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify(Object.fromEntries(formData)),
       });
+
+      const data = await res.json();
 
       if (res.ok) {
         setStatus('success');
-        setForm(initialForm);
+        e.currentTarget.reset();
+        // Clear success message after 5 seconds
+        setTimeout(() => setStatus('idle'), 5000);
       } else {
         setStatus('error');
+        setErrorMessage(data.error || 'Failed to send message.');
       }
-    } catch {
+    } catch (err) {
       setStatus('error');
+      setErrorMessage('A network error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   }
-
-  function handleChange(field: keyof FormData, value: string) {
-    setForm((prev) => ({ ...prev, [field]: value }));
-    if (errors[field]) {
-      setErrors((prev) => {
-        const next = { ...prev };
-        delete next[field];
-        return next;
-      });
-    }
-  }
-
-  /* Success state */
-  if (status === 'success') {
-    return (
-      <div className="bg-white rounded-[var(--radius-lg)] p-6 md:p-8 flex flex-col items-center justify-center min-h-[400px] text-center">
-        <CheckCircle className="w-12 h-12 text-success mb-4" strokeWidth={1.5} />
-        <h3 className="text-h3 text-text-primary mb-2">Thank You</h3>
-        <p className="text-body text-text-secondary max-w-[360px]">
-          Thank you for contacting Khushi Solutions. We&apos;ll get back to you within 24–48 hours.
-        </p>
-        <button
-          onClick={() => setStatus('idle')}
-          className="mt-6 text-sm text-primary hover:text-primary-hover transition-colors"
-        >
-          Send another message
-        </button>
-      </div>
-    );
-  }
-
-  const inputBase = dark
-    ? 'w-full h-[46px] px-4 rounded-[var(--radius-sm)] text-sm text-white placeholder:text-white/40 focus:outline-none transition-colors duration-200 focus:ring-1'
-    : 'w-full h-[46px] px-4 bg-white border border-border rounded-[var(--radius-sm)] text-text-primary text-sm placeholder:text-text-muted/60 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-colors duration-200';
-  const inputStyle = dark
-    ? { background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)' }
-    : {};
-  const inputFocusClass = dark ? 'focus:ring-secondary/40' : 'focus:ring-primary/20';
-  const errorInput = dark ? 'border-red-400/60 focus:ring-red-400/30' : 'border-error focus:border-error focus:ring-error/20';
-  const labelClass = dark ? 'text-small font-medium block mb-1.5 text-white/70' : 'text-small text-text-secondary font-medium block mb-1.5';
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className={`p-6 md:p-8 ${dark ? '' : 'bg-white rounded-[var(--radius-lg)] shadow-[var(--shadow-md)]'}`}
-      noValidate
-    >
-      <div className="flex flex-col gap-4">
-        {/* Name */}
-        <div>
-          <label htmlFor="contact-name" className={labelClass}>
-            Name <span style={{ color: '#f87171' }}>*</span>
-          </label>
-          <input
-            id="contact-name"
-            type="text"
-            value={form.name}
-            onChange={(e) => handleChange('name', e.target.value)}
-            className={`${inputBase} ${errors.name ? errorInput : ''}`}
-            style={inputStyle}
-            placeholder="Your full name"
-            required
-          />
-          {errors.name && <p className="text-xs mt-1" style={{ color: '#f87171' }}>{errors.name}</p>}
-        </div>
-
-        {/* Phone + Email row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label htmlFor="contact-phone" className={labelClass}>Phone</label>
-            <input
-              id="contact-phone"
-              type="tel"
-              value={form.phone}
-              onChange={(e) => handleChange('phone', e.target.value)}
-              className={inputBase}
-              style={inputStyle}
-              placeholder="+92 XXX XXXXXXX"
-            />
-          </div>
-          <div>
-            <label htmlFor="contact-email" className={labelClass}>
-              Email <span style={{ color: '#f87171' }}>*</span>
+    <div className="relative">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="name" className="text-xs font-bold text-text-primary uppercase tracking-widest ml-1">
+              Name
             </label>
             <input
-              id="contact-email"
-              type="email"
-              value={form.email}
-              onChange={(e) => handleChange('email', e.target.value)}
-              className={`${inputBase} ${errors.email ? errorInput : ''}`}
-              style={inputStyle}
-              placeholder="you@company.com"
               required
+              id="name"
+              name="name"
+              type="text"
+              placeholder="John Doe"
+              className="w-full px-4 py-3.5 rounded-xl text-text-primary placeholder:text-text-muted bg-white border border-border shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
             />
-            {errors.email && <p className="text-xs mt-1" style={{ color: '#f87171' }}>{errors.email}</p>}
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="email" className="text-xs font-bold text-text-primary uppercase tracking-widest ml-1">
+              Email
+            </label>
+            <input
+              required
+              id="email"
+              name="email"
+              type="email"
+              placeholder="john@example.com"
+              className="w-full px-4 py-3.5 rounded-xl text-text-primary placeholder:text-text-muted bg-white border border-border shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+            />
           </div>
         </div>
 
-        {/* Subject */}
-        <div>
-          <label htmlFor="contact-subject" className={labelClass}>
-            Subject <span style={{ color: '#f87171' }}>*</span>
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="company" className="text-xs font-bold text-text-primary uppercase tracking-widest ml-1">
+            Company (Optional)
           </label>
           <input
-            id="contact-subject"
+            id="company"
+            name="company"
             type="text"
-            value={form.subject}
-            onChange={(e) => handleChange('subject', e.target.value)}
-            className={`${inputBase} ${errors.subject ? errorInput : ''}`}
-            style={inputStyle}
-            placeholder="What is this about?"
-            required
+            placeholder="Your Business Name"
+            className="w-full px-4 py-3.5 rounded-xl text-text-primary placeholder:text-text-muted bg-white border border-border shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
           />
-          {errors.subject && <p className="text-xs mt-1" style={{ color: '#f87171' }}>{errors.subject}</p>}
         </div>
 
-        {/* Message */}
-        <div>
-          <label htmlFor="contact-message" className={labelClass}>
-            Message <span style={{ color: '#f87171' }}>*</span>
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="message" className="text-xs font-bold text-text-primary uppercase tracking-widest ml-1">
+            Message
           </label>
           <textarea
-            id="contact-message"
-            value={form.message}
-            onChange={(e) => handleChange('message', e.target.value)}
-            rows={5}
-            className={`${inputBase} h-auto py-3 resize-none ${errors.message ? errorInput : ''}`}
-            style={inputStyle}
-            placeholder="Tell us about your project or question..."
             required
+            id="message"
+            name="message"
+            rows={4}
+            placeholder="How can we help you?"
+            className="w-full px-4 py-3.5 rounded-xl text-text-primary placeholder:text-text-muted bg-white border border-border shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-y min-h-[120px]"
           />
-          {errors.message && <p className="text-xs mt-1" style={{ color: '#f87171' }}>{errors.message}</p>}
         </div>
 
-        {/* Error banner */}
-        {status === 'error' && (
-          <div
-            className="flex items-center gap-2 p-3 rounded-[var(--radius-sm)]"
-            style={dark
-              ? { background: 'rgba(248,113,113,0.1)', border: '1px solid rgba(248,113,113,0.2)' }
-              : { background: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.2)' }}
-          >
-            <AlertCircle className="w-4 h-4 shrink-0" style={{ color: '#f87171' }} />
-            <p className="text-small" style={{ color: dark ? '#f87171' : '#EF4444' }}>
-              Something went wrong. Please try again or contact us directly via email.
-            </p>
-          </div>
-        )}
-
-        {/* Submit */}
         <button
           type="submit"
-          disabled={status === 'submitting'}
-          className={`btn-primary-gradient inline-flex items-center justify-center gap-2 h-[46px] px-6 w-full sm:w-auto self-start text-sm disabled:opacity-60 disabled:cursor-not-allowed mt-2`}
+          disabled={isSubmitting}
+          className="btn-primary-gradient mt-2 w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-sm tracking-wide disabled:opacity-70 disabled:cursor-not-allowed"
         >
-          {status === 'submitting' ? (
+          {isSubmitting ? (
             <>
               <Loader2 className="w-4 h-4 animate-spin" />
-              Sending...
+              SENDING...
             </>
           ) : (
             <>
-              Send Message
+              SEND MESSAGE
               <Send className="w-4 h-4" />
             </>
           )}
         </button>
-      </div>
-    </form>
+      </form>
+
+      {/* Status Toasts */}
+      <AnimatePresence>
+        {status === 'success' && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="absolute -bottom-16 left-0 right-0 p-4 rounded-xl bg-green-50 border border-green-200 text-green-700 flex items-center gap-3 shadow-sm z-20"
+          >
+            <CheckCircle2 className="w-5 h-5 text-green-500" />
+            <p className="text-sm font-medium">Message sent! We&apos;ll be in touch soon.</p>
+          </motion.div>
+        )}
+        
+        {status === 'error' && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="absolute -bottom-16 left-0 right-0 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 flex items-center gap-3 shadow-sm z-20"
+          >
+            <AlertCircle className="w-5 h-5 text-red-500" />
+            <p className="text-sm font-medium">{errorMessage}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

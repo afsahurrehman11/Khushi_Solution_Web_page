@@ -11,23 +11,22 @@ interface ProductFeaturesProps {
 
 export default function ProductFeatures({ product }: ProductFeaturesProps) {
   const accentText = product.accent === 'blue' ? 'text-primary' : 'text-secondary';
-  const bgColors = ['bg-white', 'bg-surface'];
-
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col relative z-10">
       {product.features.map((feature, index) => {
         const isEven = index % 2 === 0;
-        const bgColor = bgColors[index % 2];
+        const accentColor = product.accent === 'blue' ? 'var(--color-primary)' : 'var(--color-secondary)';
 
         return (
-          <section key={feature.title} className={`${bgColor} section-padding overflow-hidden`}>
+          <section key={feature.title} className="section-padding overflow-hidden">
             <div className="container-main">
               <div className={`flex flex-col gap-10 md:gap-16 items-center ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}>
                 
                 {/* Text Content */}
-                <div className="w-full lg:w-1/2 flex flex-col justify-center">
+                <div className="w-full lg:w-1/2 flex flex-col justify-center items-start">
                   <ScrollReveal>
-                    <span className={`text-technical ${accentText} inline-block mb-3`}>
+                    <span className="eyebrow-pill">
+                      <span className="w-2 h-2 rounded-full inline-block" style={{ background: accentColor }} />
                       {feature.eyebrow}
                     </span>
                   </ScrollReveal>
