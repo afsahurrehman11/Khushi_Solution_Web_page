@@ -18,7 +18,7 @@ const faqs: FAQItem[] = [
     icon: MessageCircle,
     question: 'How can I use the app?',
     answer:
-      'You can contact us using the contact form below, and our team will get in touch to set you up. We handle the full onboarding process — from account creation to training your team.',
+      'You can contact us using the contact form below, and our team will get in touch to set you up. We handle the full onboarding process   from account creation to training your team.',
   },
   {
     id: 'is-free',
@@ -39,7 +39,7 @@ const faqs: FAQItem[] = [
     icon: Users,
     question: 'Does Khushi SMS support multiple school branches?',
     answer:
-      'Yes. Khushi SMS is built as a multi-tenant platform. Each school branch gets its own isolated data environment while sharing the same application — perfect for chains and educational groups.',
+      'Yes. Khushi SMS is built as a multi-tenant platform. Each school branch gets its own isolated data environment while sharing the same application   perfect for chains and educational groups.',
   },
   {
     id: 'data-security',
@@ -93,7 +93,7 @@ function FAQRow({ item, isOpen, onToggle }: { item: FAQItem; isOpen: boolean; on
           animate={{ rotate: isOpen ? 45 : 0 }}
           transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
           className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center border border-border"
-          style={{ 
+          style={{
             background: isOpen ? 'var(--color-secondary)' : '#F8FAFC',
             borderColor: isOpen ? 'var(--color-secondary)' : 'var(--color-border)',
           }}

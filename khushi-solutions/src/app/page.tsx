@@ -10,8 +10,8 @@ import LocomotiveScrollProvider from '@/components/layout/LocomotiveScrollProvid
 import GlowingBubblesBackground from '@/components/ui/GlowingBubblesBackground';
 
 export const metadata = {
-  title: 'Khushi Solutions — Software That Runs Real Businesses',
-  description: 'Delivery platforms and school management systems — built and proven in production.',
+  title: 'Khushi Solutions   Software That Runs Real Businesses',
+  description: 'Delivery platforms and school management systems   built and proven in production.',
 };
 
 export default function Home() {

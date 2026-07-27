@@ -1,5 +1,5 @@
 /* ============================================================
-   PRODUCT DATA — Single source of truth for all product content
+   PRODUCT DATA   Single source of truth for all product content
    All image paths centralized here for easy replacement.
    ============================================================ */
 
@@ -49,7 +49,7 @@ export interface ProductData {
 }
 
 /* ============================================================
-   PRODUCT 1: BITES — Multi-Store Delivery Platform
+   PRODUCT 1: BITES   Multi-Store Delivery Platform
    Accent: Blue
    ============================================================ */
 
@@ -62,7 +62,7 @@ export const product1: ProductData = {
   shortIntro:
     'A complete delivery and operations management platform. Bites connects customers with local businesses and manages the complete lifecycle from browsing to delivery, with a powerful admin control center and a dedicated rider workforce management system.',
   valueProp:
-    'Bites is a complete delivery operating system built and owned by Khushi Solutions. Engineered for local markets — cash-first transactions, real road-distance delivery pricing, and a multi-merchant architecture that lets any local business onboard in minutes.',
+    'Bites is a complete delivery operating system built and owned by Khushi Solutions. Engineered for local markets   cash-first transactions, real road-distance delivery pricing, and a multi-merchant architecture that lets any local business onboard in minutes.',
   accent: 'blue',
   url: null,
   heroVideo: {
@@ -73,26 +73,26 @@ export const product1: ProductData = {
   heroScreenshot: {
     desktop: '/images/products/product-1/desktop/product-1-hero-desktop.webp',
     mobile: '/images/products/product-1/mobile/product-1-hero-mobile.webp',
-    alt: 'Bites Admin Dashboard — Platform overview and management interface',
+    alt: 'Bites Admin Dashboard   Platform overview and management interface',
   },
   capabilities: [
     {
       icon: 'Store',
       name: 'Multi-Store Platform',
       description:
-        'Supports restaurants, groceries, pharmacies, and 10+ other business types — all in one app.',
+        'Supports restaurants, groceries, pharmacies, and 10+ other business types   all in one app.',
     },
     {
       icon: 'MapPin',
       name: 'Real-Time Order Tracking',
       description:
-        'Customers see live updates at every step — and track their rider on a map.',
+        'Customers see live updates at every step   and track their rider on a map.',
     },
     {
       icon: 'Calculator',
       name: 'Smart Delivery Pricing',
       description:
-        'Fair delivery charges calculated from actual road distance — not guesswork.',
+        'Fair delivery charges calculated from actual road distance   not guesswork.',
     },
     {
       icon: 'Bike',
@@ -104,7 +104,7 @@ export const product1: ProductData = {
       icon: 'ShieldCheck',
       name: 'Role-Based Access Control',
       description:
-        'Create staff accounts with exact module access — and track every action they take.',
+        'Create staff accounts with exact module access   and track every action they take.',
     },
     {
       icon: 'ChefHat',
@@ -140,7 +140,7 @@ export const product1: ProductData = {
   features: [
     {
       eyebrow: 'REAL-TIME TRACKING',
-      title: 'Watch Your Order Move — Live',
+      title: 'Watch Your Order Move   Live',
       description:
         '• Live updates at every step\n• Track rider location on map\n• Exact delivery timestamps',
       screenshotPath:
@@ -221,7 +221,7 @@ export const product1: ProductData = {
     },
   ],
   differentiators: [
-    '100% custom platform — full ownership, no licensing fees',
+    '100% custom platform   full ownership, no licensing fees',
     '13+ store types in a single app',
     'Real road routing for fair delivery pricing',
     'Secure logins with full activity tracking',

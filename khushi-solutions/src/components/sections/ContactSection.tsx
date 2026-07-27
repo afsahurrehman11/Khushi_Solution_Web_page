@@ -12,7 +12,7 @@ export default function ContactSection() {
     <section id="contact" className="section-padding">
       <div className="container-main">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-          
+
           {/* Left */}
           <div className="lg:col-span-7">
             <ScrollReveal>
@@ -29,12 +29,12 @@ export default function ContactSection() {
                 Ready to upgrade your operations? Send us a message or reach out on WhatsApp directly. Our technical team responds within hours.
               </p>
             </ScrollReveal>
-            
+
             <ScrollReveal delay={0.16}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Email Us */}
-                <a 
-                  href={`mailto:${contact.email}`} 
+                <a
+                  href={`mailto:${contact.email}`}
                   className="flex items-start gap-4 p-4 rounded-xl border border-border bg-white hover:bg-slate-50 hover:border-blue-500/40 transition-all duration-200 group"
                 >
                   <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 bg-blue-500/10 text-blue-600 border border-blue-500/20 group-hover:scale-110 transition-transform">
@@ -47,7 +47,7 @@ export default function ContactSection() {
                 </a>
 
                 {/* WhatsApp Direct */}
-                <a 
+                <a
                   href={contact.whatsappLink}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -63,7 +63,7 @@ export default function ContactSection() {
                 </a>
 
                 {/* WhatsApp Community */}
-                <a 
+                <a
                   href={contact.whatsappCommunity}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -92,7 +92,7 @@ export default function ContactSection() {
             </ScrollReveal>
           </div>
 
-          {/* Right — Form Container */}
+          {/* Right   Form Container */}
           <div className="lg:col-span-5">
             <ScrollReveal delay={0.2} className="h-full">
               <div className="glass-card rounded-[var(--radius-xl)] p-6 md:p-8 h-full shadow-sm">

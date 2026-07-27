@@ -77,8 +77,8 @@ function ProductCard({
       {/* Prominent Neon Gradient Glow Aura */}
       <div
         className={`absolute -inset-3 rounded-3xl transition-all duration-500 pointer-events-none ${isActive
-            ? 'opacity-100 animate-pulse scale-105'
-            : 'opacity-0 group-hover:opacity-100'
+          ? 'opacity-100 animate-pulse scale-105'
+          : 'opacity-0 group-hover:opacity-100'
           }`}
         style={{
           background: product.id === 'bites'
@@ -91,14 +91,14 @@ function ProductCard({
       />
 
       <div className={`glass-card relative z-10 flex flex-col h-full rounded-2xl overflow-hidden border transition-all duration-500 bg-white/95 ${isActive
-          ? product.id === 'bites'
-            ? 'border-2 border-emerald-400 shadow-[0_0_50px_rgba(16,185,129,0.4)]'
-            : 'border-2 border-blue-400 shadow-[0_0_50px_rgba(37,99,235,0.4)]'
-          : 'border-border/60 hover:border-slate-300 hover:shadow-xl'
+        ? product.id === 'bites'
+          ? 'border-2 border-emerald-400 shadow-[0_0_50px_rgba(16,185,129,0.4)]'
+          : 'border-2 border-blue-400 shadow-[0_0_50px_rgba(37,99,235,0.4)]'
+        : 'border-border/60 hover:border-slate-300 hover:shadow-xl'
         }`}>
         <div className="relative z-10 flex flex-col h-full bg-white/40">
 
-          {/* Video Container — Standard 16:9 Landscape Video (Zero Gaps) */}
+          {/* Video Container   Standard 16:9 Landscape Video (Zero Gaps) */}
           <div className="relative overflow-hidden border-b border-border bg-slate-100 aspect-video w-full flex items-center justify-center">
             <video
               autoPlay
@@ -114,7 +114,7 @@ function ProductCard({
             <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_20px_rgba(0,0,0,0.05)]" />
           </div>
 
-          {/* Text content — compact single-view layout */}
+          {/* Text content   compact single-view layout */}
           <div className="flex flex-col flex-1 p-4 lg:p-5 bg-white/90">
             {/* Product icon + number */}
             <div className="flex items-start justify-between mb-0.5">
@@ -143,10 +143,10 @@ function ProductCard({
                 <span
                   key={label}
                   className={`inline-flex items-center gap-1 text-[10px] font-semibold rounded-full px-2.5 py-0.5 border transition-colors ${isAndroid
-                      ? product.id === 'bites'
-                        ? 'bg-emerald-500/10 text-emerald-700 border-emerald-500/30 font-bold shadow-xs'
-                        : 'bg-blue-500/10 text-blue-700 border-blue-500/30 font-bold shadow-xs'
-                      : 'bg-slate-100 text-text-secondary border-slate-200'
+                    ? product.id === 'bites'
+                      ? 'bg-emerald-500/10 text-emerald-700 border-emerald-500/30 font-bold shadow-xs'
+                      : 'bg-blue-500/10 text-blue-700 border-blue-500/30 font-bold shadow-xs'
+                    : 'bg-slate-100 text-text-secondary border-slate-200'
                     }`}
                 >
                   <Icon className={`w-3 h-3 shrink-0 ${isAndroid ? 'text-current' : ''}`} strokeWidth={2} />
@@ -155,7 +155,7 @@ function ProductCard({
               ))}
             </div>
 
-            {/* High-Impact Real Action Button — Directly Navigates to Product Page */}
+            {/* High-Impact Real Action Button   Directly Navigates to Product Page */}
             <Link
               href={`/products/${product.id}`}
               onClick={(e) => e.stopPropagation()}

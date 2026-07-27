@@ -27,21 +27,21 @@ export default function MobileFrame({
 
   return (
     <div
-      className={`inline-block rounded-[var(--radius-2xl)] overflow-hidden border-2 ${borderColor} shadow-[var(--shadow-md)] bg-white max-w-[280px] sm:max-w-[300px] w-full ${className}`}
+      className={`inline-block rounded-[var(--radius-2xl)] overflow-hidden border-2 ${borderColor} shadow-[var(--shadow-md)] bg-white max-w-[220px] sm:max-w-[240px] w-full ${className}`}
     >
       {/* Phone notch area */}
       <div className="flex justify-center py-2 bg-surface">
         <div
-          className={`w-20 h-1.5 rounded-full ${notchBg}`}
+          className={`w-16 h-1.5 rounded-full ${notchBg}`}
         />
       </div>
 
-      {/* Screen content */}
-      <div className="relative w-full" style={{ aspectRatio: '9/19' }}>
+      {/* Screen content — Standard Android 9:16 Aspect Ratio */}
+      <div className="relative w-full" style={{ aspectRatio: '9/16' }}>
         {isPlaceholder ? (
           <ImagePlaceholder
             label={alt}
-            aspectRatio="9/19"
+            aspectRatio="9/16"
             accentColor={accentColor}
             type="mobile"
           />
@@ -50,7 +50,7 @@ export default function MobileFrame({
             src={src}
             alt={alt}
             fill
-            sizes="(max-width: 768px) 280px, 300px"
+            sizes="(max-width: 768px) 220px, 240px"
             className="object-cover object-top"
             priority={priority}
           />

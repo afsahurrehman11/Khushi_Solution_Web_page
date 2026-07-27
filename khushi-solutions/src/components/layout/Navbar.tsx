@@ -89,7 +89,7 @@ export default function Navbar() {
               </Link>
             ))}
 
-            {/* Products Dropdown — Stay visible for 2s on hover or click */}
+            {/* Products Dropdown   Stay visible for 2s on hover or click */}
             <div
               className="relative flex items-center h-full py-2 group"
               onPointerEnter={triggerDropdown}
@@ -129,9 +129,9 @@ export default function Navbar() {
                         boxShadow: '0 20px 40px rgba(15,23,42,0.2)',
                       }}
                     >
-                      <Link 
-                        href="/products/bites" 
-                        className="group/item flex items-center justify-between p-2.5 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer" 
+                      <Link
+                        href="/products/bites"
+                        className="group/item flex items-center justify-between p-2.5 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
                         onClick={(e) => handleProductLinkClick(e, '/products/bites')}
                       >
                         <div className="flex items-center gap-2.5">
@@ -144,9 +144,9 @@ export default function Navbar() {
                         <ArrowRight className="w-3.5 h-3.5 text-secondary opacity-0 group-hover/item:opacity-100 transition-all -translate-x-1 group-hover/item:translate-x-0" />
                       </Link>
 
-                      <Link 
-                        href="/products/khushi-erp" 
-                        className="group/item flex items-center justify-between p-2.5 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer" 
+                      <Link
+                        href="/products/khushi-erp"
+                        className="group/item flex items-center justify-between p-2.5 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
                         onClick={(e) => handleProductLinkClick(e, '/products/khushi-erp')}
                       >
                         <div className="flex items-center gap-2.5">
@@ -164,7 +164,7 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
 
-            {/* Contact Us — highlighted CTA */}
+            {/* Contact Us   highlighted CTA */}
             <Link
               href="/#contact"
               onClick={handleContactClick}

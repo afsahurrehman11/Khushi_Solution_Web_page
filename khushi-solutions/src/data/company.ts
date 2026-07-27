@@ -1,5 +1,5 @@
 /* ============================================================
-   COMPANY DATA — Khushi Solutions company-level information
+   COMPANY DATA   Khushi Solutions company-level information
    Contact details sourced from environment variables.
    ============================================================ */
 
@@ -9,7 +9,7 @@ export const company = {
   description:
     'Software that helps businesses deliver, manage, and grow.',
   aboutStatement:
-    'Our products serve real businesses every day — from managing deliveries across cities to running school operations and finances.',
+    'Our products serve real businesses every day   from managing deliveries across cities to running school operations and finances.',
   aboutDescription: '', // Deprecated in v2.1
   facts: [
     {

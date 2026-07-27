@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: ProductPageProps) {
   const resolvedParams = await params;
   const product = products.find((p) => p.id === resolvedParams.slug);
   if (!product) return { title: 'Product Not Found - Khushi Solutions' };
-  return { title: `${product.name} — Khushi Solutions`, description: product.shortIntro };
+  return { title: `${product.name}   Khushi Solutions`, description: product.shortIntro };
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {

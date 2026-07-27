@@ -39,7 +39,7 @@ export default function ProductDetailHero({ product }: { product: ProductData })
   return (
     <section className="pt-20 lg:pt-24 pb-8 lg:pb-12 overflow-hidden relative">
       {/* High-Visibility Vibrant Top Back Button (Moved Upwards) */}
-      <div className="absolute top-10 lg:top-12 left-4 sm:left-6 lg:left-12 z-40">
+      <div className="absolute top-5 lg:top-6 left-4 sm:left-6 lg:left-12 z-40">
         <Link
           href="/"
           title="Back to Home"
@@ -56,9 +56,9 @@ export default function ProductDetailHero({ product }: { product: ProductData })
 
       <div className="container-main relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          
-          {/* Left Column — Eyebrow, Title, Premium Description Card, Tech Pills & CTA */}
-          <motion.div 
+
+          {/* Left Column   Eyebrow, Title, Premium Description Card, Tech Pills & CTA */}
+          <motion.div
             initial="hidden"
             animate="visible"
             variants={fadeUp}
@@ -66,10 +66,10 @@ export default function ProductDetailHero({ product }: { product: ProductData })
           >
             <span className="eyebrow-pill mb-4 shadow-xs">
               <span className="w-2 h-2 rounded-full inline-block" style={{ background: accentColor }} />
-              PRODUCT {product.number} — {product.category.toUpperCase()}
+              PRODUCT {product.number}   {product.category.toUpperCase()}
             </span>
 
-            <h1 
+            <h1
               className="text-text-primary mb-5 font-extrabold tracking-tight"
               style={{
                 fontFamily: 'var(--font-heading)',
@@ -81,7 +81,7 @@ export default function ProductDetailHero({ product }: { product: ProductData })
             </h1>
 
             {/* Elevated & Premium Description Card */}
-            <div 
+            <div
               className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur-md border border-slate-200/80 mb-6 shadow-sm relative overflow-hidden w-full"
               style={{
                 borderLeft: `4px solid ${accentColor}`,
@@ -103,8 +103,8 @@ export default function ProductDetailHero({ product }: { product: ProductData })
             <div className="flex flex-wrap items-center gap-2 mb-8">
               <span className="text-xs font-bold text-text-muted uppercase tracking-wider mr-1">Stack:</span>
               {product.techStack.map((tech) => (
-                <span 
-                  key={tech} 
+                <span
+                  key={tech}
                   className="px-3.5 py-1.5 bg-slate-100/90 border border-slate-200/80 rounded-full text-xs font-semibold text-text-primary shadow-xs hover:border-slate-300 transition-colors"
                 >
                   {tech}
@@ -132,7 +132,7 @@ export default function ProductDetailHero({ product }: { product: ProductData })
             </Link>
           </motion.div>
 
-          {/* Right Column — Standard 16:9 Landscape Video Container with Custom UI Controls */}
+          {/* Right Column   Standard 16:9 Landscape Video Container with Custom UI Controls */}
           <motion.div
             initial="hidden"
             animate="visible"
@@ -140,10 +140,10 @@ export default function ProductDetailHero({ product }: { product: ProductData })
             transition={{ delay: 0.15 }}
             className="lg:col-span-6 w-full"
           >
-            <div 
+            <div
               className="relative w-full aspect-video rounded-2xl overflow-hidden border border-slate-900/10 shadow-2xl bg-slate-950 group"
               style={{
-                boxShadow: product.id === 'bites' 
+                boxShadow: product.id === 'bites'
                   ? '0 20px 40px rgba(16,185,129,0.18)'
                   : '0 20px 40px rgba(37,99,235,0.18)',
               }}

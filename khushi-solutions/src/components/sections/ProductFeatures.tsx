@@ -65,7 +65,7 @@ export default function ProductFeatures({ product }: ProductFeaturesProps) {
                 <div className="w-full flex justify-center mt-2">
                   <ScrollReveal delay={0.1} className="w-full flex justify-center">
                     {feature.screenshotType === 'mobile' ? (
-                      <div className="max-w-[280px] w-full">
+                      <div className="max-w-[230px] w-full">
                         <MobileFrame
                           src={feature.screenshotPath}
                           alt={feature.screenshotAlt}

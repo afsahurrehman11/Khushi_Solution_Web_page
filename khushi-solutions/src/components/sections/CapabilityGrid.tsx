@@ -21,12 +21,15 @@ function getIcon(iconName: string) {
 function TiltCard({ cap, Icon, cardBorderHover, iconBg, glowAura }: any) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
+  const isHovered = useMotionValue(0);
 
-  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
-  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
+  const mouseXSpring = useSpring(x, { stiffness: 400, damping: 25 });
+  const mouseYSpring = useSpring(y, { stiffness: 400, damping: 25 });
+  const scaleSpring = useSpring(isHovered, { stiffness: 400, damping: 25 });
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["22deg", "-22deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-22deg", "22deg"]);
+  const scale = useTransform(scaleSpring, [0, 1], [1, 1.06]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -38,29 +41,32 @@ function TiltCard({ cap, Icon, cardBorderHover, iconBg, glowAura }: any) {
     const yPct = mouseY / height - 0.5;
     x.set(xPct);
     y.set(yPct);
+    isHovered.set(1);
   };
 
   const handleMouseLeave = () => {
     x.set(0);
     y.set(0);
+    isHovered.set(0);
   };
 
   return (
     <motion.div
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      className={`relative overflow-hidden bg-gradient-to-b from-white to-slate-50/80 rounded-2xl p-6 md:p-7 h-full border border-border/80 shadow-sm hover:shadow-2xl group cursor-pointer ${cardBorderHover}`}
+      style={{ rotateX, rotateY, scale, transformStyle: "preserve-3d" }}
+      className={`relative overflow-hidden bg-gradient-to-b from-white to-slate-50/90 rounded-2xl p-6 md:p-7 h-full border border-border/80 shadow-md hover:shadow-2xl group cursor-pointer transition-shadow duration-300 ${cardBorderHover}`}
     >
       {/* Liquid Light Reflection Sheen Sweep */}
-      <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-1000 ease-in-out pointer-events-none z-10" />
+      <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-transform duration-1000 ease-in-out pointer-events-none z-10" />
 
       {/* Ambient Glow Aura */}
-      <div className={`absolute -top-10 -right-10 w-28 h-28 ${glowAura} rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
+      <div className={`absolute -top-12 -right-12 w-32 h-32 ${glowAura} rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`} />
 
-      <div className="relative z-20 flex items-start gap-4" style={{ transform: "translateZ(30px)" }}>
+      <div className="relative z-20 flex items-start gap-4" style={{ transform: "translateZ(50px)" }}>
         <div
-          className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 shadow-md transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 ${iconBg}`}
+          className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 shadow-lg transition-all duration-300 group-hover:scale-115 group-hover:rotate-12 ${iconBg}`}
+          style={{ transform: "translateZ(20px)" }}
         >
           <Icon className="w-5 h-5 text-white" strokeWidth={2} />
         </div>

@@ -7,7 +7,7 @@ const proofItems = [
   {
     icon: Code,
     title: 'Full Ownership',
-    description: '100% custom software — no licensing fees, no vendor lock-in, and full control over your platform.',
+    description: '100% custom software   no licensing fees, no vendor lock-in, and full control over your platform.',
   },
   {
     icon: Layers,

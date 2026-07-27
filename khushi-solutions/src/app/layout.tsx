@@ -5,8 +5,8 @@ import './globals.css';
 /* ============================================================
    FONT CONFIGURATION
    ============================================================
-   - Inter: Body/UI text (Google Fonts — reliable)
-   - IBM Plex Mono: Technical labels (Google Fonts — reliable)
+   - Inter: Body/UI text (Google Fonts   reliable)
+   - IBM Plex Mono: Technical labels (Google Fonts   reliable)
    - General Sans: Loaded via Fontshare CDN <link> below.
      Fallback chain: "General Sans" → "Inter" → system-ui → sans-serif
      If General Sans fails to load, Inter provides a clean fallback
@@ -27,9 +27,9 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Khushi Solutions — Engineered Software for Real Businesses',
+  title: 'Khushi Solutions   Engineered Software for Real Businesses',
   description:
-    'Khushi Solutions builds production-grade software platforms — from multi-store delivery systems to AI-powered school management. Real products. Real users. Proven results.',
+    'Khushi Solutions builds production-grade software platforms   from multi-store delivery systems to AI-powered school management. Real products. Real users. Proven results.',
   keywords: [
     'Khushi Solutions',
     'Bites delivery platform',
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Khushi Solutions' }],
   openGraph: {
-    title: 'Khushi Solutions — Engineered Software for Real Businesses',
+    title: 'Khushi Solutions   Engineered Software for Real Businesses',
     description:
       'Production-grade software platforms for delivery operations and educational institutions.',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://khushisolutions.com',
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Khushi Solutions — Engineered Software for Real Businesses',
+    title: 'Khushi Solutions   Engineered Software for Real Businesses',
     description:
       'Production-grade software platforms for delivery operations and educational institutions.',
   },

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 
 /**
- * SmoothScroll — A lightweight CSS-scroll-based smooth scroll manager.
+ * SmoothScroll   A lightweight CSS-scroll-based smooth scroll manager.
  * Locomotive Scroll v4 requires a wrapping element with `data-scroll-container`
  * and a specific DOM structure. For Next.js App Router compatibility we use
  * a CSS-native approach for the global canvas, while still exporting a

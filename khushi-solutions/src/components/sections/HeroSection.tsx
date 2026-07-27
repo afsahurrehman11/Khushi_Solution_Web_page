@@ -24,22 +24,22 @@ const fadeRight: Variants = {
 
 const carouselFrames = [
   {
-    label: 'Bites — Admin Dashboard',
+    label: 'Bites   Admin Dashboard',
     src: '/images/products/product-1/desktop/product-1-hero-desktop.webp',
     accent: '#10b981',
   },
   {
-    label: 'Bites — Mobile App',
+    label: 'Bites   Mobile App',
     src: '/images/products/product-1/mobile/product-1-hero-mobile.webp',
     accent: '#10b981',
   },
   {
-    label: 'Khushi SMS — Dashboard',
+    label: 'Khushi SMS   Dashboard',
     src: '/images/products/product-2/desktop/product-2-hero-desktop.webp',
     accent: '#2C64B4',
   },
   {
-    label: 'Khushi SMS — Parent App',
+    label: 'Khushi SMS   Parent App',
     src: '/images/products/product-2/mobile/product-2-hero-mobile.webp',
     accent: '#2C64B4',
   },
@@ -93,7 +93,7 @@ export default function HeroSection() {
         {/* Strict mobile stacking: flex-col-reverse ensures text is below carousel on mobile, or standard 2-col on desktop */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center w-full py-2 flex-col-reverse lg:flex-row flex lg:grid">
 
-          {/* LEFT — Text + CTA */}
+          {/* LEFT   Text + CTA */}
           <motion.div variants={stagger} initial="hidden" animate="visible" className="flex flex-col items-start w-full">
             {/* Eyebrow */}
             <motion.span
@@ -127,7 +127,7 @@ export default function HeroSection() {
             </motion.h1>
 
             <motion.p variants={fadeLeft} className="text-body-lg mb-8 max-w-[480px] text-text-secondary">
-              Delivery platforms and school management systems — built and proven in production.
+              Delivery platforms and school management systems   built and proven in production.
             </motion.p>
 
             <motion.div variants={fadeLeft} className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
@@ -144,7 +144,7 @@ export default function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* RIGHT — Fixed-ratio carousel with manual nav */}
+          {/* RIGHT   Fixed-ratio carousel with manual nav */}
           <motion.div
             variants={fadeRight}
             initial="hidden"
@@ -169,7 +169,7 @@ export default function HeroSection() {
                 </span>
               </div>
 
-              {/* STRICT 16/9 aspect-video bounding box — all images forced to fit */}
+              {/* STRICT 16/9 aspect-video bounding box   all images forced to fit */}
               <div className="relative w-full aspect-video bg-slate-100">
                 <AnimatePresence mode="wait">
                   <motion.div
@@ -193,7 +193,7 @@ export default function HeroSection() {
               </div>
             </div>
 
-            {/* Manual navigation — arrows + dots below the frame */}
+            {/* Manual navigation   arrows + dots below the frame */}
             <div className="flex items-center justify-between mt-5 px-1">
               {/* Dot indicators */}
               <div className="flex items-center gap-2">
