@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 /* ============================================================
-   KHUSHI SOLUTIONS — DESIGN TOKEN SYSTEM
-   Based on KHUSHI-SOLUTIONS-DESIGN-SYSTEM.md
+   KHUSHI SOLUTIONS — DESIGN TOKEN SYSTEM v2.1
+   Revised: Stronger contrast, visible accents, premium shadows
    ============================================================ */
 
 @theme inline {
@@ -10,13 +10,13 @@
   --color-primary: #2C64B4;
   --color-primary-hover: #204B87;
   --color-primary-active: #15325A;
-  --color-primary-light: #EAF0F7;
+  --color-primary-light: #DCE8F5;
   --color-primary-dark: #0E2039;
 
   /* --- Green System --- */
   --color-secondary: #7DC242;
   --color-secondary-hover: #639A34;
-  --color-secondary-light: #F2F9EC;
+  --color-secondary-light: #E5F2D8;
   --color-accent-green: #5FA534;
   --color-accent-light: #DFF0D1;
 
@@ -36,11 +36,11 @@
   --color-error: #EF4444;
   --color-info: #3B82F6;
 
-  /* --- Shadows --- */
-  --shadow-xs: 0 1px 2px rgba(15,23,42,0.04);
-  --shadow-sm: 0 4px 12px rgba(15,23,42,0.05);
-  --shadow-md: 0 12px 32px rgba(15,23,42,0.08);
-  --shadow-lg: 0 24px 60px rgba(15,23,42,0.12);
+  /* --- Shadows (strengthened) --- */
+  --shadow-xs: 0 1px 2px rgba(15,23,42,0.05);
+  --shadow-sm: 0 4px 16px rgba(15,23,42,0.07);
+  --shadow-md: 0 12px 36px rgba(15,23,42,0.10);
+  --shadow-lg: 0 24px 60px rgba(15,23,42,0.14);
 
   /* --- Border Radius --- */
   --radius-xs: 4px;
@@ -89,6 +89,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
@@ -244,6 +245,30 @@ h1, h2, h3, h4 {
     transparent 1px
   );
   background-size: 24px 24px;
+}
+
+/* ============================================================
+   HERO ANIMATED GRADIENT BACKGROUND
+   ============================================================ */
+
+@keyframes hero-gradient-drift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.hero-gradient {
+  background: 
+    radial-gradient(ellipse at 20% 50%, rgba(44, 100, 180, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 50%, rgba(95, 165, 52, 0.05) 0%, transparent 50%);
+  background-size: 200% 200%;
+  animation: hero-gradient-drift 24s ease-in-out infinite;
 }
 
 /* ============================================================

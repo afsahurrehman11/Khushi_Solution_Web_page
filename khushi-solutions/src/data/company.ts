@@ -5,37 +5,35 @@
 
 export const company = {
   name: 'Khushi Solutions',
-  tagline: 'Engineered Software. Real Products. Proven Results.',
+  tagline: 'Software That Runs Real Businesses',
   description:
-    'Khushi Solutions builds production-grade software platforms for local businesses and educational institutions. We engineer complete systems — from mobile apps to admin dashboards — with real-world reliability built into every layer.',
+    'Software that helps businesses deliver, manage, and grow.',
   aboutStatement:
-    'We build real software that solves real problems. Our products serve businesses across multiple industries — from last-mile delivery operations to multi-tenant school management — each engineered from the ground up with full ownership of the codebase.',
-  aboutDescription:
-    'Khushi Solutions is a software engineering company specializing in full-stack platform development. We create production-grade systems designed for reliability, scalability, and the specific operational realities of Pakistani businesses and institutions.',
+    'Our products serve real businesses every day — from managing deliveries across cities to running school operations and finances.',
+  aboutDescription: '', // Deprecated in v2.1
   facts: [
     {
-      label: 'Products Built',
+      label: 'PRODUCTS',
       value: '2',
-      description: 'Full-stack production platforms',
+      description: 'Complete platforms',
     },
     {
-      label: 'User Roles',
+      label: 'USER ROLES',
       value: '10+',
-      description: 'Across both platforms',
+      description: 'Across both products',
     },
     {
-      label: 'Integrations',
+      label: 'INTEGRATIONS',
       value: '8+',
-      description: 'Payment, AI, messaging, mapping',
+      description: 'Payments, AI, messaging',
     },
   ],
 };
 
 export const navItems = [
-  { label: 'About', href: '#about' },
-  { label: 'Products', href: '#products' },
-  { label: 'Why Us', href: '#why-us' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'About', href: '/#about' },
+  { label: 'Why Us', href: '/#why-us' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 /* Contact details from environment variables with fallbacks */

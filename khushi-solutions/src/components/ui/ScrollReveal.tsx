@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 
 interface ScrollRevealProps {
@@ -10,6 +10,7 @@ interface ScrollRevealProps {
   direction?: 'up' | 'down' | 'left' | 'right' | 'none';
   duration?: number;
   once?: boolean;
+  onReveal?: () => void;
 }
 
 const directionOffset = {
@@ -27,9 +28,16 @@ export default function ScrollReveal({
   direction = 'up',
   duration = 0.5,
   once = true,
+  onReveal,
 }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once, margin: '-10% 0px' });
+
+  useEffect(() => {
+    if (isInView && onReveal) {
+      onReveal();
+    }
+  }, [isInView, onReveal]);
 
   const offset = directionOffset[direction];
 

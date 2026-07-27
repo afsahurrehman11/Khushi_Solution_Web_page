@@ -1,19 +1,19 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
-import ScreenshotFrame from '@/components/ui/ScreenshotFrame';
+import DynamicCarousel from '@/components/ui/DynamicCarousel';
 import CornerMarks from '@/components/ui/CornerMarks';
 
-const stagger = {
+const stagger: Variants = {
   hidden: {},
   visible: {
     transition: { staggerChildren: 0.08 },
   },
 };
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
@@ -26,14 +26,14 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center bg-primary-dark overflow-hidden"
+      className="relative min-h-screen flex flex-col justify-center bg-primary-dark overflow-hidden hero-gradient pt-24"
     >
       {/* Subtle dot grid background */}
-      <div className="absolute inset-0 dot-grid opacity-40" aria-hidden="true" />
+      <div className="absolute inset-0 dot-grid opacity-15" aria-hidden="true" />
 
       {/* Very subtle ambient glow */}
       <div
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full opacity-[0.04]"
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full opacity-[0.08]"
         style={{
           background:
             'radial-gradient(ellipse, #2C64B4 0%, transparent 70%)',
@@ -41,37 +41,35 @@ export default function HeroSection() {
         aria-hidden="true"
       />
 
-      <div className="container-main relative z-10 pt-28 md:pt-32 lg:pt-36 pb-8">
+      <div className="container-main relative z-10 pt-16 md:pt-20 lg:pt-24 pb-8 flex-1 flex flex-col justify-center">
         <motion.div
           variants={stagger}
           initial="hidden"
           animate="visible"
           className="max-hero-text mx-auto text-center"
         >
-          {/* Technical eyebrow */}
+          {/* Eyebrow */}
           <motion.span
             variants={fadeUp}
-            className="text-technical text-primary/80 inline-block mb-5"
+            className="text-technical text-white/70 inline-block mb-3"
           >
-            KHUSHI SOLUTIONS / SOFTWARE ENGINEERING
+            KHUSHI SOLUTIONS
           </motion.span>
 
           {/* Main headline */}
           <motion.h1
             variants={fadeUp}
-            className="text-display text-text-inverse mb-6"
+            className="text-display text-white mb-4"
           >
-            Engineered Software
-            <br className="hidden sm:block" />
-            <span className="text-secondary"> for Real Businesses</span>
+            Software That Runs Real Businesses
           </motion.h1>
 
           {/* Description */}
           <motion.p
             variants={fadeUp}
-            className="text-body-lg text-text-inverse/70 max-w-[600px] mx-auto mb-8"
+            className="text-body-lg text-white/80 max-w-[600px] mx-auto mb-8"
           >
-            From multi-store delivery platforms to AI-powered school management systems — we build production-grade software that serves real users and solves real problems.
+            Delivery platforms and school management systems — built and proven.
           </motion.p>
 
           {/* CTAs */}
@@ -83,46 +81,42 @@ export default function HeroSection() {
               href="#products"
               className="inline-flex items-center gap-2 px-6 py-3 bg-secondary text-white font-medium rounded-[var(--radius-sm)] hover:bg-secondary-hover transition-colors duration-200 text-sm w-full sm:w-auto justify-center"
             >
-              Explore Products
+              See Our Products
               <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              href="#contact"
-              className="inline-flex items-center gap-2 px-6 py-3 border border-white/20 text-text-inverse font-medium rounded-[var(--radius-sm)] hover:bg-white/5 transition-colors duration-200 text-sm w-full sm:w-auto justify-center"
-            >
-              Get in Touch
             </Link>
           </motion.div>
         </motion.div>
 
-        {/* Hero screenshot */}
+        {/* Hero carousel */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
           animate="visible"
-          transition={{ delay: 0.5 }}
-          className="mt-12 md:mt-16 max-w-[960px] mx-auto relative"
+          transition={{ delay: 0.4 }}
+          className="mt-12 md:mt-16 max-w-[960px] mx-auto w-full relative"
         >
           <CornerMarks accentColor="blue" size={20} />
-          <ScreenshotFrame
-            src="/images/products/product-1/desktop/product-1-hero-desktop.webp"
-            alt="Bites Admin Dashboard — Multi-store delivery management platform"
-            width={1200}
-            height={700}
-            priority
-            accentColor="blue"
-            label="BITES / ADMIN DASHBOARD"
-          />
+          <div className="p-[1px] rounded-lg bg-border-subtle/20 shadow-lg relative overflow-hidden">
+             {/* Browser top bar simulation */}
+             <div className="bg-[#1A2C47] border-b border-white/10 px-4 py-2 flex items-center gap-2 rounded-t-lg">
+                <div className="flex gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-white/20" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-white/20" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-white/20" />
+                </div>
+              </div>
+              <DynamicCarousel folderPath="/images/hero" aspectRatio="aspect-video" className="rounded-b-lg" />
+          </div>
         </motion.div>
 
         {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 0.5 }}
-          transition={{ delay: 1.2, duration: 0.6 }}
+          animate={{ opacity: 0.25 }}
+          transition={{ delay: 0.8, duration: 0.6 }}
           className="flex justify-center mt-8 md:mt-12"
         >
-          <ChevronDown className="w-5 h-5 text-text-inverse/40" />
+          <ChevronDown className="w-5 h-5 text-white/40" />
         </motion.div>
       </div>
     </section>

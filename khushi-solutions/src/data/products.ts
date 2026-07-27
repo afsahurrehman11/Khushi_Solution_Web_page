@@ -30,14 +30,18 @@ export interface ProductData {
   valueProp: string;
   accent: ProductAccent;
   url: string | null;
+  heroVideo: {
+    desktop: string;
+    mobile: string;
+    alt: string;
+  };
   heroScreenshot: {
     desktop: string;
     mobile?: string;
     alt: string;
   };
   capabilities: ProductCapability[];
-  topFeatures: ProductFeature[];
-  remainingFeatures: ProductFeature[];
+  features: ProductFeature[];
   differentiators: string[];
   techStack: string[];
   integrations: string[];
@@ -46,7 +50,6 @@ export interface ProductData {
 
 /* ============================================================
    PRODUCT 1: BITES — Multi-Store Delivery Platform
-   Source: PRODUCT-1-WEBSITE-CONTENT.md
    Accent: Blue
    ============================================================ */
 
@@ -54,14 +57,19 @@ export const product1: ProductData = {
   id: 'bites',
   number: '01',
   name: 'Bites',
-  category: 'Multi-Store Delivery & Business Management Platform',
+  category: 'Delivery & Business Management',
   headline: 'One Platform. Every Local Business.',
   shortIntro:
-    'A full-stack, multi-role on-demand delivery and operations management platform. Bites connects customers with local businesses — from restaurants to grocery stores to stationery shops — and manages the complete lifecycle from browsing to delivery, with a powerful admin control center and a dedicated rider workforce management system.',
+    'A complete delivery and operations management platform. Bites connects customers with local businesses and manages the complete lifecycle from browsing to delivery, with a powerful admin control center and a dedicated rider workforce management system.',
   valueProp:
-    'Bites is a complete last-mile delivery operating system built and owned by Khushi Solutions. Engineered for local Pakistani markets — cash-first transactions, geo-aware delivery pricing, and a multi-merchant architecture that lets any local business onboard in minutes.',
+    'Bites is a complete delivery operating system built and owned by Khushi Solutions. Engineered for local markets — cash-first transactions, real road-distance delivery pricing, and a multi-merchant architecture that lets any local business onboard in minutes.',
   accent: 'blue',
   url: null,
+  heroVideo: {
+    desktop: '/videos/product-1/bites-desktop.mp4',
+    mobile: '/videos/product-1/bites-mobile.mp4',
+    alt: 'Bites Platform Overview Video',
+  },
   heroScreenshot: {
     desktop: '/images/products/product-1/desktop/product-1-hero-desktop.webp',
     mobile: '/images/products/product-1/mobile/product-1-hero-mobile.webp',
@@ -72,19 +80,19 @@ export const product1: ProductData = {
       icon: 'Store',
       name: 'Multi-Store Platform',
       description:
-        'Manages restaurants, grocery, stationery, pharmacy, courier & 8 more store categories in one system.',
+        'Supports restaurants, groceries, pharmacies, and 10+ other business types — all in one app.',
     },
     {
       icon: 'MapPin',
       name: 'Real-Time Order Tracking',
       description:
-        'Animated delivery pipeline — customers watch each milestone live with rider location on map.',
+        'Customers see live updates at every step — and track their rider on a map.',
     },
     {
       icon: 'Calculator',
       name: 'Smart Delivery Pricing',
       description:
-        'Distance-based delivery charges using real road routing (OSRM) with configurable flat rates + per-km overages.',
+        'Fair delivery charges calculated from actual road distance — not guesswork.',
     },
     {
       icon: 'Bike',
@@ -94,47 +102,47 @@ export const product1: ProductData = {
     },
     {
       icon: 'ShieldCheck',
-      name: 'Granular Permission System',
+      name: 'Role-Based Access Control',
       description:
-        'Super Admin creates sub-admins with per-module, per-action access — no privilege escalation possible.',
+        'Create staff accounts with exact module access — and track every action they take.',
     },
     {
       icon: 'ChefHat',
       name: 'Vendor Self-Service',
       description:
-        'Restaurant admins manage their own menu, deals, and orders from a dedicated vendor dashboard.',
+        'Business owners manage their own menu, deals, and orders from a dedicated dashboard.',
     },
     {
       icon: 'Target',
       name: 'Location-Aware Radius Control',
       description:
-        'Admin pins the service center on an interactive map and sets per-category delivery radius overrides.',
+        'Pin the service center on an interactive map and set delivery areas for each business type.',
     },
     {
       icon: 'Upload',
       name: 'Bulk Menu Import',
       description:
-        'Upload a CSV to instantly populate hundreds of menu items across a store.',
+        'Upload a spreadsheet to instantly populate hundreds of menu items across a store.',
     },
     {
       icon: 'FileText',
       name: 'Financial Reporting',
       description:
-        'PDF global invoices with per-rider summaries, commission tracking, and custom date range filtering.',
+        'Detailed invoices with per-rider summaries, commission tracking, and custom date range filtering.',
     },
     {
       icon: 'Megaphone',
-      name: 'Marketing Popup System',
+      name: 'Marketing Banners',
       description:
-        'Admin-controlled promotional overlay: custom image, configurable delay + duration, enabled per app launch.',
+        'Control promotional overlays directly from the admin panel to highlight new stores or offers.',
     },
   ],
-  topFeatures: [
+  features: [
     {
       eyebrow: 'REAL-TIME TRACKING',
       title: 'Watch Your Order Move — Live',
       description:
-        'From the moment your order is placed, Bites keeps you in the loop. A live step-by-step timeline shows every milestone — Confirmed, Preparing, Ready, Rider Left, Near You, Delivered — each with the exact timestamp. An embedded map shows your rider\'s real-time position as they approach.',
+        '• Live updates at every step\n• Track rider location on map\n• Exact delivery timestamps',
       screenshotPath:
         '/images/products/product-1/features/product-1-feature-order-tracking.webp',
       screenshotAlt: 'Live order tracking timeline with rider map',
@@ -144,7 +152,7 @@ export const product1: ProductData = {
       eyebrow: 'SMART DELIVERY PRICING',
       title: 'Fair Charges, Calculated to the Meter',
       description:
-        'Bites uses real road routing — not straight-line guesses — to calculate your delivery fee. A flat rate applies within the delivery zone, with a per-kilometer charge beyond. Customers see the exact delivery charge before placing their order.',
+        '• Real road distance, not straight-line guesses\n• Price shown before ordering\n• Configurable flat rates and per-km charges',
       screenshotPath:
         '/images/products/product-1/features/product-1-feature-delivery-pricing.webp',
       screenshotAlt:
@@ -155,19 +163,17 @@ export const product1: ProductData = {
       eyebrow: '13 STORE CATEGORIES',
       title: 'Every Local Business, One Doorstep',
       description:
-        'Restaurants, grocery stores, stationery shops, pharmacies, laundry services, pet supplies, cosmetics, electronics, fashion, bakeries, courier services, home needs, and more — all on one platform. Customers discover businesses by category and order through one consistent experience.',
+        '• Order from restaurants, pharmacies, groceries, and more\n• Browse by category\n• One consistent checkout experience',
       screenshotPath:
         '/images/products/product-1/features/product-1-feature-categories.webp',
       screenshotAlt: 'Customer home screen showing 13 store category grid',
       screenshotType: 'mobile',
     },
-  ],
-  remainingFeatures: [
     {
       eyebrow: 'ACCESS CONTROL',
       title: 'Your Team, Your Rules',
       description:
-        'The Super Admin can create staff accounts with surgical-precision access control. Permissions are set per module and per action — and every activity is logged with IP address, device type, and timestamp.',
+        '• Create staff accounts with exact permissions\n• Full activity tracking per user\n• See exactly who did what and when',
       screenshotPath:
         '/images/products/product-1/features/product-1-feature-permissions.webp',
       screenshotAlt: 'Admin user permission management interface',
@@ -177,7 +183,7 @@ export const product1: ProductData = {
       eyebrow: 'VENDOR DASHBOARD',
       title: 'Empower Every Business Owner',
       description:
-        'Each partner business gets its own dedicated vendor dashboard. Restaurant admins can update their store profile, add menu items, create deal bundles, and monitor today\'s orders and earnings.',
+        '• Dedicated vendor dashboards\n• Add menu items and deals instantly\n• Monitor daily orders and earnings',
       screenshotPath:
         '/images/products/product-1/features/product-1-feature-vendor.webp',
       screenshotAlt: 'Vendor self-service dashboard with menu editor',
@@ -187,7 +193,7 @@ export const product1: ProductData = {
       eyebrow: 'LOCATION MANAGEMENT',
       title: 'Control Your Delivery Zone with Precision',
       description:
-        'Admins set their service center by typing an address or dragging a pin on an interactive map. A radius slider defines the maximum delivery area — and different radii can be set for different store categories.',
+        '• Set service center on an interactive map\n• Slide to adjust maximum delivery radius\n• Different radii for different store types',
       screenshotPath:
         '/images/products/product-1/features/product-1-feature-location.webp',
       screenshotAlt: 'Location settings with interactive map and radius slider',
@@ -197,7 +203,7 @@ export const product1: ProductData = {
       eyebrow: 'BULK OPERATIONS',
       title: 'A Full Menu in Minutes',
       description:
-        'Adding hundreds of menu items one by one is a thing of the past. Bites supports CSV bulk import — prepare a spreadsheet with item names, prices, categories, and deal flags, upload it, and your menu is live instantly.',
+        '• Upload a simple spreadsheet\n• Add hundreds of items instantly\n• Ready for customers to order',
       screenshotPath:
         '/images/products/product-1/features/product-1-feature-bulk-import.webp',
       screenshotAlt: 'Restaurant detail with bulk CSV import section',
@@ -207,7 +213,7 @@ export const product1: ProductData = {
       eyebrow: 'RIDER ASSIGNMENT',
       title: 'Orders Reach the Right Rider, Automatically',
       description:
-        'Bites supports both AUTO and MANUAL rider assignment. In AUTO mode, an intelligent background service assigns the least-burdened available rider. In MANUAL mode, admins pick from a live list of online riders.',
+        '• Auto-assign to the nearest available rider\n• Manual assignment override\n• Keep deliveries moving fast',
       screenshotPath:
         '/images/products/product-1/features/product-1-feature-rider-assignment.webp',
       screenshotAlt: 'Order management with rider assignment modal',
@@ -215,41 +221,38 @@ export const product1: ProductData = {
     },
   ],
   differentiators: [
-    '100% custom codebase — full ownership, no licensing fees, no vendor lock-in',
-    '13+ store types in a single platform — not just food delivery',
-    'OSRM real road routing for delivery pricing, not straight-line approximations',
-    'Session versioning for forced logout, per-action permission matrix, audit logs',
-    'Cross-platform: same codebase runs on Android, iOS, and Web (React Native + Expo)',
-    'Built for Pakistan: PKR pricing, local business workflows, cash-only ready',
+    '100% custom platform — full ownership, no licensing fees',
+    '13+ store types in a single app',
+    'Real road routing for fair delivery pricing',
+    'Secure logins with full activity tracking',
+    'Cross-platform app for Android, iOS, and Web',
+    'Built for local markets and workflows',
   ],
   techStack: [
-    'Python',
-    'FastAPI',
-    'MongoDB Atlas',
-    'React Native (Expo)',
-    'JWT Authentication',
-    'OSRM Road Routing',
-    'OpenStreetMap Nominatim',
-    'Expo Push Notifications',
+    'Cloud-based Backend',
+    'Cross-platform App',
+    'Real-time Databases',
+    'Secure Authentication',
+    'Road Distance API',
+    'Push Notifications',
   ],
   integrations: [
-    'OSRM (Road Distance)',
-    'Nominatim (Geocoding)',
-    'Expo Push Notifications',
-    'PDF Invoice Generator',
+    'Road Distance APIs',
+    'Geocoding Services',
+    'Push Notifications',
+    'PDF Invoice Generation',
   ],
   userRoles: [
     'Customer',
     'Rider / Delivery Agent',
-    'Restaurant / Vendor Admin',
-    'Super Admin',
-    'Sub-Admin',
+    'Business Owner',
+    'Platform Admin',
+    'Staff Member',
   ],
 };
 
 /* ============================================================
    PRODUCT 2: KHUSHI ERP SYSTEM & CMS MOBILE ECOSYSTEM
-   Source: PRODUCT-2-WEBSITE-CONTENT.md
    Accent: Green
    ============================================================ */
 
@@ -257,43 +260,46 @@ export const product2: ProductData = {
   id: 'khushi-erp',
   number: '02',
   name: 'Khushi SMS',
-  category:
-    'Unified Multi-Tenant SaaS School ERP & Cross-Platform Mobile Ecosystem',
+  category: 'School ERP & Mobile Ecosystem',
   headline: 'AI-Powered School ERP & Mobile Application Ecosystem',
   shortIntro:
-    'A complete enterprise SaaS platform and mobile ecosystem engineered to digitize school administration, student fee accounting, employee payroll, campus security, and parent-teacher communication. Equips school owners, administrators, accountants, teachers, and parents with real-time financial tracking, AI facial recognition attendance, automated monthly fee rollover, PayFast mobile payments, and interactive academic performance analytics.',
+    'A complete platform engineered to digitize school administration, student fee accounting, employee payroll, campus security, and parent-teacher communication. Equips schools with real-time financial tracking, AI facial recognition attendance, automated monthly fees, online payments, and interactive academic analytics.',
   valueProp:
-    'Khushi ERP System eliminates financial leakages, manual attendance errors, paper voucher printing, and communication gaps between schools and parents. By combining isolated database security, password-verified cash sessions, PayFast multi-tenant online payments, AI facial recognition, and localized Urdu fee vouchers, Khushi ERP provides the most complete educational administration solution.',
+    'Khushi SMS eliminates financial leakages, manual attendance errors, paper printing, and communication gaps between schools and parents. By combining isolated database security, password-verified cash sessions, online payments, AI facial recognition, and localized Urdu fee vouchers, it provides a complete educational administration solution.',
   accent: 'green',
   url: null,
+  heroVideo: {
+    desktop: '/videos/product-2/khushi-erp-desktop.mp4',
+    mobile: '/videos/product-2/khushi-erp-mobile.mp4',
+    alt: 'Khushi SMS Platform Overview Video',
+  },
   heroScreenshot: {
-    desktop:
-      '/images/products/product-2/desktop/product-2-hero-desktop.webp',
+    desktop: '/images/products/product-2/desktop/product-2-hero-desktop.webp',
     mobile: '/images/products/product-2/mobile/product-2-hero-mobile.webp',
     alt: 'Khushi SMS Accountant Dashboard paired with Mobile Parent Academic Portal',
   },
   capabilities: [
     {
       icon: 'ShieldCheck',
-      name: 'Multi-Tenant SaaS Architecture',
+      name: 'Multi-School Architecture',
       description:
-        'Isolated database security per school with centralized SaaS management.',
+        'Isolated database security per school with centralized management.',
     },
     {
       icon: 'LockKeyhole',
       name: 'Password-Verified Accounting',
       description:
-        'Zero-leakage daily cash sessions with mandatory password re-verification.',
+        'Every rupee collected is tracked with daily session locks and password verification.',
     },
     {
       icon: 'Calculator',
-      name: 'Smart Fee Engine & Auto-Rollover',
+      name: 'Smart Fee Engine',
       description:
         'Dual-mode monthly fee generation, auto fine calculation, and background rollover.',
     },
     {
       icon: 'Printer',
-      name: 'Multi-Copy Fee Vouchers & Urdu Support',
+      name: 'Multi-Copy Urdu Fee Vouchers',
       description:
         'Print-ready bank/school/student vouchers with native Urdu typography.',
     },
@@ -305,59 +311,59 @@ export const product2: ProductData = {
     },
     {
       icon: 'CreditCard',
-      name: 'PayFast Mobile Fee Payments',
+      name: 'Online Fee Payments',
       description:
-        'Direct online fee payments via PayFast with multi-tenant merchant routing.',
+        'Direct online fee payments with automatic routing to the correct school bank account.',
     },
     {
       icon: 'GraduationCap',
       name: 'Teacher Mobile Exam & Grading',
       description:
-        'Mobile exam creation, dynamic grading scales, auto-saved marks, and post-publish edits.',
+        'Mobile exam creation, custom grade rules, and instant results publishing.',
     },
     {
       icon: 'TrendingUp',
-      name: 'Parent Academic Performance Graph',
+      name: 'Parent Academic Analytics',
       description:
-        'Subject-wise performance trend graphs and class ranking tables for parents.',
+        'Subject-wise performance trend graphs and class ranking tables for parents on their phones.',
     },
     {
       icon: 'RefreshCw',
-      name: 'Biometric-to-Mobile Attendance Sync',
+      name: 'Attendance Sync',
       description:
-        'Real-time conflict resolution connecting facial recognition with mobile attendance.',
+        'Instant syncing between camera facial recognition and mobile app attendance.',
     },
     {
       icon: 'Banknote',
       name: 'Full-Cycle HR & Staff Payroll',
       description:
-        'Automated monthly salary calculation, loan deductions, and PDF payslips.',
+        'Automated monthly salary calculation, loan deductions, and digital payslips.',
     },
     {
       icon: 'MessageSquare',
-      name: 'Automated WhatsApp Notifications',
+      name: 'Automated Messaging',
       description:
         'Instant WhatsApp fee receipts, due alerts, and absentee notifications.',
     },
     {
       icon: 'FileSpreadsheet',
-      name: 'Preview-First Bulk Excel Import',
+      name: 'Bulk Excel Import',
       description:
         'One-click Excel student onboarding with real-time error highlighting.',
     },
     {
       icon: 'Megaphone',
-      name: 'Root Promotional Overlay Pipeline',
+      name: 'Promotional Overlays',
       description:
-        'System-wide promotional banners and sequential post-login overlay popups.',
+        'System-wide promotional banners and informational popups.',
     },
   ],
-  topFeatures: [
+  features: [
     {
       eyebrow: 'ACADEMIC ANALYTICS',
-      title: 'Parent Academic Performance Analytics & Class Ranking',
+      title: 'Parent Academic Performance Analytics',
       description:
-        'Parents view interactive subject performance trend graphs, class averages, highest and lowest scores, and full class roster position ranking tables on their mobile phones. Replaces confusing paper report cards with real-time visual progress analytics.',
+        '• Interactive performance trend graphs\n• Class position ranking tables\n• Replaces confusing paper report cards',
       screenshotPath:
         '/images/products/product-2/mobile/product-2-feature-academic-graph.webp',
       screenshotAlt:
@@ -366,33 +372,31 @@ export const product2: ProductData = {
     },
     {
       eyebrow: 'MOBILE PAYMENTS',
-      title: 'PayFast Online Payments & Fee Visualization',
+      title: 'Online Payments & Fee Tracking',
       description:
-        'Parents pay fees online instantly via PayFast with multi-tenant merchant account routing. A color-coded pie chart shows paid vs remaining amounts with Green/Yellow/Red status indicators. Funds route directly to the specific school\'s bank account.',
+        '• Pay fees instantly online\n• Clear paid vs remaining status charts\n• Funds go straight to the school bank account',
       screenshotPath:
         '/images/products/product-2/mobile/product-2-feature-payfast.webp',
       screenshotAlt:
-        'Parent Mobile Fee System with Pie Chart and PayFast Checkout',
+        'Parent Mobile Fee System with Pie Chart and Online Checkout',
       screenshotType: 'mobile',
     },
     {
       eyebrow: 'CASH SECURITY',
-      title: 'Password-Verified Cash Sessions & Financial Audit',
+      title: 'Password-Verified Cash Sessions',
       description:
-        'Eliminates cashier cash leakage through daily session locks, password re-verification on every payment, and principal settlement approval workflows. Every rupee is tracked with IP address, timestamp, and collector metadata.',
+        '• Daily session locks\n• Password verification on every payment\n• Complete audit trail for every rupee',
       screenshotPath:
         '/images/products/product-2/desktop/product-2-feature-cash-sessions.webp',
       screenshotAlt:
         'Accountant Dashboard with active session and password verification modal',
       screenshotType: 'desktop',
     },
-  ],
-  remainingFeatures: [
     {
       eyebrow: 'AI ATTENDANCE',
-      title: 'Multi-Camera AI Face Recognition & Attendance Sync',
+      title: 'Multi-Camera AI Face Recognition',
       description:
-        'Real-time facial recognition processing multi-camera campus gate streams synchronized with teacher mobile attendance apps. The Attendance Sync Engine resolves conflicts between AI camera logs and manual teacher entries in real time.',
+        '• Live multi-camera processing\n• Syncs directly to parent apps\n• Automatically handles manual overrides',
       screenshotPath:
         '/images/products/product-2/desktop/product-2-feature-face-recognition.webp',
       screenshotAlt:
@@ -401,9 +405,9 @@ export const product2: ProductData = {
     },
     {
       eyebrow: 'DOCUMENT GENERATION',
-      title: 'Multi-Copy Fee Vouchers with Urdu Typography',
+      title: 'Multi-Copy Urdu Fee Vouchers',
       description:
-        'Generates bank-compliant 3-copy fee vouchers (Bank, School, Student) with custom logo headers and native Urdu Noto Nastaliq font rendering for localized school titles and instructions.',
+        '• Generates 3-copy fee vouchers instantly\n• Native Urdu typography support\n• Ready for bank processing',
       screenshotPath:
         '/images/products/product-2/desktop/product-2-feature-vouchers.webp',
       screenshotAlt:
@@ -412,9 +416,9 @@ export const product2: ProductData = {
     },
     {
       eyebrow: 'MOBILE EXAM SYSTEM',
-      title: 'Teacher Mobile Exam & Dynamic Grading Engine',
+      title: 'Teacher Mobile Exam & Grading',
       description:
-        'Teachers create exams, set total marks, define custom grade scale rules (e.g., 90–100 = A+), enter auto-saved student marks, and update published results. Parents receive instant push notification with student marks, grade, and class position.',
+        '• Teachers enter marks directly on their phones\n• Custom grading scale rules\n• Parents notified instantly on publish',
       screenshotPath:
         '/images/products/product-2/mobile/product-2-feature-exams.webp',
       screenshotAlt: 'Teacher Mobile Exam Builder and Marks Entry Screen',
@@ -422,31 +426,28 @@ export const product2: ProductData = {
     },
   ],
   differentiators: [
-    'Multi-Tenant SaaS PayFast Merchant Routing — online fees deposit directly into each school\'s bank account',
-    'Real-time biometric-to-mobile attendance sync — zero-conflict AI gate cameras to parent apps',
-    'Parent academic visual analytics — performance trend graphs and class position rankings',
-    'Password-verified daily cash sessions — zero cash leakage with audit-ready settlement approvals',
-    'Native multi-copy PDF fee vouchers with localized Urdu Noto Nastaliq font rendering',
+    'Online fees deposit directly into each school\'s bank account',
+    'Zero-conflict AI camera attendance sent straight to parent apps',
+    'Parent academic visual analytics and class position rankings',
+    'Password-verified daily cash sessions to prevent cash leakage',
+    'Native multi-copy PDF fee vouchers with Urdu typography',
   ],
   techStack: [
-    'React 18',
-    'TypeScript',
-    'FastAPI (Python 3.12)',
-    'MongoDB (Multi-Tenant)',
-    'PyTorch / InsightFace (AI)',
-    'PayFast Payment Gateway',
-    'ReportLab PDF Engine',
-    'CMS Mobile Application',
+    'Cloud-based Platform',
+    'Secure Databases',
+    'AI Facial Recognition',
+    'Online Payment Gateways',
+    'Cross-platform Apps',
   ],
   integrations: [
-    'PayFast Online Payment Gateway',
-    'Remote AI Face Recognition Service',
-    'WhatsApp Messaging Gateway',
-    'Push Notification Engine',
-    'ReportLab PDF & Urdu Font Engine',
+    'Online Payment Gateways',
+    'AI Face Recognition',
+    'WhatsApp Messaging',
+    'Push Notifications',
+    'PDF & Urdu Font Generation',
   ],
   userRoles: [
-    'Root Admin',
+    'Platform Admin',
     'School Admin',
     'Accountant',
     'Teacher',

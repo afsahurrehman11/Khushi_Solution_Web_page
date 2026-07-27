@@ -204,7 +204,7 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={status === 'submitting'}
-          className="inline-flex items-center justify-center gap-2 h-[46px] px-6 bg-primary text-white font-medium text-sm rounded-[var(--radius-sm)] hover:bg-primary-hover disabled:opacity-60 disabled:cursor-not-allowed transition-colors duration-200 mt-2"
+          className="inline-flex items-center justify-center gap-2 h-[46px] px-6 w-full sm:w-auto self-start bg-primary text-white font-medium text-sm rounded-[var(--radius-sm)] hover:bg-primary-hover disabled:opacity-60 disabled:cursor-not-allowed transition-colors duration-200 mt-2"
         >
           {status === 'submitting' ? (
             <>
