@@ -10,35 +10,48 @@ interface ProductFeaturesProps {
 }
 
 export default function ProductFeatures({ product }: ProductFeaturesProps) {
-  const accentText = product.accent === 'blue' ? 'text-primary' : 'text-secondary';
-  return (
-    <div className="flex flex-col relative z-10">
-      {product.features.map((feature, index) => {
-        const isEven = index % 2 === 0;
-        const accentColor = product.accent === 'blue' ? 'var(--color-primary)' : 'var(--color-secondary)';
+  const accentColor = product.accent === 'blue' ? 'var(--color-primary)' : 'var(--color-secondary)';
 
-        return (
-          <section key={feature.title} className="section-padding overflow-hidden">
-            <div className="container-main">
-              <div className={`flex flex-col gap-10 md:gap-16 items-center ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}>
-                
+  return (
+    <section className="section-padding bg-white relative z-10 overflow-hidden">
+      <div className="container-main">
+        
+        {/* Section Heading */}
+        <div className="text-center mb-16 md:mb-20">
+          <ScrollReveal delay={0}>
+            <h2 className="text-h2 text-text-primary mb-4 font-extrabold tracking-tight">
+              Core Platform Features
+            </h2>
+          </ScrollReveal>
+          <ScrollReveal delay={0.05}>
+            <p className="text-body-lg text-text-secondary max-w-2xl mx-auto">
+              Deep operational tools tailored for your specific industry workflows.
+            </p>
+          </ScrollReveal>
+        </div>
+
+        {/* 2-Column Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          {product.features.map((feature, index) => {
+            return (
+              <div key={feature.title} className="flex flex-col gap-6 w-full">
                 {/* Text Content */}
-                <div className="w-full lg:w-1/2 flex flex-col justify-center items-start">
-                  <ScrollReveal>
-                    <span className="eyebrow-pill">
+                <div className="flex flex-col justify-start items-start">
+                  <ScrollReveal delay={0}>
+                    <span className="eyebrow-pill mb-3">
                       <span className="w-2 h-2 rounded-full inline-block" style={{ background: accentColor }} />
                       {feature.eyebrow}
                     </span>
                   </ScrollReveal>
                   
-                  <ScrollReveal delay={0.1}>
-                    <h2 className="text-h2 text-text-primary mb-6">
+                  <ScrollReveal delay={0.05}>
+                    <h3 className="text-xl md:text-2xl font-bold text-text-primary mb-3">
                       {feature.title}
-                    </h2>
+                    </h3>
                   </ScrollReveal>
                   
-                  <ScrollReveal delay={0.2}>
-                    <div className="text-body-lg text-text-secondary space-y-3">
+                  <ScrollReveal delay={0.05}>
+                    <div className="text-body text-text-secondary space-y-2">
                       {feature.description.split('\n').map((line, i) => (
                         <p key={i} className={line.trim().startsWith('•') ? 'pl-4 relative before:content-["•"] before:absolute before:left-0 before:text-text-muted' : ''}>
                           {line.replace(/^•\s*/, '')}
@@ -49,10 +62,10 @@ export default function ProductFeatures({ product }: ProductFeaturesProps) {
                 </div>
 
                 {/* Media Content */}
-                <div className="w-full lg:w-1/2 flex justify-center">
-                  <ScrollReveal delay={0.3} className="w-full flex justify-center">
+                <div className="w-full flex justify-center mt-2">
+                  <ScrollReveal delay={0.1} className="w-full flex justify-center">
                     {feature.screenshotType === 'mobile' ? (
-                      <div className="max-w-[320px] w-full">
+                      <div className="max-w-[280px] w-full">
                         <MobileFrame
                           src={feature.screenshotPath}
                           alt={feature.screenshotAlt}
@@ -60,12 +73,12 @@ export default function ProductFeatures({ product }: ProductFeaturesProps) {
                         />
                       </div>
                     ) : (
-                      <div className="w-full">
+                      <div className="w-full rounded-xl overflow-hidden border border-border shadow-sm">
                         <ScreenshotFrame
                           src={feature.screenshotPath}
                           alt={feature.screenshotAlt}
-                          width={800}
-                          height={500}
+                          width={600}
+                          height={375}
                           accentColor={product.accent}
                           label={feature.eyebrow}
                         />
@@ -73,12 +86,11 @@ export default function ProductFeatures({ product }: ProductFeaturesProps) {
                     )}
                   </ScrollReveal>
                 </div>
-
               </div>
-            </div>
-          </section>
-        );
-      })}
-    </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
   );
 }

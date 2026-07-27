@@ -265,7 +265,7 @@ export const product2: ProductData = {
   shortIntro:
     'A complete platform engineered to digitize school administration, student fee accounting, employee payroll, campus security, and parent-teacher communication. Equips schools with real-time financial tracking, AI facial recognition attendance, automated monthly fees, online payments, and interactive academic analytics.',
   valueProp:
-    'Khushi SMS eliminates financial leakages, manual attendance errors, paper printing, and communication gaps between schools and parents. By combining isolated database security, password-verified cash sessions, online payments, AI facial recognition, and localized Urdu fee vouchers, it provides a complete educational administration solution.',
+    'Khushi SMS eliminates financial leakages, manual attendance errors, paper printing, and communication gaps between schools and parents. By combining isolated database security, password-verified cash sessions, online payments, AI facial recognition, and localized fee vouchers, it provides a complete educational administration solution.',
   accent: 'green',
   url: null,
   heroVideo: {
@@ -299,9 +299,9 @@ export const product2: ProductData = {
     },
     {
       icon: 'Printer',
-      name: 'Multi-Copy Urdu Fee Vouchers',
+      name: 'Multi-Copy Fee Vouchers',
       description:
-        'Print-ready bank/school/student vouchers with native Urdu typography.',
+        'Print-ready bank/school/student vouchers with native typography.',
     },
     {
       icon: 'ScanFace',
@@ -405,9 +405,9 @@ export const product2: ProductData = {
     },
     {
       eyebrow: 'DOCUMENT GENERATION',
-      title: 'Multi-Copy Urdu Fee Vouchers',
+      title: 'Multi-Copy Fee Vouchers',
       description:
-        '• Generates 3-copy fee vouchers instantly\n• Native Urdu typography support\n• Ready for bank processing',
+        '• Generates 3-copy fee vouchers instantly\n• Native typography support\n• Ready for bank processing',
       screenshotPath:
         '/images/products/product-2/desktop/product-2-feature-vouchers.webp',
       screenshotAlt:
@@ -430,7 +430,7 @@ export const product2: ProductData = {
     'Zero-conflict AI camera attendance sent straight to parent apps',
     'Parent academic visual analytics and class position rankings',
     'Password-verified daily cash sessions to prevent cash leakage',
-    'Native multi-copy PDF fee vouchers with Urdu typography',
+    'Native multi-copy PDF fee vouchers with native typography',
   ],
   techStack: [
     'Cloud-based Platform',
@@ -444,7 +444,7 @@ export const product2: ProductData = {
     'AI Face Recognition',
     'WhatsApp Messaging',
     'Push Notifications',
-    'PDF & Urdu Font Generation',
+    'PDF & Font Generation',
   ],
   userRoles: [
     'Platform Admin',

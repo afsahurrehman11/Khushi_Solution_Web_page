@@ -18,13 +18,13 @@ export default function LocomotiveScrollProvider({
         locomotiveScroll = new LocomotiveScroll({
           lenisOptions: {
             // Configure for smooth scrolling without slow, dragged-out animation speeds
-            duration: 0.8,
-            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // standard ease-out
+            duration: 0.5,
+            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // smooth, natural ease-out
             orientation: 'vertical',
             gestureOrientation: 'vertical',
             smoothWheel: true,
-            wheelMultiplier: 1,
-            touchMultiplier: 2,
+            wheelMultiplier: 2.2,
+            touchMultiplier: 2.4,
           }
         });
       } catch (error) {

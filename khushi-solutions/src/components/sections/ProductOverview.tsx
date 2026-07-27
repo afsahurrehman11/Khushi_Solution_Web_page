@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useState, useRef } from 'react';
 import { motion, useInView, type Variants } from 'framer-motion';
 import { ArrowRight, Truck, GraduationCap, MapPin, Smartphone, Receipt, Calendar, Users, Fingerprint } from 'lucide-react';
 import Link from 'next/link';
@@ -14,32 +14,49 @@ const fadeUp: Variants = {
 
 function ProductIcon({ productId, accent }: { productId: string; accent: string }) {
   if (productId === 'bites') {
-    return <Truck className="w-9 h-9 mb-3" style={{ color: accent }} strokeWidth={1.5} aria-hidden="true" />;
+    return <Truck className="w-7 h-7 mb-2" style={{ color: accent }} strokeWidth={1.5} aria-hidden="true" />;
   }
-  return <GraduationCap className="w-9 h-9 mb-3" style={{ color: accent }} strokeWidth={1.5} aria-hidden="true" />;
+  return <GraduationCap className="w-7 h-7 mb-2" style={{ color: accent }} strokeWidth={1.5} aria-hidden="true" />;
 }
 
-// Maps platform tags to clean SVG icons, no emojis.
+// Maps platform tags to clean SVG icons with Android App highlight
 const platformTagDefs = {
   'bites': [
-    { label: 'Mobile App', icon: Smartphone },
-    { label: 'Live Tracking', icon: MapPin },
-    { label: 'POS Billing', icon: Receipt },
+    { label: 'Native Android App', icon: Smartphone, isAndroid: true },
+    { label: 'Live GPS Tracking', icon: MapPin },
+    { label: 'POS & Kitchen Display', icon: Receipt },
+    { label: 'Real-time Orders', icon: Truck },
+    { label: 'Customer Portal', icon: Users },
   ],
   'khushi-erp': [
-    { label: 'Biometric AI', icon: Fingerprint },
-    { label: 'Parent App', icon: Smartphone },
-    { label: 'Fee Management', icon: Receipt },
+    { label: 'Native Android App', icon: Smartphone, isAndroid: true },
+    { label: 'Biometric AI Attendance', icon: Fingerprint },
+    { label: 'Automated Fee Portal', icon: Receipt },
+    { label: 'Exam & Report Cards', icon: Calendar },
+    { label: 'Bus GPS Tracking', icon: MapPin },
   ],
 };
 
-function ProductCard({ product, index }: { product: typeof products[0]; index: number }) {
+function ProductCard({
+  product,
+  index,
+  activeId,
+  setActiveId,
+}: {
+  product: typeof products[0];
+  index: number;
+  activeId: string | null;
+  setActiveId: (id: string | null) => void;
+}) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-10% 0px' });
 
+  const isActive = activeId === product.id;
+  const isOtherActive = activeId !== null && !isActive;
+
   const accentColor = product.accent === 'blue' ? 'var(--color-primary)' : 'var(--color-secondary)';
   const tags = platformTagDefs[product.id as keyof typeof platformTagDefs] || [];
-  
+
   // Use a fallback poster if the video is missing
   const videoPoster = `/images/products/${product.id === 'bites' ? 'product-1' : 'product-2'}/desktop/${product.id === 'bites' ? 'product-1-hero-desktop' : 'product-2-hero-desktop'}.webp`;
   const videoSrc = `/videos/${product.id}-demo.mp4`; // Path to where videos will be placed
@@ -51,71 +68,111 @@ function ProductCard({ product, index }: { product: typeof products[0]; index: n
       initial="hidden"
       animate={isInView ? 'visible' : 'hidden'}
       transition={{ delay: index * 0.15 }}
-      className="glass-card flex flex-col h-full rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+      onPointerEnter={() => setActiveId(product.id)}
+      onPointerLeave={() => setActiveId(null)}
+      onClick={() => setActiveId(isActive ? null : product.id)}
+      className={`group relative flex flex-col h-full rounded-2xl cursor-pointer transition-all duration-500 ${isActive ? 'z-[60] scale-[1.03] opacity-100 blur-none' : isOtherActive ? 'z-10 opacity-35 blur-[1.5px] scale-[0.97]' : 'z-20 opacity-100 blur-none'
+        }`}
     >
-      <div className="relative z-10 flex flex-col h-full bg-white/40">
-        
-        {/* Video Container — compact strict aspect-video */}
-        <div className="relative overflow-hidden border-b border-border bg-slate-100 aspect-video">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            poster={videoPoster}
-            className="absolute inset-0 w-full h-full object-cover"
-          >
-            <source src={videoSrc} type="video/mp4" />
-          </video>
-          {/* Subtle inner shadow overlay */}
-          <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_20px_rgba(0,0,0,0.05)]" />
-        </div>
+      {/* Prominent Neon Gradient Glow Aura */}
+      <div
+        className={`absolute -inset-3 rounded-3xl transition-all duration-500 pointer-events-none ${isActive
+            ? 'opacity-100 animate-pulse scale-105'
+            : 'opacity-0 group-hover:opacity-100'
+          }`}
+        style={{
+          background: product.id === 'bites'
+            ? 'radial-gradient(circle, rgba(16,185,129,0.8) 0%, rgba(59,130,246,0.3) 50%, transparent 80%)'
+            : 'radial-gradient(circle, rgba(37,99,235,0.8) 0%, rgba(16,185,129,0.3) 50%, transparent 80%)',
+          filter: product.id === 'bites'
+            ? 'drop-shadow(0 0 40px rgba(16,185,129,0.7))'
+            : 'drop-shadow(0 0 40px rgba(37,99,235,0.7))',
+        }}
+      />
 
-        {/* Text content — compact */}
-        <div className="flex flex-col flex-1 p-5 md:p-6 bg-white/80">
-          {/* Product icon + number */}
-          <div className="flex items-start justify-between mb-1.5">
-            <ProductIcon productId={product.id} accent={accentColor} />
-            <span
-              className="text-[10px] font-bold tracking-widest text-text-muted font-mono"
+      <div className={`glass-card relative z-10 flex flex-col h-full rounded-2xl overflow-hidden border transition-all duration-500 bg-white/95 ${isActive
+          ? product.id === 'bites'
+            ? 'border-2 border-emerald-400 shadow-[0_0_50px_rgba(16,185,129,0.4)]'
+            : 'border-2 border-blue-400 shadow-[0_0_50px_rgba(37,99,235,0.4)]'
+          : 'border-border/60 hover:border-slate-300 hover:shadow-xl'
+        }`}>
+        <div className="relative z-10 flex flex-col h-full bg-white/40">
+
+          {/* Video Container — Standard 16:9 Landscape Video (Zero Gaps) */}
+          <div className="relative overflow-hidden border-b border-border bg-slate-100 aspect-video w-full flex items-center justify-center">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              poster={videoPoster}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             >
-              PRODUCT {product.number}
-            </span>
+              <source src={videoSrc} type="video/mp4" />
+            </video>
+            {/* Subtle inner shadow overlay */}
+            <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_20px_rgba(0,0,0,0.05)]" />
           </div>
 
-          <h3
-            className="text-text-primary mb-2 text-2xl"
-            style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, lineHeight: 1.2 }}
-          >
-            {product.name}
-          </h3>
-
-          <p className="text-sm mb-5 line-clamp-2 text-text-secondary" style={{ lineHeight: 1.55 }}>
-            {product.shortIntro.split('.')[0]}.
-          </p>
-
-          {/* Platform tag pills */}
-          <div className="flex flex-wrap gap-2 mb-5 mt-auto">
-            {tags.map(({ icon: Icon, label }) => (
+          {/* Text content — compact single-view layout */}
+          <div className="flex flex-col flex-1 p-4 lg:p-5 bg-white/90">
+            {/* Product icon + number */}
+            <div className="flex items-start justify-between mb-0.5">
+              <ProductIcon productId={product.id} accent={accentColor} />
               <span
-                key={label}
-                className="inline-flex items-center gap-1.5 text-[11px] font-semibold rounded-full px-3 py-1.5 bg-slate-100 text-text-secondary border border-slate-200"
+                className="text-[9px] font-bold tracking-widest text-text-muted font-mono"
               >
-                <Icon className="w-3.5 h-3.5 shrink-0" strokeWidth={2} />
-                {label}
+                PRODUCT {product.number}
               </span>
-            ))}
-          </div>
+            </div>
 
-          {/* CTA */}
-          <Link
-            href={`/products/${product.id}`}
-            className="cta-underline text-sm font-bold w-fit"
-            style={{ color: accentColor }}
-          >
-            View {product.name}
-            <ArrowRight className="w-3.5 h-3.5 transition-transform" />
-          </Link>
+            <h3
+              className="text-text-primary mb-1 text-lg lg:text-xl font-extrabold"
+              style={{ fontFamily: 'var(--font-heading)', lineHeight: 1.2 }}
+            >
+              {product.name}
+            </h3>
+
+            <p className="text-xs mb-2.5 line-clamp-1 text-text-secondary" style={{ lineHeight: 1.4 }}>
+              {product.shortIntro.split('.')[0]}.
+            </p>
+
+            {/* Platform tag pills with highlighted Android App badge */}
+            <div className="flex flex-wrap gap-1.5 mb-3 mt-auto">
+              {tags.map(({ icon: Icon, label, isAndroid }) => (
+                <span
+                  key={label}
+                  className={`inline-flex items-center gap-1 text-[10px] font-semibold rounded-full px-2.5 py-0.5 border transition-colors ${isAndroid
+                      ? product.id === 'bites'
+                        ? 'bg-emerald-500/10 text-emerald-700 border-emerald-500/30 font-bold shadow-xs'
+                        : 'bg-blue-500/10 text-blue-700 border-blue-500/30 font-bold shadow-xs'
+                      : 'bg-slate-100 text-text-secondary border-slate-200'
+                    }`}
+                >
+                  <Icon className={`w-3 h-3 shrink-0 ${isAndroid ? 'text-current' : ''}`} strokeWidth={2} />
+                  {label}
+                </span>
+              ))}
+            </div>
+
+            {/* High-Impact Real Action Button — Directly Navigates to Product Page */}
+            <Link
+              href={`/products/${product.id}`}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full py-2.5 px-4 rounded-xl font-bold text-xs lg:text-sm text-white flex items-center justify-center gap-1.5 transition-all duration-200 shadow-sm hover:shadow-md hover:scale-[1.02] active:scale-[0.98] group/btn"
+              style={{
+                background: product.id === 'bites'
+                  ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
+                  : 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                boxShadow: product.id === 'bites'
+                  ? '0 4px 12px rgba(16,185,129,0.25)'
+                  : '0 4px 12px rgba(37,99,235,0.25)',
+              }}
+            >
+              <span>Explore {product.name}</span>
+              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" />
+            </Link>
+          </div>
         </div>
       </div>
     </motion.div>
@@ -125,35 +182,48 @@ function ProductCard({ product, index }: { product: typeof products[0]; index: n
 export default function ProductOverview() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-10% 0px' });
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   return (
     <section
       id="products"
       ref={ref}
-      className="section-padding relative"
+      className="py-4 lg:py-6 min-h-[calc(100vh-80px)] flex flex-col justify-center relative"
     >
-      <div className="container-main">
-        <div className="mb-8 md:mb-10 text-center flex flex-col items-center">
+      {/* "Turn Off The Lights" Global Spotlight Backdrop Overlay */}
+      <div
+        className={`fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-40 transition-opacity duration-500 pointer-events-none ${activeId !== null ? 'opacity-100' : 'opacity-0'
+          }`}
+      />
+
+      <div className="container-main relative z-50">
+        <div className="mb-3 lg:mb-4 text-center flex flex-col items-center">
           <motion.div
             variants={fadeUp}
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
             className="flex flex-col items-center"
           >
-            <span className="eyebrow-pill">
+            <span className="eyebrow-pill mb-1">
               <span className="w-2 h-2 rounded-full bg-secondary inline-block" />
               PRODUCTS
             </span>
-            <h2 className="text-h2 text-text-primary max-w-[420px]">
-              Two Products. Complete Solutions.
+            <h2 className="text-xl lg:text-2xl text-text-primary font-extrabold tracking-tight">
+              Flagship Solutions
             </h2>
           </motion.div>
         </div>
 
-        {/* Strict layout: stacking grid-cols-1 on mobile, strictly grid-cols-2 on desktop */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+        {/* Responsive layout: grid-cols-1 on mobile, max-w-5xl grid-cols-2 on desktop */}
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 items-stretch">
           {products.map((product, index) => (
-            <ProductCard key={product.id} product={product} index={index} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              index={index}
+              activeId={activeId}
+              setActiveId={setActiveId}
+            />
           ))}
         </div>
       </div>

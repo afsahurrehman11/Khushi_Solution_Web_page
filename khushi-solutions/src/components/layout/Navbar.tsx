@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Link from 'next/link';
 import { Menu, X, ChevronDown, ArrowRight, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
@@ -11,11 +11,38 @@ import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 export default function Navbar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  let closeTimeout: ReturnType<typeof setTimeout>;
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { scrollTo } = useSmoothScroll();
 
-  const handleMouseEnter = () => { clearTimeout(closeTimeout); setIsDropdownOpen(true); };
-  const handleMouseLeave = () => { closeTimeout = setTimeout(() => setIsDropdownOpen(false), 150); };
+  /* Opens dropdown and keeps it visible for 2 seconds (2000ms) */
+  const triggerDropdown = () => {
+    setIsDropdownOpen(true);
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+    closeTimeoutRef.current = setTimeout(() => {
+      setIsDropdownOpen(false);
+    }, 2000);
+  };
+
+  const handleMouseLeave = () => {
+    /* Maintain the 2s window without closing instantly */
+    if (!closeTimeoutRef.current) {
+      closeTimeoutRef.current = setTimeout(() => {
+        setIsDropdownOpen(false);
+      }, 2000);
+    }
+  };
+
+  const handleProductLinkClick = (e: React.MouseEvent, href: string) => {
+    e.stopPropagation();
+    setIsDropdownOpen(false);
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+    window.location.href = href;
+  };
+
   const handleNavClick = () => setIsMobileOpen(false);
 
   const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -29,16 +56,16 @@ export default function Navbar() {
   return (
     <>
       {/* Floating Pill Navbar (Light Neumorphic) */}
-      <header className="fixed top-5 left-0 right-0 z-50 flex justify-center px-4">
+      <header className="fixed top-5 left-0 right-0 z-[999999] flex justify-center px-4 pointer-events-auto">
         <nav
-          className="flex items-center justify-between w-full max-w-5xl px-5 sm:px-8 h-[60px]"
+          className="flex items-center justify-between w-full max-w-5xl px-5 sm:px-8 h-[60px] relative z-[999999]"
           style={{
-            background: 'rgba(255, 255, 255, 0.75)',
+            background: 'rgba(255, 255, 255, 0.9)',
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
             borderRadius: '9999px',
             border: '1px solid rgba(15, 23, 42, 0.08)',
-            boxShadow: '0 8px 32px rgba(15, 23, 42, 0.04), 0 0 0 1px rgba(255,255,255,0.5) inset',
+            boxShadow: '0 8px 32px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(255,255,255,0.5) inset',
           }}
           aria-label="Main navigation"
         >
@@ -62,15 +89,22 @@ export default function Navbar() {
               </Link>
             ))}
 
-            {/* Products Dropdown */}
+            {/* Products Dropdown — Stay visible for 2s on hover or click */}
             <div
-              className="relative flex items-center h-full"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
+              className="relative flex items-center h-full py-2 group"
+              onPointerEnter={triggerDropdown}
+              onPointerLeave={handleMouseLeave}
             >
               <button
-                className="flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium text-text-secondary hover:text-text-primary rounded-full hover:bg-slate-100/50 transition-all duration-200"
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium text-text-secondary group-hover:text-text-primary rounded-full group-hover:bg-slate-100/50 transition-all duration-200"
+                onClick={() => {
+                  if (isDropdownOpen) {
+                    setIsDropdownOpen(false);
+                    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+                  } else {
+                    triggerDropdown();
+                  }
+                }}
               >
                 Products
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
@@ -79,38 +113,50 @@ export default function Navbar() {
               <AnimatePresence>
                 {isDropdownOpen && (
                   <motion.div
-                    initial={{ opacity: 0, y: -4, scale: 0.98 }}
+                    initial={{ opacity: 0, y: -2, scale: 0.96 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -4, scale: 0.98 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2 w-[280px] rounded-2xl overflow-hidden"
-                    style={{
-                      background: 'rgba(255, 255, 255, 0.9)',
-                      backdropFilter: 'blur(24px)',
-                      border: '1px solid rgba(15,23,42,0.06)',
-                      boxShadow: '0 24px 60px rgba(15,23,42,0.1)',
-                    }}
+                    exit={{ opacity: 0, y: -2, scale: 0.96 }}
+                    transition={{ duration: 0.12 }}
+                    onPointerEnter={triggerDropdown}
+                    onPointerLeave={handleMouseLeave}
+                    className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-[210px] z-[999999]"
                   >
-                    <div className="p-2">
-                      <Link href="/products/bites" className="group flex items-center justify-between p-3.5 rounded-xl hover:bg-slate-50 transition-colors" onClick={() => setIsDropdownOpen(false)}>
-                        <div className="flex items-center gap-3">
-                          <div className="w-2 h-2 rounded-full bg-secondary" />
+                    {/* Invisible h-6 connector bridge overlay */}
+                    <div className="absolute -top-4 left-0 right-0 h-6 bg-transparent" />
+
+                    <div className="relative z-10 rounded-xl overflow-hidden border border-slate-900/10 shadow-2xl bg-white/95 backdrop-blur-2xl p-1.5"
+                      style={{
+                        boxShadow: '0 20px 40px rgba(15,23,42,0.2)',
+                      }}
+                    >
+                      <Link 
+                        href="/products/bites" 
+                        className="group/item flex items-center justify-between p-2.5 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer" 
+                        onClick={(e) => handleProductLinkClick(e, '/products/bites')}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-2 h-2 rounded-full bg-secondary shrink-0" />
                           <div>
-                            <div className="text-sm font-semibold text-text-primary">Bites</div>
-                            <div className="text-xs text-text-muted mt-0.5">Delivery & business management</div>
+                            <div className="text-xs font-bold text-text-primary">Bites</div>
+                            <div className="text-[10px] text-text-muted">Delivery & POS</div>
                           </div>
                         </div>
-                        <ArrowRight className="w-4 h-4 text-secondary opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" />
+                        <ArrowRight className="w-3.5 h-3.5 text-secondary opacity-0 group-hover/item:opacity-100 transition-all -translate-x-1 group-hover/item:translate-x-0" />
                       </Link>
-                      <Link href="/products/khushi-erp" className="group flex items-center justify-between p-3.5 rounded-xl hover:bg-slate-50 transition-colors" onClick={() => setIsDropdownOpen(false)}>
-                        <div className="flex items-center gap-3">
-                          <div className="w-2 h-2 rounded-full bg-primary" />
+
+                      <Link 
+                        href="/products/khushi-erp" 
+                        className="group/item flex items-center justify-between p-2.5 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer" 
+                        onClick={(e) => handleProductLinkClick(e, '/products/khushi-erp')}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-2 h-2 rounded-full bg-primary shrink-0" />
                           <div>
-                            <div className="text-sm font-semibold text-text-primary">Khushi SMS</div>
-                            <div className="text-xs text-text-muted mt-0.5">School ERP & mobile ecosystem</div>
+                            <div className="text-xs font-bold text-text-primary">Khushi SMS</div>
+                            <div className="text-[10px] text-text-muted">School ERP & Apps</div>
                           </div>
                         </div>
-                        <ArrowRight className="w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" />
+                        <ArrowRight className="w-3.5 h-3.5 text-primary opacity-0 group-hover/item:opacity-100 transition-all -translate-x-1 group-hover/item:translate-x-0" />
                       </Link>
                     </div>
                   </motion.div>

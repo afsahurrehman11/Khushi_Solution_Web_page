@@ -102,11 +102,11 @@ export default function AboutSection() {
                 <div className="absolute inset-8 rounded-full border border-slate-200 animate-[spin_15s_linear_infinite_reverse]" />
                 
                 <div className="text-center z-10 relative">
-                  <div className="text-6xl font-bold mb-2 text-text-primary" style={{ fontFamily: 'var(--font-heading)' }}>
-                    10+
+                  <div className="text-5xl font-bold mb-2 text-text-primary" style={{ fontFamily: 'var(--font-heading)' }}>
+                    100%
                   </div>
-                  <div className="text-sm font-medium text-text-muted uppercase tracking-wider">
-                    Years Combined<br />Experience
+                  <div className="text-xs font-semibold text-text-muted uppercase tracking-widest leading-relaxed">
+                    Production-Grade<br />Custom Architecture
                   </div>
                 </div>
               </div>

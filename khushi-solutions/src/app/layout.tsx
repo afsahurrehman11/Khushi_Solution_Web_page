@@ -68,6 +68,7 @@ export const metadata: Metadata = {
 };
 
 import CustomCursor from '@/components/ui/CustomCursor';
+import FloatingActionButton from '@/components/ui/FloatingActionButton';
 
 export default function RootLayout({
   children,
@@ -78,6 +79,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${inter.variable} ${ibmPlexMono.variable}`}
+      suppressHydrationWarning
     >
       <head>
         {/* General Sans from Fontshare (free, production-safe) */}
@@ -91,8 +93,9 @@ export default function RootLayout({
           type="image/png"
         />
       </head>
-      <body className={inter.className}>
+      <body className={inter.className} suppressHydrationWarning>
         <CustomCursor />
+        <FloatingActionButton />
         {children}
       </body>
     </html>

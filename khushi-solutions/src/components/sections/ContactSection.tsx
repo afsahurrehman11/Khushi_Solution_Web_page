@@ -1,10 +1,13 @@
 'use client';
 
-import { Mail, MapPin, Phone } from 'lucide-react';
+import { Mail, MapPin, Phone, MessageSquare, Users } from 'lucide-react';
 import ContactForm from './ContactForm';
 import ScrollReveal from '@/components/ui/ScrollReveal';
+import { getContactInfo } from '@/data/company';
 
 export default function ContactSection() {
+  const contact = getContactInfo();
+
   return (
     <section id="contact" className="section-padding">
       <div className="container-main">
@@ -22,40 +25,67 @@ export default function ContactSection() {
               <h2 className="text-h2 text-text-primary mb-4">Get in Touch</h2>
             </ScrollReveal>
             <ScrollReveal delay={0.12}>
-              <p className="text-body-lg text-text-secondary max-w-[500px] mb-10">
-                Ready to upgrade your operations? Send us a message and our technical team will get back to you within 24 hours.
+              <p className="text-body-lg text-text-secondary max-w-[500px] mb-8">
+                Ready to upgrade your operations? Send us a message or reach out on WhatsApp directly. Our technical team responds within hours.
               </p>
             </ScrollReveal>
             
             <ScrollReveal delay={0.16}>
-              <div className="flex flex-col gap-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-slate-100 border border-border text-text-primary">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Email Us */}
+                <a 
+                  href={`mailto:${contact.email}`} 
+                  className="flex items-start gap-4 p-4 rounded-xl border border-border bg-white hover:bg-slate-50 hover:border-blue-500/40 transition-all duration-200 group"
+                >
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 bg-blue-500/10 text-blue-600 border border-blue-500/20 group-hover:scale-110 transition-transform">
                     <Mail className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-text-primary mb-1 uppercase tracking-wider">Email Us</h4>
-                    <p className="text-text-secondary">contact@khushisolutions.com</p>
+                    <h4 className="text-xs font-bold text-text-primary mb-0.5 uppercase tracking-wider">Email Us</h4>
+                    <p className="text-xs text-text-secondary font-medium group-hover:text-blue-600 transition-colors truncate">{contact.email}</p>
                   </div>
-                </div>
+                </a>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-slate-100 border border-border text-text-primary">
-                    <Phone className="w-5 h-5" />
+                {/* WhatsApp Direct */}
+                <a 
+                  href={contact.whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-4 p-4 rounded-xl border border-border bg-white hover:bg-slate-50 hover:border-emerald-500/40 transition-all duration-200 group"
+                >
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 group-hover:scale-110 transition-transform">
+                    <MessageSquare className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-text-primary mb-1 uppercase tracking-wider">Call Us</h4>
-                    <p className="text-text-secondary">+92 300 1234567</p>
+                    <h4 className="text-xs font-bold text-text-primary mb-0.5 uppercase tracking-wider">WhatsApp Chat</h4>
+                    <p className="text-xs text-text-secondary font-medium group-hover:text-emerald-600 transition-colors">{contact.phone}</p>
                   </div>
-                </div>
+                </a>
 
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-slate-100 border border-border text-text-primary">
+                {/* WhatsApp Community */}
+                <a 
+                  href={contact.whatsappCommunity}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-4 p-4 rounded-xl border border-border bg-white hover:bg-slate-50 hover:border-emerald-500/40 transition-all duration-200 group"
+                >
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 group-hover:scale-110 transition-transform">
+                    <Users className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-text-primary mb-0.5 uppercase tracking-wider">Join Community</h4>
+                    <p className="text-xs text-text-secondary font-medium group-hover:text-emerald-600 transition-colors">WhatsApp Group & Updates</p>
+                  </div>
+                </a>
+
+                {/* Location */}
+                <div className="flex items-start gap-4 p-4 rounded-xl border border-border bg-white">
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 bg-slate-100 text-text-primary border border-slate-200">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-text-primary mb-1 uppercase tracking-wider">Location</h4>
-                    <p className="text-text-secondary">Lahore, Pakistan<br />Available for remote deployment globally.</p>
+                    <h4 className="text-xs font-bold text-text-primary mb-0.5 uppercase tracking-wider">Location</h4>
+                    <p className="text-xs text-text-secondary font-medium">{contact.address}</p>
                   </div>
                 </div>
               </div>

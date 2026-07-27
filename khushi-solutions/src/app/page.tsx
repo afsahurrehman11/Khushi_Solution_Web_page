@@ -6,7 +6,6 @@ import ProductOverview from '@/components/sections/ProductOverview';
 import ProofSection from '@/components/sections/ProofSection';
 import FAQSection from '@/components/sections/FAQSection';
 import ContactSection from '@/components/sections/ContactSection';
-import FloatingActionButton from '@/components/ui/FloatingActionButton';
 import LocomotiveScrollProvider from '@/components/layout/LocomotiveScrollProvider';
 import GlowingBubblesBackground from '@/components/ui/GlowingBubblesBackground';
 
@@ -36,7 +35,6 @@ export default function Home() {
         </main>
 
         <Footer />
-        <FloatingActionButton />
       </div>
     </LocomotiveScrollProvider>
   );
