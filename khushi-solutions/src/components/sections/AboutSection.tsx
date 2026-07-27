@@ -87,29 +87,49 @@ export default function AboutSection() {
             </div>
           </div>
 
-          {/* Right Column - Experience visualization */}
-          <div className="lg:col-span-5 xl:col-span-4 lg:col-start-8 xl:col-start-9 hidden lg:flex items-center justify-center">
-            <ScrollReveal delay={0.3} className="w-full">
-              <div
-                className="relative w-full aspect-square rounded-full flex items-center justify-center bg-white"
-                style={{
-                  border: '1px solid var(--color-border)',
-                  boxShadow: 'var(--shadow-md)',
-                }}
+          {/* Right Column - Animated Experience & Architecture visualization */}
+          <div className="lg:col-span-5 xl:col-span-4 lg:col-start-8 xl:col-start-9 flex items-center justify-center mt-8 lg:mt-0">
+            <ScrollReveal delay={0.2} className="w-full max-w-[280px] sm:max-w-[320px]">
+              <motion.div
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                className="relative w-full aspect-square rounded-full flex items-center justify-center bg-white border border-border shadow-xl group cursor-pointer"
               >
-                {/* Core animated rings */}
-                <div className="absolute inset-4 rounded-full border border-dashed border-border animate-[spin_20s_linear_infinite]" />
-                <div className="absolute inset-8 rounded-full border border-slate-200 animate-[spin_15s_linear_infinite_reverse]" />
-                
-                <div className="text-center z-10 relative">
-                  <div className="text-5xl font-bold mb-2 text-text-primary" style={{ fontFamily: 'var(--font-heading)' }}>
+                {/* Expanding Soft Radar Pulse Ring */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/15 via-emerald-500/15 to-blue-500/15 animate-ping opacity-20 pointer-events-none" />
+
+                {/* Ambient Gradient Glow Backdrop */}
+                <div className="absolute inset-2 rounded-full bg-gradient-to-tr from-blue-50/60 via-slate-50 to-emerald-50/60 blur-sm pointer-events-none" />
+
+                {/* Orbit Ring 1 — Clockwise Dashed Gradient */}
+                <div className="absolute inset-3 rounded-full border-2 border-dashed border-blue-500/30 animate-[spin_18s_linear_infinite]" />
+
+                {/* Orbit Ring 2 — Counter-Clockwise Dotted Gradient */}
+                <div className="absolute inset-7 rounded-full border border-dotted border-emerald-500/40 animate-[spin_14s_linear_infinite_reverse]" />
+
+                {/* Orbiting Satellite Dots */}
+                <div className="absolute inset-0 rounded-full animate-[spin_12s_linear_infinite] pointer-events-none">
+                  <div className="w-3.5 h-3.5 rounded-full bg-blue-600 shadow-[0_0_12px_rgba(37,99,235,0.8)] absolute -top-1.5 left-1/2 -translate-x-1/2 border-2 border-white" />
+                  <div className="w-3.5 h-3.5 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.8)] absolute -bottom-1.5 left-1/2 -translate-x-1/2 border-2 border-white" />
+                </div>
+
+                {/* Center Core Badge */}
+                <div className="text-center z-10 relative p-6 flex flex-col items-center justify-center">
+                  <motion.div 
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                    className="text-4xl md:text-5xl font-black mb-2 bg-gradient-to-r from-blue-600 via-emerald-600 to-blue-600 bg-clip-text text-transparent tracking-tight" 
+                    style={{ fontFamily: 'var(--font-heading)' }}
+                  >
                     100%
-                  </div>
-                  <div className="text-xs font-semibold text-text-muted uppercase tracking-widest leading-relaxed">
-                    Production-Grade<br />Custom Architecture
+                  </motion.div>
+
+                  <div className="text-[11px] md:text-xs font-bold text-text-primary uppercase tracking-widest leading-relaxed">
+                    Production-Grade<br />
+                    <span className="text-secondary font-extrabold">Custom Architecture</span>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </ScrollReveal>
           </div>
 
