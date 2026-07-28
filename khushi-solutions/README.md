@@ -95,28 +95,51 @@ For full asset tables, aspect ratio guides, and resolution specs, consult [`IMAG
 
 ---
 
-## 🌐 Hostinger Web App Deployment Guide
+## 🌐 MANUAL NETLIFY DEPLOYMENT
 
-This project is 100% frontend-only, production-ready, and fully compatible with **Hostinger Web App Hosting** (Node.js/Next.js) or Static Hosting via GitHub integration.
+This website is configured for **Static Export** (`output: 'export'`) and direct **manual upload to Netlify** without connecting GitHub.
 
-### Environment Variable Setup on Hostinger
-When deploying on Hostinger via GitHub or Node.js Web App deployment:
+### Step 1: Install Dependencies
+Ensure all project dependencies are installed locally:
+```bash
+npm install
+```
 
-1. Navigate to your Hostinger Control Panel -> **Web Applications** / **Node.js Application**.
-2. Go to **Environment Variables**.
-3. Add your Web3Forms access key:
-   - **Key**: `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY`
-   - **Value**: `YOUR_ACTUAL_WEB3FORMS_ACCESS_KEY`
-4. Add any optional contact or social media overrides (`NEXT_PUBLIC_CONTACT_PHONE`, `NEXT_PUBLIC_CONTACT_EMAIL`, etc.).
+### Step 2: Configure Environment Variables
+1. Copy `.env.example` to `.env.local` (or `.env.production`):
+   ```bash
+   cp .env.example .env.local
+   ```
+2. Set your actual Web3Forms access key:
+   ```env
+   NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY="YOUR_ACTUAL_WEB3FORMS_ACCESS_KEY"
+   ```
+*(Note: Because Next.js static export bakes `NEXT_PUBLIC_*` environment variables into the HTML/JS output during build time, ensure this variable is set before running `npm run build`.)*
 
-### Build Settings
-- **Build Command**: `npm run build`
-- **Output Directory**: `.next` (or standard Next.js build output)
-- **Node.js Version**: 20.x or 22.x
-- **Start Command**: `npm run start`
+### Step 3: Run the Production Build
+Generate the static export directory by running:
+```bash
+npm run build
+```
+Next.js will compile the project and generate a complete, self-contained **`out`** folder in the root directory.
 
-### GitHub Auto-Deployment
-- Connect your GitHub repository to Hostinger.
-- On `git push origin main`, Hostinger will automatically fetch, build, and deploy the updated application cleanly.
-- All product routes (`/products/bites` and `/products/khushi-erp`) will function out-of-the-box with zero backend configuration required.
+### Step 4: Upload to Netlify
+1. Log in to [Netlify App](https://app.netlify.com).
+2. Go to **Sites** -> **Add new site** -> **Deploy manually**.
+3. Drag and drop the **`out`** folder (or drag and drop all the **contents inside the `out` folder**).
+4. Netlify will instantly deploy your website live.
 
+### Step 5: Route Handling & Web3Forms Verification
+- **Static Routes**: All routes (`/`, `/products/bites/`, `/products/khushi-erp/`) are pre-rendered into static HTML (`out/products/bites/index.html`). Direct browser refreshes will never cause a 404 error.
+- **Web3Forms**: The contact form submits directly from the user's browser to `https://api.web3forms.com/submit`. No server or backend function is needed.
+
+### Step 6: Connecting Custom Domain
+1. In Netlify Site Settings, go to **Domain management** -> **Add custom domain**.
+2. Enter your custom domain name (e.g. `khushisolutions.com`).
+3. Update your domain DNS records (CNAME or A records) to point to Netlify as instructed by the Netlify dashboard.
+
+### Step 7: How to Redeploy Future Code & Asset Changes
+Whenever you update code or add new media files (`public/images/products/...`):
+1. Place assets in the correct folder (refer to [`IMAGE-ASSETS-GUIDE.md`](./IMAGE-ASSETS-GUIDE.md)).
+2. Run `npm run build`.
+3. Go to Netlify -> Your Site -> **Deploys** -> Drag and drop the newly generated **`out`** folder to trigger an instant update.
