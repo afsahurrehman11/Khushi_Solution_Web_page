@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
+import { createPortal } from 'react-dom';
 import { Mail, MapPin, MessageSquare, Users, Building, User, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
@@ -15,6 +16,11 @@ function ContactSectionContent() {
   const pathname = usePathname();
   
   const [activeModal, setActiveModal] = useState<'purchase' | 'affiliate' | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const formParam = searchParams.get('form');
@@ -161,66 +167,69 @@ function ContactSectionContent() {
         </div>
       </div>
 
-      {/* Form Modal Overlay */}
-      <AnimatePresence>
-        {activeModal && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={closeModal}
-              className="fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-[99999]"
-            />
-            <div className="fixed inset-0 flex items-center justify-center p-4 sm:p-6 z-[100000] pointer-events-none">
+      {/* Form Modal Overlay — Rendered via Portal directly into document.body to ensure top z-index above Footer */}
+      {mounted && createPortal(
+        <AnimatePresence>
+          {activeModal && (
+            <>
               <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                transition={{ type: "spring", duration: 0.5, bounce: 0.15 }}
-                className="w-full max-w-2xl bg-slate-50 rounded-2xl shadow-2xl overflow-hidden pointer-events-auto flex flex-col max-h-[90vh]"
-              >
-                {/* Modal Header */}
-                <div className={`p-5 sm:p-6 flex items-center justify-between border-b ${
-                  activeModal === 'purchase' ? 'bg-white border-slate-100' : 'bg-emerald-50 border-emerald-100'
-                }`}>
-                  <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                      activeModal === 'purchase' ? 'bg-blue-100 text-primary' : 'bg-emerald-100 text-emerald-700'
-                    }`}>
-                      {activeModal === 'purchase' ? <Building className="w-5 h-5" /> : <User className="w-5 h-5" />}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={closeModal}
+                className="fixed inset-0 bg-slate-950/50 backdrop-blur-sm z-[999998]"
+              />
+              <div className="fixed inset-0 flex items-center justify-center p-4 sm:p-6 z-[999999] pointer-events-auto cursor-auto">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                  transition={{ type: "spring", duration: 0.5, bounce: 0.15 }}
+                  className="w-full max-w-2xl bg-slate-50 rounded-2xl shadow-2xl overflow-hidden pointer-events-auto flex flex-col max-h-[90vh]"
+                >
+                  {/* Modal Header */}
+                  <div className={`p-5 sm:p-6 flex items-center justify-between border-b ${
+                    activeModal === 'purchase' ? 'bg-white border-slate-100' : 'bg-emerald-50 border-emerald-100'
+                  }`}>
+                    <div className="flex items-center gap-3">
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                        activeModal === 'purchase' ? 'bg-blue-100 text-primary' : 'bg-emerald-100 text-emerald-700'
+                      }`}>
+                        {activeModal === 'purchase' ? <Building className="w-5 h-5" /> : <User className="w-5 h-5" />}
+                      </div>
+                      <div>
+                        <h3 className="font-extrabold text-lg text-text-primary leading-tight">
+                          {activeModal === 'purchase' ? 'Purchase Inquiry' : 'Affiliate Application'}
+                        </h3>
+                        <p className="text-xs text-text-secondary mt-0.5">
+                          {activeModal === 'purchase' 
+                            ? 'Fill out the details below to request a quote.' 
+                            : 'Join the Khushi Solutions partner network.'}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-extrabold text-lg text-text-primary leading-tight">
-                        {activeModal === 'purchase' ? 'Purchase Inquiry' : 'Affiliate Application'}
-                      </h3>
-                      <p className="text-xs text-text-secondary mt-0.5">
-                        {activeModal === 'purchase' 
-                          ? 'Fill out the details below to request a quote.' 
-                          : 'Join the Khushi Solutions partner network.'}
-                      </p>
-                    </div>
+                    <button 
+                      onClick={closeModal}
+                      className="p-2 rounded-full hover:bg-black/5 text-text-muted hover:text-text-primary transition-colors"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
                   </div>
-                  <button 
-                    onClick={closeModal}
-                    className="p-2 rounded-full hover:bg-black/5 text-text-muted hover:text-text-primary transition-colors"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
 
-                {/* Modal Body (Scrollable) */}
-                <div className="p-5 sm:p-6 overflow-y-auto custom-scrollbar">
-                  <ContactForm 
-                    formType={activeModal} 
-                    onSuccess={() => setTimeout(closeModal, 1500)} 
-                  />
-                </div>
-              </motion.div>
-            </div>
-          </>
-        )}
-      </AnimatePresence>
+                  {/* Modal Body (Scrollable) */}
+                  <div className="p-5 sm:p-6 overflow-y-auto custom-scrollbar">
+                    <ContactForm 
+                      formType={activeModal} 
+                      onSuccess={() => setTimeout(closeModal, 1500)} 
+                    />
+                  </div>
+                </motion.div>
+              </div>
+            </>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
 
     </section>
   );

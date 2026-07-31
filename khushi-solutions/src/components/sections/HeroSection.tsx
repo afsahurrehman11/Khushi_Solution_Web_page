@@ -44,12 +44,42 @@ const carouselFrames = [
     accent: '#2C64B4',
   },
   {
+    label: 'Khushi Delivery   Live Order Tracking Map',
+    src: '/images/products/product-1/mobile/product-1-feature-order-tracking.jpeg',
+    accent: '#10b981',
+  },
+  {
     label: 'Khushi SMS   Cash Session Security',
     src: '/images/products/product-2/desktop/product-2-feature-cash-sessions.png',
     accent: '#2C64B4',
   },
   {
-    label: 'Khushi Delivery   Rider Assignment',
+    label: 'Khushi SMS   Online Fee Payment Portal',
+    src: '/images/products/product-2/mobile/product-2-feature-payfast.jpeg',
+    accent: '#2C64B4',
+  },
+  {
+    label: 'Khushi Delivery   Delivery Zone Radius Control',
+    src: '/images/products/product-1/desktop/product-1-feature-location.jpeg',
+    accent: '#10b981',
+  },
+  {
+    label: 'Khushi SMS   3-Copy PDF Fee Vouchers',
+    src: '/images/products/product-2/desktop/product-2-feature-vouchers.png',
+    accent: '#2C64B4',
+  },
+  {
+    label: 'Khushi SMS   Teacher Mobile Exam & Grading',
+    src: '/images/products/product-2/mobile/product-2-feature-exams.jpeg',
+    accent: '#2C64B4',
+  },
+  {
+    label: 'Khushi Delivery   Bulk CSV Menu Import',
+    src: '/images/products/product-1/desktop/product-1-feature-bulk-import.jpeg',
+    accent: '#10b981',
+  },
+  {
+    label: 'Khushi Delivery   Automated Rider Assignment',
     src: '/images/products/product-1/desktop/product-1-feature-rider-assignment.jpeg',
     accent: '#10b981',
   },
@@ -58,25 +88,19 @@ const carouselFrames = [
 export default function HeroSection() {
   const bgRef = useRef<HTMLElement>(null);
   const [currentFrame, setCurrentFrame] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const autoPlayRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const { scrollTo } = useSmoothScroll();
 
-  /* Auto-play */
+  /* Auto-play continuous 1.5s rotation (never pauses on manual interaction) */
   useEffect(() => {
-    if (!isAutoPlaying) return;
     autoPlayRef.current = setTimeout(() => {
       setCurrentFrame((prev) => (prev + 1) % carouselFrames.length);
-    }, 3800);
+    }, 1500);
     return () => clearTimeout(autoPlayRef.current);
-  }, [currentFrame, isAutoPlaying]);
+  }, [currentFrame]);
 
   const goTo = (idx: number) => {
-    setIsAutoPlaying(false);
     setCurrentFrame(idx);
-    // Resume auto-play after 6s of inactivity
-    clearTimeout(autoPlayRef.current);
-    autoPlayRef.current = setTimeout(() => setIsAutoPlaying(true), 6000);
   };
 
   const prev = () => goTo((currentFrame - 1 + carouselFrames.length) % carouselFrames.length);

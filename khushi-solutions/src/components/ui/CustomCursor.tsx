@@ -47,7 +47,7 @@ export default function CustomCursor() {
   if (!isMounted || !isPointerFine) return null;
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden">
+    <div className="pointer-events-none fixed inset-0 z-[9999999] overflow-hidden">
       {/* Outer Spring Circle - Sleeker, balanced size with responsive spring physics */}
       <motion.div
         className="absolute top-0 left-0 w-8 h-8 border-[1.5px] border-emerald-500/60 rounded-full flex items-center justify-center"
