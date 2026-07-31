@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, useInView, type Variants } from 'framer-motion';
 import { ArrowRight, Truck, GraduationCap, MapPin, Smartphone, Receipt, Calendar, Users, Fingerprint } from 'lucide-react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { products } from '@/data/products';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 
@@ -13,7 +14,7 @@ const fadeUp: Variants = {
 };
 
 function ProductIcon({ productId, accent }: { productId: string; accent: string }) {
-  if (productId === 'bites') {
+  if (productId === 'khushi-delivery') {
     return <Truck className="w-7 h-7 mb-2" style={{ color: accent }} strokeWidth={1.5} aria-hidden="true" />;
   }
   return <GraduationCap className="w-7 h-7 mb-2" style={{ color: accent }} strokeWidth={1.5} aria-hidden="true" />;
@@ -21,7 +22,7 @@ function ProductIcon({ productId, accent }: { productId: string; accent: string 
 
 // Maps platform tags to clean SVG icons with Android App highlight
 const platformTagDefs = {
-  'bites': [
+  'khushi-delivery': [
     { label: 'Native Android App', icon: Smartphone, isAndroid: true },
     { label: 'Live GPS Tracking', icon: MapPin },
     { label: 'POS & Kitchen Display', icon: Receipt },
@@ -57,9 +58,9 @@ function ProductCard({
   const accentColor = product.accent === 'blue' ? 'var(--color-primary)' : 'var(--color-secondary)';
   const tags = platformTagDefs[product.id as keyof typeof platformTagDefs] || [];
 
-  // Use a fallback poster if the video is missing
-  const videoPoster = `/images/products/${product.id === 'bites' ? 'product-1' : 'product-2'}/desktop/${product.id === 'bites' ? 'product-1-hero-desktop' : 'product-2-hero-desktop'}.webp`;
-  const videoSrc = `/videos/${product.id}-demo.mp4`; // Path to where videos will be placed
+  // Use dynamic poster & video source from product data
+  const videoPoster = `/images/products/${product.id === 'khushi-delivery' ? 'product-1' : 'product-2'}/desktop/${product.id === 'khushi-delivery' ? 'product-1-hero-desktop' : 'product-2-hero-desktop'}.webp`;
+  const videoSrc = product.heroVideo.desktop;
 
   return (
     <motion.div
@@ -81,17 +82,17 @@ function ProductCard({
           : 'opacity-0 group-hover:opacity-100'
           }`}
         style={{
-          background: product.id === 'bites'
+          background: product.id === 'khushi-delivery'
             ? 'radial-gradient(circle, rgba(16,185,129,0.8) 0%, rgba(59,130,246,0.3) 50%, transparent 80%)'
             : 'radial-gradient(circle, rgba(37,99,235,0.8) 0%, rgba(16,185,129,0.3) 50%, transparent 80%)',
-          filter: product.id === 'bites'
+          filter: product.id === 'khushi-delivery'
             ? 'drop-shadow(0 0 40px rgba(16,185,129,0.7))'
             : 'drop-shadow(0 0 40px rgba(37,99,235,0.7))',
         }}
       />
 
       <div className={`glass-card relative z-10 flex flex-col h-full rounded-2xl overflow-hidden border transition-all duration-500 bg-white/95 ${isActive
-        ? product.id === 'bites'
+        ? product.id === 'khushi-delivery'
           ? 'border-2 border-emerald-400 shadow-[0_0_50px_rgba(16,185,129,0.4)]'
           : 'border-2 border-blue-400 shadow-[0_0_50px_rgba(37,99,235,0.4)]'
         : 'border-border/60 hover:border-slate-300 hover:shadow-xl'
@@ -143,7 +144,7 @@ function ProductCard({
                 <span
                   key={label}
                   className={`inline-flex items-center gap-1 text-[10px] font-semibold rounded-full px-2.5 py-0.5 border transition-colors ${isAndroid
-                    ? product.id === 'bites'
+                    ? product.id === 'khushi-delivery'
                       ? 'bg-emerald-500/10 text-emerald-700 border-emerald-500/30 font-bold shadow-xs'
                       : 'bg-blue-500/10 text-blue-700 border-blue-500/30 font-bold shadow-xs'
                     : 'bg-slate-100 text-text-secondary border-slate-200'
@@ -161,10 +162,10 @@ function ProductCard({
               onClick={(e) => e.stopPropagation()}
               className="w-full py-2.5 px-4 rounded-xl font-bold text-xs lg:text-sm text-white flex items-center justify-center gap-1.5 transition-all duration-200 shadow-sm hover:shadow-md hover:scale-[1.02] active:scale-[0.98] group/btn"
               style={{
-                background: product.id === 'bites'
+                background: product.id === 'khushi-delivery'
                   ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
                   : 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
-                boxShadow: product.id === 'bites'
+                boxShadow: product.id === 'khushi-delivery'
                   ? '0 4px 12px rgba(16,185,129,0.25)'
                   : '0 4px 12px rgba(37,99,235,0.25)',
               }}
@@ -182,7 +183,16 @@ function ProductCard({
 export default function ProductOverview() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-10% 0px' });
+  const searchParams = useSearchParams();
+  const highlightId = searchParams.get('highlight');
+  
   const [activeId, setActiveId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (highlightId) {
+      setActiveId(highlightId);
+    }
+  }, [highlightId]);
 
   return (
     <section

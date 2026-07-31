@@ -33,8 +33,8 @@ export default function ProductDetailHero({ product }: { product: ProductData })
   };
 
   const accentColor = product.accent === 'blue' ? 'var(--color-primary)' : 'var(--color-secondary)';
-  const videoPoster = `/images/products/${product.id === 'bites' ? 'product-1' : 'product-2'}/desktop/${product.id === 'bites' ? 'product-1-hero-desktop' : 'product-2-hero-desktop'}.webp`;
-  const videoSrc = `/videos/${product.id}-demo.mp4`;
+  const videoPoster = `/images/products/${product.id === 'khushi-delivery' ? 'product-1' : 'product-2'}/desktop/${product.id === 'khushi-delivery' ? 'product-1-hero-desktop' : 'product-2-hero-desktop'}.webp`;
+  const videoSrc = product.heroVideo.desktop;
 
   return (
     <section className="pt-20 lg:pt-24 pb-8 lg:pb-12 overflow-hidden relative">
@@ -143,7 +143,7 @@ export default function ProductDetailHero({ product }: { product: ProductData })
             <div
               className="relative w-full aspect-video rounded-2xl overflow-hidden border border-slate-900/10 shadow-2xl bg-slate-950 group"
               style={{
-                boxShadow: product.id === 'bites'
+                boxShadow: product.id === 'khushi-delivery'
                   ? '0 20px 40px rgba(16,185,129,0.18)'
                   : '0 20px 40px rgba(37,99,235,0.18)',
               }}

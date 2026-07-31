@@ -31,7 +31,7 @@ export default function ScreenshotFrame({
       ? ['bg-primary/30', 'bg-primary/20', 'bg-primary/10']
       : ['bg-secondary/30', 'bg-secondary/20', 'bg-secondary/10'];
 
-  const isPlaceholder = !src || src.includes('.webp');
+  const isPlaceholder = !src;
 
   return (
     <div
@@ -53,8 +53,8 @@ export default function ScreenshotFrame({
         )}
       </div>
 
-      {/* Screenshot content */}
-      <div className="relative w-full" style={{ aspectRatio: `${width}/${height}` }}>
+      {/* Screenshot content — dynamic height to display 100% of screenshot without cropping or blank padding */}
+      <div className="relative w-full overflow-hidden bg-white">
         {isPlaceholder ? (
           <ImagePlaceholder
             label={alt}
@@ -66,9 +66,10 @@ export default function ScreenshotFrame({
           <Image
             src={src}
             alt={alt}
-            fill
+            width={width}
+            height={height}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1100px"
-            className="object-cover object-top"
+            className="w-full h-auto block"
             priority={priority}
           />
         )}

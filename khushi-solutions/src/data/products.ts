@@ -49,31 +49,31 @@ export interface ProductData {
 }
 
 /* ============================================================
-   PRODUCT 1: BITES   Multi-Store Delivery Platform
+   PRODUCT 1: KHUSHI DELIVERY   Multi-Store Delivery Platform
    Accent: Blue
    ============================================================ */
 
 export const product1: ProductData = {
-  id: 'bites',
+  id: 'khushi-delivery',
   number: '01',
-  name: 'Bites',
+  name: 'Khushi Delivery',
   category: 'Delivery & Business Management',
   headline: 'One Platform. Every Local Business.',
   shortIntro:
-    'A complete delivery and operations management platform. Bites connects customers with local businesses and manages the complete lifecycle from browsing to delivery, with a powerful admin control center and a dedicated rider workforce management system.',
+    'A complete delivery and operations management platform. Khushi Delivery connects customers with local businesses and manages the complete lifecycle from browsing to delivery, with a powerful admin control center and a dedicated rider workforce management system.',
   valueProp:
-    'Bites is a complete delivery operating system built and owned by Khushi Solutions. Engineered for local markets   cash-first transactions, real road-distance delivery pricing, and a multi-merchant architecture that lets any local business onboard in minutes.',
+    'Khushi Delivery is a complete delivery operating system built and owned by Khushi Solutions. Engineered for local markets   cash-first transactions, real road-distance delivery pricing, and a multi-merchant architecture that lets any local business onboard in minutes.',
   accent: 'blue',
   url: null,
   heroVideo: {
-    desktop: '/videos/product-1/bites-desktop.mp4',
-    mobile: '/videos/product-1/bites-mobile.mp4',
-    alt: 'Bites Platform Overview Video',
+    desktop: '/videos/khushi_ Delivery.mp4',
+    mobile: '/videos/khushi_ Delivery.mp4',
+    alt: 'Khushi Delivery Platform Overview Video',
   },
   heroScreenshot: {
     desktop: '/images/products/product-1/desktop/product-1-hero-desktop.webp',
     mobile: '/images/products/product-1/mobile/product-1-hero-mobile.webp',
-    alt: 'Bites Admin Dashboard   Platform overview and management interface',
+    alt: 'Khushi Delivery Admin Dashboard   Platform overview and management interface',
   },
   capabilities: [
     {
@@ -144,7 +144,7 @@ export const product1: ProductData = {
       description:
         '• Live updates at every step\n• Track rider location on map\n• Exact delivery timestamps',
       screenshotPath:
-        '/images/products/product-1/features/product-1-feature-order-tracking.webp',
+        '/images/products/product-1/mobile/product-1-feature-order-tracking.jpeg',
       screenshotAlt: 'Live order tracking timeline with rider map',
       screenshotType: 'mobile',
     },
@@ -154,7 +154,7 @@ export const product1: ProductData = {
       description:
         '• Real road distance, not straight-line guesses\n• Price shown before ordering\n• Configurable flat rates and per-km charges',
       screenshotPath:
-        '/images/products/product-1/features/product-1-feature-delivery-pricing.webp',
+        '/images/products/product-1/mobile/product-1-feature-delivery-pricing.jpeg',
       screenshotAlt:
         'Cart showing delivery charge breakdown with distance calculation',
       screenshotType: 'mobile',
@@ -165,7 +165,7 @@ export const product1: ProductData = {
       description:
         '• Order from restaurants, pharmacies, groceries, and more\n• Browse by category\n• One consistent checkout experience',
       screenshotPath:
-        '/images/products/product-1/features/product-1-feature-categories.webp',
+        '/images/products/product-1/mobile/product-1-feature-categories.jpeg',
       screenshotAlt: 'Customer home screen showing 13 store category grid',
       screenshotType: 'mobile',
     },
@@ -175,7 +175,7 @@ export const product1: ProductData = {
       description:
         '• Create staff accounts with exact permissions\n• Full activity tracking per user\n• See exactly who did what and when',
       screenshotPath:
-        '/images/products/product-1/features/product-1-feature-permissions.webp',
+        '/images/products/product-1/desktop/product-1-feature-permissions.jpeg',
       screenshotAlt: 'Admin user permission management interface',
       screenshotType: 'desktop',
     },
@@ -185,7 +185,7 @@ export const product1: ProductData = {
       description:
         '• Dedicated vendor dashboards\n• Add menu items and deals instantly\n• Monitor daily orders and earnings',
       screenshotPath:
-        '/images/products/product-1/features/product-1-feature-vendor.webp',
+        '/images/products/product-1/desktop/product-1-feature-vendor.jpeg',
       screenshotAlt: 'Vendor self-service dashboard with menu editor',
       screenshotType: 'desktop',
     },
@@ -195,7 +195,7 @@ export const product1: ProductData = {
       description:
         '• Set service center on an interactive map\n• Slide to adjust maximum delivery radius\n• Different radii for different store types',
       screenshotPath:
-        '/images/products/product-1/features/product-1-feature-location.webp',
+        '/images/products/product-1/desktop/product-1-feature-location.jpeg',
       screenshotAlt: 'Location settings with interactive map and radius slider',
       screenshotType: 'desktop',
     },
@@ -205,7 +205,7 @@ export const product1: ProductData = {
       description:
         '• Upload a simple spreadsheet\n• Add hundreds of items instantly\n• Ready for customers to order',
       screenshotPath:
-        '/images/products/product-1/features/product-1-feature-bulk-import.webp',
+        '/images/products/product-1/desktop/product-1-feature-bulk-import.jpeg',
       screenshotAlt: 'Restaurant detail with bulk CSV import section',
       screenshotType: 'desktop',
     },
@@ -215,7 +215,7 @@ export const product1: ProductData = {
       description:
         '• Auto-assign to the nearest available rider\n• Manual assignment override\n• Keep deliveries moving fast',
       screenshotPath:
-        '/images/products/product-1/features/product-1-feature-rider-assignment.webp',
+        '/images/products/product-1/desktop/product-1-feature-rider-assignment.jpeg',
       screenshotAlt: 'Order management with rider assignment modal',
       screenshotType: 'desktop',
     },
@@ -269,8 +269,8 @@ export const product2: ProductData = {
   accent: 'green',
   url: null,
   heroVideo: {
-    desktop: '/videos/product-2/khushi-erp-desktop.mp4',
-    mobile: '/videos/product-2/khushi-erp-mobile.mp4',
+    desktop: '/videos/SMS-desktop-video.mp4',
+    mobile: '/videos/SMS-desktop-video.mp4',
     alt: 'Khushi SMS Platform Overview Video',
   },
   heroScreenshot: {
@@ -365,7 +365,7 @@ export const product2: ProductData = {
       description:
         '• Interactive performance trend graphs\n• Class position ranking tables\n• Replaces confusing paper report cards',
       screenshotPath:
-        '/images/products/product-2/mobile/product-2-feature-academic-graph.webp',
+        '/images/products/product-2/mobile/product-2-feature-academic-graph.jpeg',
       screenshotAlt:
         'Parent Mobile App showing Subject Performance Graph and Class Position Ranking Table',
       screenshotType: 'mobile',
@@ -376,7 +376,7 @@ export const product2: ProductData = {
       description:
         '• Pay fees instantly online\n• Clear paid vs remaining status charts\n• Funds go straight to the school bank account',
       screenshotPath:
-        '/images/products/product-2/mobile/product-2-feature-payfast.webp',
+        '/images/products/product-2/mobile/product-2-feature-payfast.jpeg',
       screenshotAlt:
         'Parent Mobile Fee System with Pie Chart and Online Checkout',
       screenshotType: 'mobile',
@@ -387,7 +387,7 @@ export const product2: ProductData = {
       description:
         '• Daily session locks\n• Password verification on every payment\n• Complete audit trail for every rupee',
       screenshotPath:
-        '/images/products/product-2/desktop/product-2-feature-cash-sessions.webp',
+        '/images/products/product-2/desktop/product-2-feature-cash-sessions.png',
       screenshotAlt:
         'Accountant Dashboard with active session and password verification modal',
       screenshotType: 'desktop',
@@ -398,7 +398,7 @@ export const product2: ProductData = {
       description:
         '• Live multi-camera processing\n• Syncs directly to parent apps\n• Automatically handles manual overrides',
       screenshotPath:
-        '/images/products/product-2/desktop/product-2-feature-face-recognition.webp',
+        '/images/products/product-2/desktop/product-2-feature-face-recognition.png',
       screenshotAlt:
         'Multi-Camera Face Stream showing live video grid and attendance log',
       screenshotType: 'desktop',
@@ -409,7 +409,7 @@ export const product2: ProductData = {
       description:
         '• Generates 3-copy fee vouchers instantly\n• Native typography support\n• Ready for bank processing',
       screenshotPath:
-        '/images/products/product-2/desktop/product-2-feature-vouchers.webp',
+        '/images/products/product-2/desktop/product-2-feature-vouchers.png',
       screenshotAlt:
         'Fee Voucher Print Preview rendering multi-copy PDF voucher',
       screenshotType: 'desktop',
@@ -420,7 +420,7 @@ export const product2: ProductData = {
       description:
         '• Teachers enter marks directly on their phones\n• Custom grading scale rules\n• Parents notified instantly on publish',
       screenshotPath:
-        '/images/products/product-2/mobile/product-2-feature-exams.webp',
+        '/images/products/product-2/mobile/product-2-feature-exams.jpeg',
       screenshotAlt: 'Teacher Mobile Exam Builder and Marks Entry Screen',
       screenshotType: 'mobile',
     },

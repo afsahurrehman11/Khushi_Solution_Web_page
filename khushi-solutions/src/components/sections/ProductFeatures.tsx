@@ -62,10 +62,10 @@ export default function ProductFeatures({ product }: ProductFeaturesProps) {
                 </div>
 
                 {/* Media Content */}
-                <div className="w-full flex justify-center mt-2">
-                  <ScrollReveal delay={0.1} className="w-full flex justify-center">
+                <div className="w-full flex justify-center mt-2 overflow-hidden">
+                  <ScrollReveal delay={0.1} className="w-full flex justify-center overflow-hidden">
                     {feature.screenshotType === 'mobile' ? (
-                      <div className="max-w-[230px] w-full">
+                      <div className="max-w-[230px] w-full shrink-0 flex justify-center overflow-hidden">
                         <MobileFrame
                           src={feature.screenshotPath}
                           alt={feature.screenshotAlt}
@@ -73,7 +73,7 @@ export default function ProductFeatures({ product }: ProductFeaturesProps) {
                         />
                       </div>
                     ) : (
-                      <div className="w-full rounded-xl overflow-hidden border border-border shadow-sm">
+                      <div className="w-full rounded-xl overflow-hidden border border-border shadow-sm bg-white">
                         <ScreenshotFrame
                           src={feature.screenshotPath}
                           alt={feature.screenshotAlt}

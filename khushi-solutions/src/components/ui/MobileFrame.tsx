@@ -23,7 +23,7 @@ export default function MobileFrame({
   const notchBg =
     accentColor === 'blue' ? 'bg-primary/10' : 'bg-secondary/10';
 
-  const isPlaceholder = !src || src.includes('.webp');
+  const isPlaceholder = !src;
 
   return (
     <div
@@ -36,8 +36,8 @@ export default function MobileFrame({
         />
       </div>
 
-      {/* Screen content — Standard Android 9:16 Aspect Ratio */}
-      <div className="relative w-full" style={{ aspectRatio: '9/16' }}>
+      {/* Screen content — dynamic height to display 100% of mobile screenshot cleanly */}
+      <div className="relative w-full overflow-hidden bg-white">
         {isPlaceholder ? (
           <ImagePlaceholder
             label={alt}
@@ -49,9 +49,10 @@ export default function MobileFrame({
           <Image
             src={src}
             alt={alt}
-            fill
+            width={400}
+            height={711}
             sizes="(max-width: 768px) 220px, 240px"
-            className="object-cover object-top"
+            className="w-full h-auto block"
             priority={priority}
           />
         )}

@@ -24,24 +24,34 @@ const fadeRight: Variants = {
 
 const carouselFrames = [
   {
-    label: 'Bites   Admin Dashboard',
-    src: '/images/products/product-1/desktop/product-1-hero-desktop.webp',
+    label: 'Khushi Delivery   Vendor Dashboard',
+    src: '/images/products/product-1/desktop/product-1-feature-vendor.jpeg',
     accent: '#10b981',
   },
   {
-    label: 'Bites   Mobile App',
-    src: '/images/products/product-1/mobile/product-1-hero-mobile.webp',
+    label: 'Khushi Delivery   13 Store Categories App',
+    src: '/images/products/product-1/mobile/product-1-feature-categories.jpeg',
     accent: '#10b981',
   },
   {
-    label: 'Khushi SMS   Dashboard',
-    src: '/images/products/product-2/desktop/product-2-hero-desktop.webp',
+    label: 'Khushi SMS   AI Face Recognition',
+    src: '/images/products/product-2/desktop/product-2-feature-face-recognition.png',
     accent: '#2C64B4',
   },
   {
-    label: 'Khushi SMS   Parent App',
-    src: '/images/products/product-2/mobile/product-2-hero-mobile.webp',
+    label: 'Khushi SMS   Parent Academic Analytics',
+    src: '/images/products/product-2/mobile/product-2-feature-academic-graph.jpeg',
     accent: '#2C64B4',
+  },
+  {
+    label: 'Khushi SMS   Cash Session Security',
+    src: '/images/products/product-2/desktop/product-2-feature-cash-sessions.png',
+    accent: '#2C64B4',
+  },
+  {
+    label: 'Khushi Delivery   Rider Assignment',
+    src: '/images/products/product-1/desktop/product-1-feature-rider-assignment.jpeg',
+    accent: '#10b981',
   },
 ];
 
@@ -169,22 +179,22 @@ export default function HeroSection() {
                 </span>
               </div>
 
-              {/* STRICT 16/9 aspect-video bounding box   all images forced to fit */}
-              <div className="relative w-full aspect-video bg-slate-100">
+              {/* STRICT 16/9 aspect-video bounding box   all images fit symmetrically without cropping */}
+              <div className="relative w-full aspect-video bg-slate-50 flex items-center justify-center p-2.5 sm:p-4 overflow-hidden">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentFrame}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4, ease: 'easeOut' }}
-                    className="absolute inset-0"
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.97 }}
+                    transition={{ duration: 0.35, ease: 'easeOut' }}
+                    className="relative w-full h-full flex items-center justify-center"
                   >
                     <Image
                       src={frame.src}
                       alt={frame.label}
                       fill
-                      className="object-cover"
+                      className="object-contain object-center drop-shadow-md rounded-md"
                       sizes="(max-width: 1024px) 100vw, 50vw"
                       priority={currentFrame === 0}
                     />

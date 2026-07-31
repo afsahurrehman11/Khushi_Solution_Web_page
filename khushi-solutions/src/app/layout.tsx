@@ -27,12 +27,12 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Khushi Solutions   Engineered Software for Real Businesses',
+  title: 'Khushi Solutions | Engineered Software',
   description:
     'Khushi Solutions builds production-grade software platforms   from multi-store delivery systems to AI-powered school management. Real products. Real users. Proven results.',
   keywords: [
     'Khushi Solutions',
-    'Bites delivery platform',
+    'Khushi Delivery platform',
     'Khushi SMS',
     'School ERP',
     'multi-store delivery',
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Khushi Solutions' }],
   openGraph: {
-    title: 'Khushi Solutions   Engineered Software for Real Businesses',
+    title: 'Khushi Solutions | Engineered Software',
     description:
       'Production-grade software platforms for delivery operations and educational institutions.',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://khushisolutions.com',
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Khushi Solutions   Engineered Software for Real Businesses',
+    title: 'Khushi Solutions | Engineered Software',
     description:
       'Production-grade software platforms for delivery operations and educational institutions.',
   },
@@ -69,6 +69,11 @@ export const metadata: Metadata = {
 
 import CustomCursor from '@/components/ui/CustomCursor';
 import FloatingActionButton from '@/components/ui/FloatingActionButton';
+import type { Viewport } from 'next';
+
+export const viewport: Viewport = {
+  themeColor: '#2C64B4',
+};
 
 export default function RootLayout({
   children,

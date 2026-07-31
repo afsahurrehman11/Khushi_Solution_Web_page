@@ -34,6 +34,7 @@ export const navItems = [
   { label: 'About', href: '/#about' },
   { label: 'Why Us', href: '/#why-us' },
   { label: 'Contact', href: '/#contact' },
+  { label: 'Become Affiliate Broker', href: '/?form=affiliate#contact' },
 ];
 
 /* Contact details & social links from environment variables with fallbacks */

@@ -139,8 +139,8 @@ export default function Footer() {
             <h4 className="text-xs font-bold text-text-primary uppercase tracking-widest mb-3">Products</h4>
             <ul className="flex flex-col gap-2.5">
               <li>
-                <Link href="/products/bites" className="group flex items-center gap-1.5 text-xs text-text-secondary hover:text-primary transition-colors">
-                  Bites Delivery
+                <Link href="/products/khushi-delivery" className="group flex items-center gap-1.5 text-xs text-text-secondary hover:text-primary transition-colors">
+                  Khushi Delivery
                   <ArrowUpRight className="w-3 h-3 opacity-0 -translate-y-0.5 translate-x-0.5 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
                 </Link>
               </li>

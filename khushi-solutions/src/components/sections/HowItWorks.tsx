@@ -8,7 +8,7 @@ interface HowItWorksProps {
   product: ProductData;
 }
 
-const bitesWorkflow = [
+const deliveryWorkflow = [
   { icon: ShoppingBag, label: 'Customer Browsing', sublabel: 'Opens app, sees 13 store types, adds items to cart.' },
   { icon: Map, label: 'Smart Pricing', sublabel: 'System calculates delivery fee based on exact road distance.' },
   { icon: CheckCircle2, label: 'Vendor Acceptance', sublabel: 'Store owner accepts order on dedicated tablet dashboard.' },
@@ -25,7 +25,7 @@ const erpWorkflow = [
 ];
 
 export default function HowItWorks({ product }: HowItWorksProps) {
-  const workflow = product.id === 'bites' ? bitesWorkflow : erpWorkflow;
+  const workflow = product.id === 'khushi-delivery' ? deliveryWorkflow : erpWorkflow;
   const accentColor = product.accent === 'blue' ? 'var(--color-primary)' : 'var(--color-secondary)';
   const gradientLine = product.accent === 'blue' 
     ? 'from-blue-100 via-blue-500 to-blue-100' 
