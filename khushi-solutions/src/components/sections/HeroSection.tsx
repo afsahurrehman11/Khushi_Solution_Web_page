@@ -91,11 +91,11 @@ export default function HeroSection() {
   const autoPlayRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const { scrollTo } = useSmoothScroll();
 
-  /* Auto-play continuous 1.5s rotation (never pauses on manual interaction) */
+  /* Auto-play continuous 2s rotation (never pauses on manual interaction) */
   useEffect(() => {
     autoPlayRef.current = setTimeout(() => {
       setCurrentFrame((prev) => (prev + 1) % carouselFrames.length);
-    }, 1500);
+    }, 2000);
     return () => clearTimeout(autoPlayRef.current);
   }, [currentFrame]);
 

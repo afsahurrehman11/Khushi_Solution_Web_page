@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { Send, CheckCircle2, AlertCircle, Loader2, ChevronDown } from 'lucide-react';
 import { Country, City } from 'country-state-city';
 import SearchableDropdown, { DropdownOption } from '../ui/SearchableDropdown';
 import { useEffect } from 'react';
@@ -18,10 +18,17 @@ export default function ContactForm({ formType, onSuccess }: ContactFormProps) {
   const [errorMessage, setErrorMessage] = useState('');
 
   // Dropdown State
+  const [selectedProduct, setSelectedProduct] = useState('');
   const [selectedCountryCode, setSelectedCountryCode] = useState('');
   const [selectedCityName, setSelectedCityName] = useState('');
   const [countries, setCountries] = useState<DropdownOption[]>([]);
   const [cities, setCities] = useState<DropdownOption[]>([]);
+
+  const productOptions: DropdownOption[] = [
+    { value: 'Khushi Delivery', label: 'Khushi Delivery (Delivery & Operations)' },
+    { value: 'Khushi SMS / ERP', label: 'Khushi SMS / ERP (School Management)' },
+    { value: 'Both Platforms', label: 'Both Platforms / General Inquiry' },
+  ];
 
   useEffect(() => {
     const allCountries = Country.getAllCountries().map((c) => ({
@@ -82,6 +89,7 @@ export default function ContactForm({ formType, onSuccess }: ContactFormProps) {
       if (data.success) {
         setStatus('success');
         formElement.reset();
+        setSelectedProduct('');
         setSelectedCountryCode('');
         setSelectedCityName('');
         setTimeout(() => {
@@ -131,47 +139,87 @@ export default function ContactForm({ formType, onSuccess }: ContactFormProps) {
             </div>
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-bold text-text-primary uppercase tracking-widest ml-1">
-                Business Name <span className="text-red-500">*</span>
+                Select Product <span className="text-red-500">*</span>
               </label>
-              <input required name="business_name" type="text" placeholder="Acme Corp" className="w-full px-4 py-3 rounded-xl text-text-primary placeholder:text-text-muted bg-white border border-border shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm" />
+              <div className="relative w-full">
+                <select
+                  required
+                  name="selected_product"
+                  value={selectedProduct}
+                  onChange={(e) => setSelectedProduct(e.target.value)}
+                  className={`w-full px-4 py-3 rounded-xl border shadow-xs focus:outline-none focus:ring-2 focus:border-transparent transition-all text-sm cursor-pointer appearance-none pr-10 ${
+                    selectedProduct === 'Khushi Delivery'
+                      ? 'bg-emerald-50/90 border-emerald-400 text-emerald-950 font-bold shadow-emerald-500/10 focus:ring-emerald-500'
+                      : selectedProduct === 'Khushi SMS / ERP'
+                      ? 'bg-blue-50/90 border-blue-400 text-blue-950 font-bold shadow-blue-500/10 focus:ring-blue-500'
+                      : selectedProduct === 'Both Products'
+                      ? 'bg-indigo-50/90 border-indigo-400 text-indigo-950 font-bold shadow-indigo-500/10 focus:ring-indigo-500'
+                      : 'bg-white border-border text-text-primary hover:border-slate-300 focus:ring-primary'
+                  }`}
+                >
+                  <option value="" disabled className="text-text-muted bg-white">Select Product...</option>
+                  <option value="Khushi Delivery" className="text-emerald-900 bg-white font-semibold py-2">🟢 Khushi Delivery</option>
+                  <option value="Khushi SMS / ERP" className="text-blue-900 bg-white font-semibold py-2">🔵 Khushi SMS / ERP</option>
+                  <option value="Both Products" className="text-indigo-900 bg-white font-semibold py-2">⚡ Both Products</option>
+                </select>
+                <div className={`absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none transition-colors ${
+                  selectedProduct === 'Khushi Delivery'
+                    ? 'text-emerald-600'
+                    : selectedProduct === 'Khushi SMS / ERP'
+                    ? 'text-blue-600'
+                    : selectedProduct === 'Both Products'
+                    ? 'text-indigo-600'
+                    : 'text-text-muted'
+                }`}>
+                  <ChevronDown className="w-4 h-4" />
+                </div>
+              </div>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-bold text-text-primary uppercase tracking-widest ml-1">
+                Business Name <span className="text-red-500">*</span>
+              </label>
+              <input required name="business_name" type="text" placeholder="Acme Corp" className="w-full px-4 py-3 rounded-xl text-text-primary placeholder:text-text-muted bg-white border border-border shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm" />
+            </div>
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-bold text-text-primary uppercase tracking-widest ml-1">
                 Email Address <span className="text-red-500">*</span>
               </label>
               <input required name="email" type="email" placeholder="john@example.com" className="w-full px-4 py-3 rounded-xl text-text-primary placeholder:text-text-muted bg-white border border-border shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm" />
             </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-bold text-text-primary uppercase tracking-widest ml-1">
                 Phone Number <span className="text-red-500">*</span>
               </label>
               <input required name="phone" type="tel" placeholder="+1 234 567 8900" className="w-full px-4 py-3 rounded-xl text-text-primary placeholder:text-text-muted bg-white border border-border shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm" />
             </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-bold text-text-primary uppercase tracking-widest ml-1">
                 Country <span className="text-red-500">*</span>
               </label>
               <SearchableDropdown options={countries} value={selectedCountryCode} onChange={setSelectedCountryCode} placeholder="Search Country..." />
             </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-bold text-text-primary uppercase tracking-widest ml-1">
                 City <span className="text-red-500">*</span>
               </label>
               <SearchableDropdown name="city" options={cities} value={selectedCityName} onChange={setSelectedCityName} placeholder={selectedCountryCode ? "Search City..." : "Select Country first"} disabled={!selectedCountryCode || cities.length === 0} />
             </div>
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-bold text-text-primary uppercase tracking-widest ml-1">
-              Full Address
-            </label>
-            <input name="address" type="text" placeholder="123 Business Avenue, Suite 100" className="w-full px-4 py-3 rounded-xl text-text-primary placeholder:text-text-muted bg-white border border-border shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm" />
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-bold text-text-primary uppercase tracking-widest ml-1">
+                Full Address
+              </label>
+              <input name="address" type="text" placeholder="123 Business Avenue, Suite 100" className="w-full px-4 py-3 rounded-xl text-text-primary placeholder:text-text-muted bg-white border border-border shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm" />
+            </div>
           </div>
 
           {formType === 'affiliate' && (

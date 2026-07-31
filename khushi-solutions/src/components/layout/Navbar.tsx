@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { Menu, X, ChevronDown, ArrowRight, MessageCircle } from 'lucide-react';
@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { navItems } from '@/data/company';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 
-export default function Navbar() {
+function NavbarContent() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -225,5 +225,13 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </>
+  );
+}
+
+export default function Navbar() {
+  return (
+    <Suspense fallback={<header className="fixed top-0 left-0 right-0 z-50 h-20 bg-white/80 backdrop-blur-md border-b border-border" />}>
+      <NavbarContent />
+    </Suspense>
   );
 }

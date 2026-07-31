@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, Suspense } from 'react';
 import { motion, useInView, type Variants } from 'framer-motion';
 import { ArrowRight, Truck, GraduationCap, MapPin, Smartphone, Receipt, Calendar, Users, Fingerprint } from 'lucide-react';
 import Link from 'next/link';
@@ -180,7 +180,7 @@ function ProductCard({
   );
 }
 
-export default function ProductOverview() {
+function ProductOverviewContent() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-10% 0px' });
   const searchParams = useSearchParams();
@@ -238,5 +238,13 @@ export default function ProductOverview() {
         </div>
       </div>
     </section>
+  );
+}
+
+export default function ProductOverview() {
+  return (
+    <Suspense fallback={<section id="products" className="py-4 min-h-[500px]" />}>
+      <ProductOverviewContent />
+    </Suspense>
   );
 }
