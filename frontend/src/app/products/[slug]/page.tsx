@@ -6,6 +6,7 @@ import CapabilityGrid from '@/components/sections/CapabilityGrid';
 import ProductFeatures from '@/components/sections/ProductFeatures';
 import ProductDetailHero from '@/components/sections/ProductDetailHero';
 import HowItWorks from '@/components/sections/HowItWorks';
+import PurchaseSection from '@/components/sections/purchase/PurchaseSection';
 import Navbar from '@/components/layout/Navbar';
 import ContactSection from '@/components/sections/ContactSection';
 import Footer from '@/components/layout/Footer';
@@ -56,6 +57,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
           {/* How It Works */}
           <HowItWorks product={product} />
+
+          {/* Purchase Section */}
+          <PurchaseSection product={product} />
 
           {/* Contact Section */}
           <ContactSection />
