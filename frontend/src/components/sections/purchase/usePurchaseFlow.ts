@@ -11,12 +11,19 @@ export type PurchaseState =
   | 'api_error'
   | 'network_error';
 
+export interface PlanFeature {
+  name: string;
+  included: boolean;
+}
+
 export interface Plan {
   plan_key: string;
   label: string;
   amount_pkr: number;
   description: string;
+  is_custom_price?: boolean;
   categories?: { key: string; label: string; commission_pct: number; display: string }[];
+  features?: PlanFeature[];
 }
 
 export function usePurchaseFlow(productId: string) {
@@ -35,7 +42,6 @@ export function usePurchaseFlow(productId: string) {
       const data = await res.json();
       setPlans(data.plans);
     } catch (err: any) {
-      // Avoid console.error for standard Failed to fetch to prevent Next.js dev overlay
       if (err.name !== 'TypeError' && err.message !== 'Failed to fetch') {
         console.error(err);
       }
@@ -109,7 +115,7 @@ export function usePurchaseFlow(productId: string) {
         }
       }
 
-      // If zero amount (ERP free), it might be PAID already. Let's redirect to status page directly to check.
+      // If zero amount (ERP free), redirect to payment-status or success
       if (purchaseData.amount_pkr === 0) {
         window.location.href = `/payment-status?purchase_id=${newPurchaseId}`;
         return;
@@ -127,7 +133,6 @@ export function usePurchaseFlow(productId: string) {
       }
 
       const payData = await payRes.json();
-      // Redirect to AssanPay
       window.location.href = payData.complete_link;
 
     } catch (err: any) {

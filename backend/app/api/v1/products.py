@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 from app.config.pricing import PRICING_CONFIG
-from app.schemas.product_schemas import PricingResponse, PlanInfo, PlanCategory
+from app.schemas.product_schemas import PricingResponse, PlanInfo, PlanCategory, PlanFeature
 from app.core.security import sanitize_product_id
 from app.core.exceptions import ValidationError
 
@@ -23,12 +23,20 @@ async def get_pricing(product_id: str, request: Request):
                 PlanCategory(**cat) for cat in plan_data["categories"].values()
             ]
             
+        features = None
+        if plan_data.get("features"):
+            features = [
+                PlanFeature(**f) for f in plan_data["features"]
+            ]
+            
         plan_infos.append(PlanInfo(
             plan_key=plan_key,
             label=plan_data["label"],
             amount_pkr=plan_data["registration_fee_pkr"],
             description=plan_data["description"],
-            categories=categories
+            is_custom_price=plan_data.get("is_custom_price", False),
+            categories=categories,
+            features=features
         ))
         
     return PricingResponse(
