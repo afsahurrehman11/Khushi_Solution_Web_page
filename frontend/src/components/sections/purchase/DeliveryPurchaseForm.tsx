@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Plan } from './usePurchaseFlow';
-import { ArrowLeft, ArrowRight, UserCircle, Building2, Upload, Check, ImageIcon, FileImage, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, UserCircle, Building2, Upload, Check, ImageIcon, FileImage, ChevronRight, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface DeliveryPurchaseFormProps {
@@ -18,6 +18,7 @@ const STEPS = [
 
 export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentClass }: DeliveryPurchaseFormProps) {
   const [currentStep, setCurrentStep] = useState(0);
+  const [showFileError, setShowFileError] = useState(false);
   
   const [formData, setFormData] = useState({
     name: '', email: '', phone: '', whatsapp: '',
@@ -38,6 +39,7 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
     if (!e.target.files?.length) return;
     if (field === 'business_logo') {
       setFiles(prev => ({ ...prev, business_logo: e.target.files![0] }));
+      setShowFileError(false);
     } else {
       setFiles(prev => ({ ...prev, business_photos: Array.from(e.target.files!) }));
     }
@@ -69,6 +71,12 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!files.business_logo) {
+      setShowFileError(true);
+      return;
+    }
+    
     if (!validateStep(0) || !validateStep(1) || !validateStep(2)) return;
     
     const payload = {
@@ -200,32 +208,46 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
                     <label className="block text-xs font-semibold text-slate-700 mb-1.5">Business Name *</label>
                     <input required minLength={2} name="business_name" value={formData.business_name} onChange={handleChange} className={inputClass} placeholder="e.g. Khushi Foods" />
                   </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">Category *</label>
+                  
+                  {/* Category Selection with Commission Display */}
+                  <div className="sm:col-span-2">
+                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">Business Category *</label>
                     <div className="relative">
                       <select required name="business_category" value={formData.business_category} onChange={handleChange} className={`${inputClass} appearance-none pr-8 cursor-pointer`}>
-                        <option value="food_restaurant">Food & Restaurant</option>
-                        <option value="grocery">Grocery</option>
-                        <option value="pharmacy">Pharmacy</option>
-                        <option value="general_retail">General Retail</option>
-                        <option value="other">Other</option>
+                        <option value="food_restaurant">🍔 Food & Restaurant (15% Commission)</option>
+                        <option value="grocery" disabled>🛒 Grocery (Coming Soon)</option>
+                        <option value="pharmacy" disabled>💊 Pharmacy (Coming Soon)</option>
+                        <option value="general_retail" disabled>🛍️ General Retail (Coming Soon)</option>
+                        <option value="other" disabled>✨ Other (Coming Soon)</option>
                       </select>
                       <ChevronRight className="w-4 h-4 rotate-90 absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                     </div>
+                    
+                    {/* Dynamic Commission Info Card */}
+                    <div className="mt-2.5 p-3 rounded-xl bg-blue-50/70 border border-blue-100 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-bold text-slate-700">Platform Commission:</span>
+                        <span className="text-xs font-extrabold text-primary bg-white px-2.5 py-0.5 rounded-full border border-blue-200 shadow-2xs">
+                          15% per order
+                        </span>
+                      </div>
+                      <span className="text-[11px] font-medium text-slate-500">Only Food & Restaurant is currently active</span>
+                    </div>
                   </div>
+
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1.5">Sub-Category (optional)</label>
                     <input name="sub_category" placeholder="e.g. Fast Food" value={formData.sub_category} onChange={handleChange} className={inputClass} />
-                  </div>
-                  <div className="sm:col-span-2">
-                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">Complete Address *</label>
-                    <input required minLength={3} name="business_address" value={formData.business_address} onChange={handleChange} className={inputClass} placeholder="Shop 1, Main Street" />
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 mb-1.5">City *</label>
                     <input required minLength={2} name="city" value={formData.city} onChange={handleChange} className={inputClass} placeholder="Lahore" />
                   </div>
-                  <div>
+                  <div className="sm:col-span-2">
+                    <label className="block text-xs font-semibold text-slate-700 mb-1.5">Complete Address *</label>
+                    <input required minLength={3} name="business_address" value={formData.business_address} onChange={handleChange} className={inputClass} placeholder="Shop 1, Main Street" />
+                  </div>
+                  <div className="sm:col-span-2">
                     <label className="block text-xs font-semibold text-slate-700 mb-1.5">Area / Town *</label>
                     <input required minLength={2} name="area_town" value={formData.area_town} onChange={handleChange} className={inputClass} placeholder="Gulberg" />
                   </div>
@@ -241,15 +263,25 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
                   <p className="text-xs text-slate-500">Attach logo and storefront images.</p>
                 </div>
 
+                {showFileError && !files.business_logo && (
+                  <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 flex items-center gap-2 text-xs font-bold animate-shake">
+                    <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
+                    Please select a Business Logo before completing registration.
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* File Box 1 */}
-                  <div className="p-4 border border-slate-200 rounded-xl bg-slate-50/50 flex flex-col items-center justify-center text-center">
-                    <ImageIcon className="w-6 h-6 text-slate-400 mb-2" />
+                  <div className={`p-4 border rounded-xl flex flex-col items-center justify-center text-center transition-colors ${showFileError && !files.business_logo ? 'border-red-300 bg-red-50/30' : 'border-slate-200 bg-slate-50/50'}`}>
+                    <ImageIcon className={`w-6 h-6 mb-2 ${showFileError && !files.business_logo ? 'text-red-400' : 'text-slate-400'}`} />
                     <span className="text-xs font-bold text-slate-800 mb-1">Business Logo *</span>
                     <span className="text-[11px] text-slate-400 mb-3">PNG, JPG up to 2MB</span>
-                    <label className="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm">
+                    <label className={`cursor-pointer px-3 py-1.5 rounded-lg border text-xs font-semibold transition-colors shadow-sm ${
+                      files.business_logo ? 'bg-emerald-50 border-emerald-300 text-emerald-700' : 
+                      showFileError ? 'bg-red-100 border-red-300 text-red-800' : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                    }`}>
                       {files.business_logo ? files.business_logo.name : 'Choose File'}
-                      <input required type="file" accept="image/*" onChange={(e) => handleFileChange(e, 'business_logo')} className="hidden" />
+                      <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, 'business_logo')} className="hidden" />
                     </label>
                   </div>
                   
