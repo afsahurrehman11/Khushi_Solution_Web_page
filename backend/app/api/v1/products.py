@@ -7,6 +7,7 @@ from app.core.exceptions import ValidationError
 router = APIRouter()
 # dumy
 
+
 @router.get("/{product_id}/pricing", response_model=PricingResponse)
 async def get_pricing(product_id: str, request: Request):
     backend_product_id = sanitize_product_id(product_id)
