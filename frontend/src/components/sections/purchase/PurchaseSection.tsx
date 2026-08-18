@@ -7,10 +7,10 @@ import PlanSelector from './PlanSelector';
 import OrderReview from './OrderReview';
 import DeliveryPurchaseForm from './DeliveryPurchaseForm';
 import ErpPurchaseForm from './ErpPurchaseForm';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, RefreshCw, ArrowLeft } from 'lucide-react';
 
 interface PurchaseSectionProps {
-  product: any; // Using any for simplicity as it matches the existing product data type
+  product: any;
 }
 
 export default function PurchaseSection({ product }: PurchaseSectionProps) {
@@ -34,7 +34,6 @@ export default function PurchaseSection({ product }: PurchaseSectionProps) {
   const isBlue = product.accent === 'blue';
   const accentClass = isBlue ? 'text-primary' : 'text-secondary';
   
-  // Decide which form to show
   const isDelivery = product.id === 'khushi-delivery';
 
   return (
@@ -58,10 +57,10 @@ export default function PurchaseSection({ product }: PurchaseSectionProps) {
         )}
 
         {/* Global Error Banner */}
-        {error && (
-          <div className="max-w-2xl mx-auto mb-8 p-4 bg-red-50 rounded-xl border border-red-200 flex items-start gap-3 animate-in fade-in slide-in-from-top-2">
-            <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
-            <p className="text-sm text-red-800">{error}</p>
+        {error && state !== 'api_error' && state !== 'network_error' && (
+          <div className="max-w-2xl mx-auto mb-8 p-4 bg-amber-50 rounded-xl border border-amber-200 flex items-start gap-3 animate-in fade-in slide-in-from-top-2">
+            <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+            <p className="text-xs font-semibold text-amber-800 leading-relaxed">{error}</p>
           </div>
         )}
 
@@ -103,22 +102,38 @@ export default function PurchaseSection({ product }: PurchaseSectionProps) {
               <div className={`w-12 h-12 border-4 border-slate-100 rounded-full mx-auto mb-6 animate-spin ${
                 accentClass === 'text-primary' ? 'border-t-primary' : 'border-t-secondary'
               }`} />
-              <h3 className="text-xl font-bold text-text-primary mb-2">
+              <h3 className="text-xl font-bold text-slate-900 mb-2">
                 {state === 'creating_purchase' ? 'Creating your account...' : 'Redirecting to AssanPay...'}
               </h3>
-              <p className="text-text-secondary">Please wait, do not close this page.</p>
+              <p className="text-xs text-slate-500 font-medium">Please wait while we connect to our secure checkout gateway.</p>
             </div>
           )}
           
           {(state === 'api_error' || state === 'network_error') && (
-            <div className="py-24 text-center max-w-lg mx-auto animate-in slide-in-from-bottom-4 fade-in duration-500">
-               <div className="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <AlertCircle className="w-8 h-8" />
+            <div className="py-12 text-center max-w-md mx-auto animate-in slide-in-from-bottom-4 fade-in duration-500 bg-white p-8 rounded-2xl border border-slate-300 shadow-md">
+               <div className="w-14 h-14 bg-blue-50 border border-blue-100 text-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                  <AlertCircle className="w-7 h-7 text-primary" />
                </div>
-               <h3 className="text-xl font-bold text-text-primary mb-4">Registration Failed</h3>
-               <button onClick={reset} className="btn-primary-gradient px-8 py-3 rounded-full text-white font-bold">
-                 Try Again
-               </button>
+               <h3 className="text-lg font-bold text-slate-900 mb-2">Checkout Gateway Notice</h3>
+               <p className="text-xs text-slate-600 mb-6 leading-relaxed font-medium">
+                 {error || "We couldn't connect to the payment gateway at this moment. Don't worry! Your registration information is safe. You can try again or return to plans."}
+               </p>
+               <div className="flex items-center justify-center gap-3">
+                 <button 
+                   onClick={reset} 
+                   className="px-5 py-2.5 rounded-xl bg-white border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-100 transition-colors flex items-center gap-1.5 shadow-2xs"
+                 >
+                   <ArrowLeft className="w-3.5 h-3.5" /> Return to Plans
+                 </button>
+                 <button 
+                   onClick={() => confirmPurchase()} 
+                   className={`px-5 py-2.5 rounded-xl text-white font-bold text-xs shadow-sm transition-all flex items-center gap-1.5 ${
+                     isBlue ? 'bg-primary hover:bg-blue-700' : 'bg-secondary hover:bg-emerald-700'
+                   }`}
+                 >
+                   <RefreshCw className="w-3.5 h-3.5" /> Retry Checkout
+                 </button>
+               </div>
             </div>
           )}
         </div>

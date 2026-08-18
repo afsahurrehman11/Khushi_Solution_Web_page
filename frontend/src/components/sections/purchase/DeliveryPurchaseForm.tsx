@@ -109,10 +109,10 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
 
   const validateStep = (step: number) => {
     if (step === 0) {
-      return formData.name.length > 1 && formData.email.includes('@') && formData.phone.length > 5;
+      return formData.name.trim().length > 1 && formData.email.includes('@') && formData.phone.trim().length > 2;
     }
     if (step === 1) {
-      return formData.business_name.length > 1 && formData.business_address.length > 1 && formData.city.length > 1;
+      return formData.business_name.trim().length > 1 && formData.business_address.trim().length > 1 && formData.city.trim().length > 1;
     }
     if (step === 2) {
       return files.business_logo !== null && files.business_photos.length >= 3;
@@ -166,39 +166,39 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
   const isBlue = accentClass.includes('primary');
 
   const containerVariants = {
-    hidden: { opacity: 0, y: 15 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeOut' as const } },
-    exit: { opacity: 0, y: -15, transition: { duration: 0.15 } }
+    hidden: { opacity: 0, y: 12 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.2, ease: 'easeOut' as const } },
+    exit: { opacity: 0, y: -12, transition: { duration: 0.12 } }
   };
 
-  const inputClass = `w-full px-4 py-3 rounded-xl border border-slate-300 bg-slate-50/80 focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all text-sm font-semibold text-slate-900 placeholder:text-slate-400 outline-none shadow-2xs`;
+  const inputClass = `w-full px-3.5 py-2.5 rounded-lg border border-slate-300 bg-slate-50/80 focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all text-xs font-semibold text-slate-900 placeholder:text-slate-400 outline-none shadow-2xs`;
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-xl mx-auto">
       {/* Top Navigation & Stepper Header */}
-      <div className="bg-white rounded-2xl border border-slate-300 p-5 md:p-6 shadow-sm mb-6">
-        <div className="flex items-center justify-between mb-6 pb-5 border-b border-slate-200">
-          <div className="flex items-center gap-3">
-            <button onClick={onBack} type="button" className="p-2 hover:bg-slate-100 rounded-lg transition-colors border border-slate-300 bg-slate-50 text-slate-700 shadow-2xs">
+      <div className="bg-white rounded-xl border border-slate-300 p-4 md:p-5 shadow-sm mb-4">
+        <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-200">
+          <div className="flex items-center gap-2.5">
+            <button onClick={onBack} type="button" className="p-1.5 hover:bg-slate-100 rounded-md transition-colors border border-slate-300 bg-slate-50 text-slate-700 shadow-2xs">
               <ArrowLeft className="w-4 h-4" />
             </button>
             <div>
-              <h3 className="text-lg font-bold text-slate-900 leading-tight">Registration</h3>
-              <p className="text-xs text-slate-600 font-medium">Fill in the details to proceed</p>
+              <h3 className="text-base font-bold text-slate-900 leading-tight">Registration</h3>
+              <p className="text-[11px] text-slate-500 font-medium">Fill in the details to proceed</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <span className={`px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider text-white shadow-2xs ${isBlue ? 'bg-primary' : 'bg-secondary'}`}>
+            <span className={`px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider text-white shadow-2xs ${isBlue ? 'bg-primary' : 'bg-secondary'}`}>
               {plan.label}
             </span>
-            <span className="text-xs font-extrabold text-slate-800 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-300 shadow-2xs">
+            <span className="text-[11px] font-extrabold text-slate-800 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-300 shadow-2xs">
               {plan.amount_pkr === 0 ? 'Free' : `Rs. ${plan.amount_pkr.toLocaleString()}`}
             </span>
           </div>
         </div>
 
         {/* Crisp Contrast Stepper Tabs */}
-        <div className="grid grid-cols-3 gap-2.5">
+        <div className="grid grid-cols-3 gap-2">
           {STEPS.map((step, idx) => {
             const active = idx === currentStep;
             const completed = idx < currentStep;
@@ -214,65 +214,65 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
                     setCurrentStep(idx); 
                   }
                 }}
-                className={`flex items-center gap-2.5 p-3 rounded-xl text-left transition-all ${
+                className={`flex items-center gap-2 p-2 rounded-lg text-left transition-all ${
                   active ? (isBlue ? 'bg-blue-50 border-2 border-primary text-primary font-bold shadow-2xs' : 'bg-emerald-50 border-2 border-secondary text-secondary font-bold shadow-2xs') :
                   completed ? 'bg-slate-100 border border-slate-300 text-slate-800 hover:bg-slate-200/70 font-semibold' :
                   'bg-slate-50/80 border border-slate-200 text-slate-400'
                 }`}
               >
-                <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 text-xs font-bold ${
+                <div className={`w-6 h-6 rounded-md flex items-center justify-center shrink-0 text-[11px] font-bold ${
                   active ? (isBlue ? 'bg-primary text-white' : 'bg-secondary text-white') :
                   completed ? 'bg-slate-300 text-slate-800' :
                   'bg-slate-200 text-slate-400'
                 }`}>
-                  {completed ? <Check className="w-3.5 h-3.5" /> : <Icon className="w-3.5 h-3.5" />}
+                  {completed ? <Check className="w-3 h-3" /> : <Icon className="w-3 h-3" />}
                 </div>
-                <span className="text-xs truncate hidden sm:inline">{step.title}</span>
+                <span className="text-[11px] truncate hidden sm:inline">{step.title}</span>
               </button>
             );
           })}
         </div>
       </div>
       
-      {/* Main Form Container with High Contrast & Clear Borders */}
-      <div className="bg-slate-50/90 rounded-2xl border border-slate-300 p-6 md:p-8 shadow-sm">
+      {/* Main Form Container - Compact & Proportional */}
+      <div className="bg-slate-50/90 rounded-xl border border-slate-300 p-5 md:p-6 shadow-sm">
         <form id="purchase-form" onSubmit={handleSubmit}>
           <AnimatePresence mode="wait">
             
             {/* STEP 1: OWNER INFO */}
             {currentStep === 0 && (
-              <motion.div key="step0" variants={containerVariants} initial="hidden" animate="visible" exit="exit" className="space-y-4">
-                <div className="mb-4 pb-3 border-b border-slate-200">
-                  <h4 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <motion.div key="step0" variants={containerVariants} initial="hidden" animate="visible" exit="exit" className="space-y-3.5">
+                <div className="mb-3 pb-2.5 border-b border-slate-200">
+                  <h4 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
                     <UserCircle className="w-4 h-4 text-primary" /> Owner Contact Information
                   </h4>
-                  <p className="text-xs text-slate-600">Enter your primary contact details.</p>
+                  <p className="text-[11px] text-slate-500">Enter your primary contact details.</p>
                 </div>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
-                      <User className="w-3.5 h-3.5 text-primary" /> Full Name *
+                    <label className="block text-[11px] font-bold text-slate-800 mb-1 flex items-center gap-1.5">
+                      <User className="w-3 h-3 text-primary" /> Full Name *
                     </label>
                     <input required minLength={2} name="name" value={formData.name} onChange={handleChange} className={inputClass} placeholder="John Doe" />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
-                      <Mail className="w-3.5 h-3.5 text-primary" /> Email Address *
+                    <label className="block text-[11px] font-bold text-slate-800 mb-1 flex items-center gap-1.5">
+                      <Mail className="w-3 h-3 text-primary" /> Email Address *
                     </label>
                     <input required type="email" name="email" value={formData.email} onChange={handleChange} className={inputClass} placeholder="john@example.com" />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
-                      <Phone className="w-3.5 h-3.5 text-primary" /> Mobile Number *
+                    <label className="block text-[11px] font-bold text-slate-800 mb-1 flex items-center gap-1.5">
+                      <Phone className="w-3 h-3 text-primary" /> Mobile Number *
                     </label>
-                    <input required minLength={6} name="phone" placeholder="+1234567890 or 03001234567" value={formData.phone} onChange={handleChange} className={inputClass} />
+                    <input required type="text" name="phone" placeholder="Enter mobile or phone number" value={formData.phone} onChange={handleChange} className={inputClass} />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
-                      <MessageSquare className="w-3.5 h-3.5 text-primary" /> WhatsApp (optional)
+                    <label className="block text-[11px] font-bold text-slate-800 mb-1 flex items-center gap-1.5">
+                      <MessageSquare className="w-3 h-3 text-primary" /> WhatsApp (optional)
                     </label>
-                    <input name="whatsapp" placeholder="+1234567890" value={formData.whatsapp} onChange={handleChange} className={inputClass} />
+                    <input type="text" name="whatsapp" placeholder="WhatsApp number" value={formData.whatsapp} onChange={handleChange} className={inputClass} />
                   </div>
                 </div>
               </motion.div>
@@ -280,89 +280,89 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
 
             {/* STEP 2: BUSINESS INFO */}
             {currentStep === 1 && (
-              <motion.div key="step1" variants={containerVariants} initial="hidden" animate="visible" exit="exit" className="space-y-4">
-                <div className="mb-4 pb-3 border-b border-slate-200">
-                  <h4 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <motion.div key="step1" variants={containerVariants} initial="hidden" animate="visible" exit="exit" className="space-y-3.5">
+                <div className="mb-3 pb-2.5 border-b border-slate-200">
+                  <h4 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
                     <Building2 className="w-4 h-4 text-primary" /> Business Details
                   </h4>
-                  <p className="text-xs text-slate-600">Enter information about your store or restaurant.</p>
+                  <p className="text-[11px] text-slate-500">Enter information about your store or restaurant.</p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="sm:col-span-2">
-                    <label className="block text-xs font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
-                      <Store className="w-3.5 h-3.5 text-primary" /> Business Name *
+                    <label className="block text-[11px] font-bold text-slate-800 mb-1 flex items-center gap-1.5">
+                      <Store className="w-3 h-3 text-primary" /> Business Name *
                     </label>
                     <input required minLength={2} name="business_name" value={formData.business_name} onChange={handleChange} className={inputClass} placeholder="e.g. Khushi Foods" />
                   </div>
                   
                   {/* Category Selection */}
                   <div>
-                    <label className="block text-xs font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
-                      <Tag className="w-3.5 h-3.5 text-primary" /> Business Category *
+                    <label className="block text-[11px] font-bold text-slate-800 mb-1 flex items-center gap-1.5">
+                      <Tag className="w-3 h-3 text-primary" /> Business Category *
                     </label>
                     <div className="relative">
-                      <select required name="business_category" value={formData.business_category} onChange={handleChange} className={`${inputClass} appearance-none pr-8 cursor-pointer`}>
+                      <select required name="business_category" value={formData.business_category} onChange={handleChange} className={`${inputClass} appearance-none pr-7 cursor-pointer`}>
                         <option value="food_restaurant">Food & Restaurant</option>
                         <option value="grocery" disabled>Grocery (Coming Soon)</option>
                         <option value="pharmacy" disabled>Pharmacy (Coming Soon)</option>
                         <option value="general_retail" disabled>General Retail (Coming Soon)</option>
                         <option value="other" disabled>Other (Coming Soon)</option>
                       </select>
-                      <ChevronRight className="w-4 h-4 rotate-90 absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 pointer-events-none" />
+                      <ChevronRight className="w-3.5 h-3.5 rotate-90 absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-600 pointer-events-none" />
                     </div>
                   </div>
 
                   {/* Separate Commission Rate Field */}
                   <div>
-                    <label className="block text-xs font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
-                      <Percent className="w-3.5 h-3.5 text-primary" /> Applicable Commission Rate
+                    <label className="block text-[11px] font-bold text-slate-800 mb-1 flex items-center gap-1.5">
+                      <Percent className="w-3 h-3 text-primary" /> Applicable Commission Rate
                     </label>
                     <div className="relative">
                       <input 
                         readOnly 
                         disabled 
                         value={formData.business_category === 'food_restaurant' ? '15% per order' : 'N/A'} 
-                        className="w-full px-4 py-3 rounded-xl border border-blue-300 bg-blue-50 text-sm font-extrabold text-blue-900 cursor-not-allowed outline-none" 
+                        className="w-full px-3.5 py-2.5 rounded-lg border border-blue-300 bg-blue-50 text-xs font-bold text-blue-900 cursor-not-allowed outline-none" 
                       />
-                      <Lock className="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-blue-600" />
+                      <Lock className="w-3.5 h-3.5 absolute right-2.5 top-1/2 -translate-y-1/2 text-blue-600" />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
-                      <Tag className="w-3.5 h-3.5 text-primary" /> Sub-Category (optional)
+                    <label className="block text-[11px] font-bold text-slate-800 mb-1 flex items-center gap-1.5">
+                      <Tag className="w-3 h-3 text-primary" /> Sub-Category (optional)
                     </label>
                     <input name="sub_category" placeholder="e.g. Fast Food" value={formData.sub_category} onChange={handleChange} className={inputClass} />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
-                      <Building className="w-3.5 h-3.5 text-primary" /> City *
+                    <label className="block text-[11px] font-bold text-slate-800 mb-1 flex items-center gap-1.5">
+                      <Building className="w-3 h-3 text-primary" /> City *
                     </label>
                     <input required minLength={2} name="city" value={formData.city} onChange={handleChange} className={inputClass} placeholder="Lahore" />
                   </div>
                   <div className="sm:col-span-2">
-                    <label className="block text-xs font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-primary" /> Complete Address *
+                    <label className="block text-[11px] font-bold text-slate-800 mb-1 flex items-center gap-1.5">
+                      <MapPin className="w-3 h-3 text-primary" /> Complete Address *
                     </label>
                     <input required minLength={3} name="business_address" value={formData.business_address} onChange={handleChange} className={inputClass} placeholder="Shop 1, Main Street" />
                   </div>
                   <div className="sm:col-span-2">
-                    <label className="block text-xs font-bold text-slate-800 mb-1.5 flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-primary" /> Area / Town *
+                    <label className="block text-[11px] font-bold text-slate-800 mb-1 flex items-center gap-1.5">
+                      <MapPin className="w-3 h-3 text-primary" /> Area / Town *
                     </label>
                     <input required minLength={2} name="area_town" value={formData.area_town} onChange={handleChange} className={inputClass} placeholder="Gulberg" />
                   </div>
 
                   {/* Shop GPS Location Section */}
-                  <div className="sm:col-span-2 p-4 rounded-xl bg-blue-50 border border-blue-200 space-y-3">
-                    <div className="flex items-start justify-between gap-3">
+                  <div className="sm:col-span-2 p-3 rounded-xl bg-blue-50 border border-blue-200 space-y-2.5">
+                    <div className="flex items-start justify-between gap-2.5">
                       <div>
-                        <label className="block text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                          <Navigation className="w-3.5 h-3.5 text-primary" /> Shop GPS Location Coordinates
+                        <label className="block text-[11px] font-bold text-slate-900 flex items-center gap-1">
+                          <Navigation className="w-3 h-3 text-primary" /> Shop GPS Location Coordinates
                         </label>
-                        <p className="text-[11px] text-slate-600 mt-0.5 leading-snug">
-                          We request your location permission to capture accurate GPS coordinates (Latitude & Longitude) for your shop to ensure exact order delivery routing.
+                        <p className="text-[10px] text-slate-600 mt-0.5 leading-snug">
+                          Capture GPS coordinates for exact order routing.
                         </p>
                       </div>
                       
@@ -370,25 +370,25 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
                         type="button"
                         onClick={handleGetLocation}
                         disabled={isLocating}
-                        className="px-3 py-1.5 rounded-lg bg-primary text-white font-bold text-xs hover:bg-blue-700 transition-colors flex items-center gap-1.5 shrink-0 shadow-2xs disabled:opacity-50"
+                        className="px-2.5 py-1.5 rounded-md bg-primary text-white font-bold text-[11px] hover:bg-blue-700 transition-colors flex items-center gap-1 shrink-0 shadow-2xs disabled:opacity-50"
                       >
-                        <Compass className={`w-3.5 h-3.5 ${isLocating ? 'animate-spin' : ''}`} />
-                        {isLocating ? 'Detecting...' : 'Get Shop Location'}
+                        <Compass className={`w-3 h-3 ${isLocating ? 'animate-spin' : ''}`} />
+                        {isLocating ? 'Detecting...' : 'Get Location'}
                       </button>
                     </div>
 
                     {locationStatus && (
-                      <div className={`text-[11px] font-bold flex items-center gap-1.5 ${
+                      <div className={`text-[10px] font-bold flex items-center gap-1 ${
                         locationStatus.includes('successfully') ? 'text-emerald-800' : 'text-slate-700'
                       }`}>
-                        {locationStatus.includes('successfully') && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />}
+                        {locationStatus.includes('successfully') && <CheckCircle2 className="w-3 h-3 text-emerald-600 shrink-0" />}
                         {locationStatus}
                       </div>
                     )}
 
-                    <div className="grid grid-cols-2 gap-3 pt-1">
+                    <div className="grid grid-cols-2 gap-2.5 pt-0.5">
                       <div>
-                        <label className="block text-[11px] font-bold text-slate-700 mb-1">Latitude</label>
+                        <label className="block text-[10px] font-bold text-slate-700 mb-1">Latitude</label>
                         <input
                           name="latitude"
                           placeholder="e.g. 31.5204"
@@ -401,7 +401,7 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
                         />
                       </div>
                       <div>
-                        <label className="block text-[11px] font-bold text-slate-700 mb-1">Longitude</label>
+                        <label className="block text-[10px] font-bold text-slate-700 mb-1">Longitude</label>
                         <input
                           name="longitude"
                           placeholder="e.g. 74.3587"
@@ -422,19 +422,19 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
 
             {/* STEP 3: MEDIA & SUBMIT */}
             {currentStep === 2 && (
-              <motion.div key="step2" variants={containerVariants} initial="hidden" animate="visible" exit="exit" className="space-y-6">
-                <div className="mb-2 pb-3 border-b border-slate-200">
-                  <h4 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <motion.div key="step2" variants={containerVariants} initial="hidden" animate="visible" exit="exit" className="space-y-4">
+                <div className="mb-2 pb-2.5 border-b border-slate-200">
+                  <h4 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
                     <Upload className="w-4 h-4 text-primary" /> Business Media & Previews
                   </h4>
-                  <p className="text-xs text-slate-600">Upload mandatory logo and shop photos to complete registration.</p>
+                  <p className="text-[11px] text-slate-500">Upload mandatory logo and shop photos to complete registration.</p>
                 </div>
 
                 {showFileError && (
-                  <div className="p-3 rounded-xl bg-red-50 border border-red-300 text-red-800 flex items-center gap-2 text-xs font-bold animate-shake">
+                  <div className="p-2.5 rounded-lg bg-red-50 border border-red-300 text-red-800 flex items-center gap-2 text-[11px] font-bold animate-shake">
                     <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
                     {!files.business_logo && files.business_photos.length < 3 ? (
-                      'Please upload your Business Logo AND at least 3 Business Photos to complete registration.'
+                      'Please upload your Business Logo AND at least 3 Business Photos.'
                     ) : !files.business_logo ? (
                       'Please select a Business Logo before completing registration.'
                     ) : (
@@ -444,39 +444,39 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
                 )}
 
                 {/* 1. BUSINESS LOGO PREVIEW SECTION */}
-                <div className="p-4 border border-slate-300 rounded-2xl bg-white space-y-3 shadow-2xs">
+                <div className="p-3.5 border border-slate-300 rounded-xl bg-white space-y-2.5 shadow-2xs">
                   <div className="flex items-center justify-between">
                     <div>
-                      <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                        <ImageIcon className="w-3.5 h-3.5 text-primary" /> Business Logo *
+                      <span className="text-[11px] font-bold text-slate-900 flex items-center gap-1.5">
+                        <ImageIcon className="w-3 h-3 text-primary" /> Business Logo *
                       </span>
-                      <span className="text-[11px] text-slate-500">Main brand logo (PNG, JPG up to 2MB)</span>
+                      <span className="text-[10px] text-slate-500">Main brand logo (PNG, JPG up to 2MB)</span>
                     </div>
                     {files.business_logo && (
-                      <span className="text-[11px] font-extrabold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-300 flex items-center gap-1">
+                      <span className="text-[10px] font-extrabold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-300 flex items-center gap-1">
                         <CheckCircle2 className="w-3 h-3" /> Selected
                       </span>
                     )}
                   </div>
 
                   {logoPreview ? (
-                    <div className="relative w-36 h-36 rounded-xl border-2 border-slate-300 overflow-hidden group shadow-sm bg-slate-100">
+                    <div className="relative w-28 h-28 rounded-lg border-2 border-slate-300 overflow-hidden group shadow-sm bg-slate-100">
                       <img src={logoPreview} alt="Logo preview" className="w-full h-full object-cover" />
                       <button
                         type="button"
                         onClick={handleRemoveLogo}
-                        className="absolute top-2 right-2 p-1.5 rounded-full bg-slate-900/80 text-white hover:bg-red-600 transition-colors shadow-sm"
+                        className="absolute top-1.5 right-1.5 p-1 rounded-full bg-slate-900/80 text-white hover:bg-red-600 transition-colors shadow-sm"
                         title="Remove Logo"
                       >
-                        <X className="w-3.5 h-3.5" />
+                        <X className="w-3 h-3" />
                       </button>
                     </div>
                   ) : (
-                    <label className={`flex flex-col items-center justify-center p-6 border-2 border-dashed rounded-xl cursor-pointer transition-colors ${
+                    <label className={`flex flex-col items-center justify-center p-4 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
                       showFileError && !files.business_logo ? 'border-red-400 bg-red-50/50 hover:bg-red-50/80' : 'border-slate-300 bg-slate-50 hover:bg-slate-100'
                     }`}>
-                      <ImageIcon className="w-7 h-7 text-slate-500 mb-1.5" />
-                      <span className="text-xs font-bold text-slate-800">Choose Business Logo</span>
+                      <ImageIcon className="w-6 h-6 text-slate-500 mb-1" />
+                      <span className="text-[11px] font-bold text-slate-800">Choose Business Logo</span>
                       <span className="text-[10px] text-slate-500 mt-0.5">Click to browse files</span>
                       <input type="file" accept="image/*" onChange={handleLogoChange} className="hidden" />
                     </label>
@@ -484,47 +484,47 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
                 </div>
 
                 {/* 2. BUSINESS STORE PHOTOS (MINIMUM 3 REQUIRED) */}
-                <div className="p-4 border border-slate-300 rounded-2xl bg-white space-y-3 shadow-2xs">
+                <div className="p-3.5 border border-slate-300 rounded-xl bg-white space-y-2.5 shadow-2xs">
                   <div className="flex items-center justify-between flex-wrap gap-2">
                     <div>
-                      <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                        <FileImage className="w-3.5 h-3.5 text-primary" /> Storefront / Business Photos (Minimum 3 required) *
+                      <span className="text-[11px] font-bold text-slate-900 flex items-center gap-1.5">
+                        <FileImage className="w-3 h-3 text-primary" /> Storefront Photos (Min 3) *
                       </span>
-                      <span className="text-[11px] text-slate-500">Photos of storefront, interior, or products</span>
+                      <span className="text-[10px] text-slate-500">Photos of storefront, interior, or products</span>
                     </div>
-                    <span className={`text-[11px] font-extrabold px-2.5 py-0.5 rounded-full border flex items-center gap-1 ${
+                    <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full border flex items-center gap-1 ${
                       files.business_photos.length >= 3 
                         ? 'text-emerald-800 bg-emerald-100 border-emerald-300' 
                         : 'text-amber-800 bg-amber-100 border-amber-300'
                     }`}>
                       {files.business_photos.length >= 3 && <CheckCircle2 className="w-3 h-3" />}
-                      {files.business_photos.length} / 3 Photos Uploaded
+                      {files.business_photos.length} / 3 Uploaded
                     </span>
                   </div>
 
                   {/* Medium Preview Grid */}
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 pt-1">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-0.5">
                     {photoPreviews.map((url, idx) => (
-                      <div key={idx} className="relative h-32 rounded-xl border-2 border-slate-300 overflow-hidden group shadow-sm bg-slate-100">
+                      <div key={idx} className="relative h-24 rounded-lg border-2 border-slate-300 overflow-hidden group shadow-sm bg-slate-100">
                         <img src={url} alt={`Store photo ${idx + 1}`} className="w-full h-full object-cover" />
                         <button
                           type="button"
                           onClick={() => handleRemovePhoto(idx)}
-                          className="absolute top-2 right-2 p-1.5 rounded-full bg-slate-900/80 text-white hover:bg-red-600 transition-colors shadow-sm"
+                          className="absolute top-1.5 right-1.5 p-1 rounded-full bg-slate-900/80 text-white hover:bg-red-600 transition-colors shadow-sm"
                           title="Remove photo"
                         >
-                          <X className="w-3.5 h-3.5" />
+                          <X className="w-3 h-3" />
                         </button>
                       </div>
                     ))}
 
                     {/* Add More Photos Button box */}
-                    <label className={`h-32 flex flex-col items-center justify-center border-2 border-dashed rounded-xl cursor-pointer transition-colors ${
+                    <label className={`h-24 flex flex-col items-center justify-center border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
                       showFileError && files.business_photos.length < 3 ? 'border-red-400 bg-red-50/50 hover:bg-red-50/80' : 'border-slate-300 bg-slate-50 hover:bg-slate-100'
                     }`}>
-                      <Plus className="w-6 h-6 text-slate-500 mb-1" />
-                      <span className="text-xs font-bold text-slate-800">Add Photos</span>
-                      <span className="text-[10px] text-slate-500 mt-0.5">Select images</span>
+                      <Plus className="w-5 h-5 text-slate-500 mb-0.5" />
+                      <span className="text-[11px] font-bold text-slate-800">Add Photos</span>
+                      <span className="text-[9px] text-slate-500">Select images</span>
                       <input type="file" multiple accept="image/*" onChange={handlePhotosChange} className="hidden" />
                     </label>
                   </div>
@@ -536,10 +536,10 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
           </AnimatePresence>
 
           {/* Footer Actions */}
-          <div className="mt-6 pt-5 border-t border-slate-200 flex items-center justify-between">
+          <div className="mt-5 pt-4 border-t border-slate-200 flex items-center justify-between">
             {currentStep > 0 ? (
-              <button type="button" onClick={prevStep} className="px-5 py-2.5 rounded-xl font-bold text-xs text-slate-700 bg-white border border-slate-300 hover:bg-slate-100 transition-colors flex items-center gap-1.5 shadow-2xs">
-                <ArrowLeft className="w-4 h-4" /> Back
+              <button type="button" onClick={prevStep} className="px-4 py-2 rounded-lg font-bold text-xs text-slate-700 bg-white border border-slate-300 hover:bg-slate-100 transition-colors flex items-center gap-1 shadow-2xs">
+                <ArrowLeft className="w-3.5 h-3.5" /> Back
               </button>
             ) : <div />}
             
@@ -547,16 +547,16 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
               <button 
                 type="button" 
                 onClick={nextStep} 
-                className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-xs text-white transition-all shadow-sm ${isBlue ? 'bg-primary hover:bg-blue-700' : 'bg-secondary hover:bg-emerald-700'}`}
+                className={`flex items-center gap-1.5 px-5 py-2 rounded-lg font-bold text-xs text-white transition-all shadow-sm ${isBlue ? 'bg-primary hover:bg-blue-700' : 'bg-secondary hover:bg-emerald-700'}`}
               >
-                Next <ArrowRight className="w-4 h-4" />
+                Next <ArrowRight className="w-3.5 h-3.5" />
               </button>
             ) : (
               <button 
                 type="submit" 
-                className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-xs text-white transition-all shadow-sm ${isBlue ? 'bg-primary hover:bg-blue-700' : 'bg-secondary hover:bg-emerald-700'}`}
+                className={`flex items-center gap-1.5 px-5 py-2 rounded-lg font-bold text-xs text-white transition-all shadow-sm ${isBlue ? 'bg-primary hover:bg-blue-700' : 'bg-secondary hover:bg-emerald-700'}`}
               >
-                Complete <Check className="w-4 h-4" />
+                Complete <Check className="w-3.5 h-3.5" />
               </button>
             )}
           </div>

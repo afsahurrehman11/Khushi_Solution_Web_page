@@ -6,40 +6,39 @@ from app.schemas.common import ProductEnum, DeliveryCategoryEnum, InstitutionTyp
 # --- Base and Sub-documents ---
 
 class CustomerInfo(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="ignore")
     name: str = Field(min_length=2, max_length=100)
-    email: EmailStr
-    phone: str = Field(pattern=r"^\+92[0-9]{10}$")
-    whatsapp: Optional[str] = Field(None, pattern=r"^\+92[0-9]{10}$")
+    email: str = Field(min_length=3, max_length=150)
+    phone: str = Field(min_length=5, max_length=30)
+    whatsapp: Optional[str] = Field(None, max_length=30)
 
 class DeliveryProductData(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="ignore")
     business_name: str = Field(min_length=2, max_length=150)
     business_category: DeliveryCategoryEnum
     sub_category: Optional[str] = Field(None, max_length=100)
-    business_address: str = Field(min_length=5, max_length=500)
+    business_address: str = Field(min_length=2, max_length=500)
     city: str = Field(min_length=2, max_length=100)
     area_town: str = Field(min_length=2, max_length=100)
     maps_location: Optional[str] = Field(None, max_length=500)
-    # File IDs will be added by backend after successful file upload
 
 class ErpProductData(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="ignore")
     institution_name: str = Field(min_length=2, max_length=200)
     institution_type: InstitutionTypeEnum
-    institution_email: EmailStr
-    institution_phone: str
+    institution_email: str = Field(min_length=3, max_length=150)
+    institution_phone: str = Field(min_length=5, max_length=30)
     secondary_phone: Optional[str] = None
     whatsapp: Optional[str] = None
-    complete_address: str = Field(min_length=5, max_length=500)
+    complete_address: str = Field(min_length=2, max_length=500)
     city: str
     area_town: Optional[str] = None
     latitude: Optional[float] = Field(None, ge=-90.0, le=90.0)
     longitude: Optional[float] = Field(None, ge=-180.0, le=180.0)
     contact_name: str = Field(min_length=2, max_length=100)
     contact_designation: str = Field(min_length=2, max_length=100)
-    contact_email: EmailStr
-    contact_phone: str
+    contact_email: str = Field(min_length=3, max_length=150)
+    contact_phone: str = Field(min_length=5, max_length=30)
     contact_whatsapp: Optional[str] = None
     student_count: Optional[int] = Field(None, ge=0, le=100000)
     teacher_staff_count: Optional[int] = Field(None, ge=0, le=10000)
@@ -49,7 +48,7 @@ class ErpProductData(BaseModel):
 # --- Requests ---
 
 class PurchaseCreateRequest(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="ignore")
     product: ProductEnum
     plan_key: str
     customer: CustomerInfo
