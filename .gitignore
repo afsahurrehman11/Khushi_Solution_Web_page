@@ -1,0 +1,29 @@
+# Environment variables - NEVER commit any .env file (except .env.example)
+.env
+.env*
+.env.production
+.env.local
+.env.development
+.env.test
+!.env.example
+*.env
+
+# Dependencies & Build artifacts
+node_modules/
+.next/
+out/
+dist/
+build/
+
+# Python Virtual Environment & Caches
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -23,8 +23,14 @@ venv/
 env/
 ENV/
 
-# Environment variables — NEVER commit .env
+# Environment variables — NEVER commit .env files
 .env
+.env*
+.env.production
+.env.local
+.env.development
+.env.test
+!.env.example
 
 # IDE
 .vscode/

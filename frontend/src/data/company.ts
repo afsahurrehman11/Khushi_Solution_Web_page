@@ -1,5 +1,5 @@
 /* ============================================================
-   COMPANY DATA   Khushi Solutions company-level information
+   COMPANY DATA – Khushi Solutions company-level information
    Contact details sourced from environment variables.
    ============================================================ */
 
@@ -9,7 +9,7 @@ export const company = {
   description:
     'Software that helps businesses deliver, manage, and grow.',
   aboutStatement:
-    'Our products serve real businesses every day   from managing deliveries across cities to running school operations and finances.',
+    'Our products serve real businesses every day – from managing deliveries across cities to running school operations and finances.',
   aboutDescription: '', // Deprecated in v2.1
   facts: [
     {
@@ -39,7 +39,7 @@ export const navItems = [
 
 /* Contact details & social links from environment variables with fallbacks */
 export function getContactInfo() {
-  const phone = process.env.NEXT_PUBLIC_CONTACT_PHONE || '+92 300 1234567';
+  const phone = process.env.NEXT_PUBLIC_CONTACT_PHONE || '0566343231';
   const rawWa = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || phone;
   const cleanWaNumber = rawWa.replace(/\D/g, '');
 
@@ -49,7 +49,7 @@ export function getContactInfo() {
     whatsappNumber: rawWa,
     whatsappLink: `https://wa.me/${cleanWaNumber}`,
     whatsappCommunity: process.env.NEXT_PUBLIC_WHATSAPP_COMMUNITY || 'https://chat.whatsapp.com/KhushiSolutionsCommunity',
-    address: process.env.NEXT_PUBLIC_COMPANY_ADDRESS || 'Lahore, Pakistan',
+    address: process.env.NEXT_PUBLIC_COMPANY_ADDRESS || 'Sheikhupura, Pakistan',
   };
 }
 
