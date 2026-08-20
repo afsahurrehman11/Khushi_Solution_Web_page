@@ -16,6 +16,7 @@ function PaymentStatusContent() {
   
   const [status, setStatus] = useState<string | null>(null); // "PAID", "FAILED", "PENDING_VERIFICATION", "ERROR"
   const [amount, setAmount] = useState<number | null>(null);
+  const [planKey, setPlanKey] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   
   const pollingRef = useRef<NodeJS.Timeout | null>(null);
@@ -41,6 +42,7 @@ function PaymentStatusContent() {
       if (data.purchase_status === 'PAID') {
         setStatus('PAID');
         setAmount(data.amount_pkr);
+        if (data.plan_key) setPlanKey(data.plan_key);
         if (pollingRef.current) clearTimeout(pollingRef.current);
       } else if (data.purchase_status === 'FAILED') {
         setStatus('FAILED');
@@ -79,8 +81,8 @@ function PaymentStatusContent() {
         {!status && (
           <div className="animate-pulse">
             <div className="w-16 h-16 border-4 border-slate-100 border-t-primary rounded-full mx-auto mb-6 animate-spin" />
-            <h2 className="text-2xl font-bold text-text-primary mb-2">Checking Payment Status...</h2>
-            <p className="text-text-secondary">Please wait while we verify your transaction.</p>
+            <h2 className="text-2xl font-bold text-text-primary mb-2">Checking Registration Status...</h2>
+            <p className="text-text-secondary">Please wait while we confirm your details.</p>
           </div>
         )}
 
@@ -89,16 +91,44 @@ function PaymentStatusContent() {
             <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
               <CheckCircle2 className="w-10 h-10 text-emerald-600" />
             </div>
-            <h2 className="text-3xl font-extrabold text-text-primary mb-2" style={{ fontFamily: 'var(--font-heading)' }}>Payment Successful!</h2>
-            <p className="text-text-secondary mb-6">Your registration is complete.</p>
             
-            {amount !== null && (
-              <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-8">
-                <p className="text-sm text-text-muted mb-1">Amount Paid</p>
-                <p className="text-2xl font-bold text-text-primary">Rs. {amount.toLocaleString()}</p>
-                <p className="text-xs text-text-muted mt-2">Order ID: {purchaseId}</p>
+            <h2 className="text-3xl font-extrabold text-text-primary mb-2" style={{ fontFamily: 'var(--font-heading)' }}>
+              {planKey === 'enterprise_paid' ? 'Application Submitted!' : amount === 0 ? 'Registration Complete!' : 'Payment Successful!'}
+            </h2>
+            <p className="text-text-secondary mb-6">
+              {planKey === 'enterprise_paid'
+                ? 'Your Enterprise Pro Plan registration has been received.'
+                : amount === 0
+                ? 'Your Free Starter Plan activation is complete.'
+                : 'Your payment & registration are complete.'}
+            </p>
+            
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-8 text-left space-y-2 text-xs">
+              <div className="flex justify-between items-center pb-2 border-b border-slate-200">
+                <span className="text-slate-500 font-semibold">Plan Selected</span>
+                <span className="font-bold text-slate-900">
+                  {planKey === 'enterprise_paid' ? 'Enterprise Pro Plan' : amount === 0 ? 'Free Starter Plan' : 'Standard Paid Plan'}
+                </span>
               </div>
-            )}
+              
+              <div className="flex justify-between items-center pb-2 border-b border-slate-200">
+                <span className="text-slate-500 font-semibold">Registration Billing</span>
+                <span className="font-bold text-slate-900">
+                  {planKey === 'enterprise_paid' ? 'Custom Quote' : amount === 0 ? 'Free (0 PKR)' : `Rs. ${amount?.toLocaleString()}`}
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center pt-1 text-[11px] text-slate-400 font-medium">
+                <span>Registration Reference ID</span>
+                <span className="font-mono">{purchaseId}</span>
+              </div>
+
+              {planKey === 'enterprise_paid' && (
+                <p className="text-[11px] text-blue-700 bg-blue-50 p-2.5 rounded-lg border border-blue-200 font-semibold mt-3 leading-relaxed">
+                  Our Enterprise Onboarding Team will contact you within 24 hours with your custom license quote & onboarding schedule.
+                </p>
+              )}
+            </div>
             
             <Link href="/" className="btn-primary-gradient px-8 py-3 rounded-full text-white font-bold inline-block">
               Return to Homepage
