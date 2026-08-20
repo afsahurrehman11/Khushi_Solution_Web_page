@@ -157,7 +157,7 @@ export default function PlanSelector({ plans, onSelect, accentClass }: PlanSelec
             {/* Button */}
             <div className="mt-auto pt-2">
               <div className={`flex items-center justify-center gap-1.5 w-full py-2.5 rounded-xl font-bold text-xs transition-all ${buttonClass}`}>
-                {isCustomPrice ? 'Contact for Enterprise' : 'Select Plan'} <ChevronRight className="w-4 h-4" />
+                {isCustomPrice ? 'Contact for Enterprise' : 'Select Plan & Checkout'} <ChevronRight className="w-4 h-4" />
               </div>
             </div>
           </motion.div>

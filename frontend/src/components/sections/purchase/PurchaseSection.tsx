@@ -31,6 +31,15 @@ export default function PurchaseSection({ product }: PurchaseSectionProps) {
     fetchPricing();
   }, [fetchPricing]);
 
+  useEffect(() => {
+    if (state !== 'idle') {
+      const el = document.getElementById('purchase') || document.getElementById('purchase-form');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }, [state]);
+
   const isBlue = product.accent === 'blue';
   const accentClass = isBlue ? 'text-primary' : 'text-secondary';
   
@@ -42,15 +51,15 @@ export default function PurchaseSection({ product }: PurchaseSectionProps) {
         
         {/* Header */}
         {(state === 'idle' || state === 'filling_form' || state === 'reviewing') && (
-          <div className="text-center mb-12">
+          <div className="text-center mb-4 sm:mb-6">
             <ScrollReveal delay={0.05}>
               <span className={`text-technical ${accentClass} inline-block mb-2 font-bold tracking-widest`}>
-                PURCHASE / REGISTRATION
+                PURCHASE & CHECKOUT REGISTRATION
               </span>
             </ScrollReveal>
             <ScrollReveal delay={0.08}>
-              <h2 className="text-h2 text-text-primary mb-3 font-extrabold tracking-tight">
-                {state === 'idle' ? 'Select a Plan to Get Started' : 'Complete Your Registration'}
+              <h2 className="text-h2 text-text-primary mb-2 font-extrabold tracking-tight">
+                {state === 'idle' ? 'Select a Plan to Begin Checkout' : 'Complete Registration & Checkout'}
               </h2>
             </ScrollReveal>
           </div>

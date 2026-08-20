@@ -4,7 +4,7 @@ import {
   ArrowLeft, ArrowRight, UserCircle, Building2, Upload, Check, 
   ImageIcon, FileImage, ChevronRight, AlertCircle, User, Mail, 
   Phone, MessageSquare, Store, Tag, MapPin, Building, Percent, Lock,
-  Navigation, Compass, CheckCircle2, X, Plus
+  Navigation, Compass, CheckCircle2, X, Plus, Landmark, CreditCard
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -16,9 +16,9 @@ interface DeliveryPurchaseFormProps {
 }
 
 const STEPS = [
-  { id: 'owner', title: 'Owner Info', icon: UserCircle },
-  { id: 'business', title: 'Business Details', icon: Building2 },
-  { id: 'media', title: 'Media Upload', icon: Upload }
+  { id: 'owner', title: '1. Owner Info', icon: UserCircle },
+  { id: 'business', title: '2. Business & Payouts', icon: Building2 },
+  { id: 'media', title: '3. Media & Checkout', icon: Upload }
 ];
 
 export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentClass }: DeliveryPurchaseFormProps) {
@@ -33,7 +33,8 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
   const [formData, setFormData] = useState({
     name: '', email: '', phone: '', whatsapp: '',
     business_name: '', business_category: 'food_restaurant', sub_category: '',
-    business_address: '', city: '', area_town: '', maps_location: ''
+    business_address: '', city: '', area_town: '', maps_location: '',
+    bank_name: '', account_title: '', account_number_iban: '', branch_code: ''
   });
   
   const [files, setFiles] = useState<{ business_logo: File | null, business_photos: File[] }>({
@@ -43,9 +44,12 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
 
+  const [stepError, setStepError] = useState<string | null>(null);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    if (stepError) setStepError(null);
   };
 
   const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,6 +58,7 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
     setFiles(prev => ({ ...prev, business_logo: file }));
     setLogoPreview(URL.createObjectURL(file));
     setShowFileError(false);
+    if (stepError) setStepError(null);
   };
 
   const handlePhotosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +68,7 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
     const newUrls = newFiles.map(f => URL.createObjectURL(f));
     setPhotoPreviews(prev => [...prev, ...newUrls]);
     setShowFileError(false);
+    if (stepError) setStepError(null);
   };
 
   const handleRemoveLogo = () => {
@@ -109,10 +115,18 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
 
   const validateStep = (step: number) => {
     if (step === 0) {
-      return formData.name.trim().length > 1 && formData.email.includes('@') && formData.phone.trim().length > 2;
+      return formData.name.trim().length >= 2 && formData.email.includes('@') && formData.phone.trim().length >= 3;
     }
     if (step === 1) {
-      return formData.business_name.trim().length > 1 && formData.business_address.trim().length > 1 && formData.city.trim().length > 1;
+      return (
+        formData.business_name.trim().length >= 2 && 
+        formData.city.trim().length >= 2 && 
+        formData.business_address.trim().length >= 2 && 
+        formData.area_town.trim().length >= 2 &&
+        formData.bank_name.trim().length >= 2 &&
+        formData.account_title.trim().length >= 2 &&
+        formData.account_number_iban.trim().length >= 3
+      );
     }
     if (step === 2) {
       return files.business_logo !== null && files.business_photos.length >= 3;
@@ -121,20 +135,71 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
   };
 
   const nextStep = () => {
-    const form = document.getElementById('purchase-form') as HTMLFormElement;
-    if (form && !form.checkValidity()) {
-      form.reportValidity();
-      return;
+    setStepError(null);
+
+    if (currentStep === 0) {
+      if (!formData.name.trim() || formData.name.trim().length < 2) {
+        setStepError('Please enter your Full Name.');
+        return;
+      }
+      if (!formData.email || !formData.email.includes('@')) {
+        setStepError('Please enter a valid Email Address.');
+        return;
+      }
+      if (!formData.phone || formData.phone.trim().length < 3) {
+        setStepError('Please enter a valid Mobile Number.');
+        return;
+      }
     }
-    if (validateStep(currentStep)) {
-      setShowFileError(false);
-      setCurrentStep(prev => Math.min(prev + 1, STEPS.length - 1));
+
+    if (currentStep === 1) {
+      if (!formData.business_name.trim() || formData.business_name.trim().length < 2) {
+        setStepError('Please enter your Business Name.');
+        return;
+      }
+      if (!formData.city.trim() || formData.city.trim().length < 2) {
+        setStepError('Please enter your City.');
+        return;
+      }
+      if (!formData.business_address.trim() || formData.business_address.trim().length < 2) {
+        setStepError('Please enter your Complete Address.');
+        return;
+      }
+      if (!formData.area_town.trim() || formData.area_town.trim().length < 2) {
+        setStepError('Please enter your Area / Town.');
+        return;
+      }
+      if (!formData.bank_name.trim() || formData.bank_name.trim().length < 2) {
+        setStepError('Please enter your Bank Name / Institution for payouts.');
+        return;
+      }
+      if (!formData.account_title.trim() || formData.account_title.trim().length < 2) {
+        setStepError('Please enter your Bank Account Title / Holder Name.');
+        return;
+      }
+      if (!formData.account_number_iban.trim() || formData.account_number_iban.trim().length < 3) {
+        setStepError('Please enter your Bank Account Number or IBAN.');
+        return;
+      }
     }
+
+    setShowFileError(false);
+    setStepError(null);
+    setCurrentStep(prev => Math.min(prev + 1, STEPS.length - 1));
+    setTimeout(() => {
+      const el = document.getElementById('purchase-form') || document.getElementById('purchase');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
   };
 
   const prevStep = () => {
     setShowFileError(false);
+    setStepError(null);
     setCurrentStep(prev => Math.max(prev - 1, 0));
+    setTimeout(() => {
+      const el = document.getElementById('purchase-form') || document.getElementById('purchase');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -153,7 +218,8 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
       },
       product_data: {
         business_name: formData.business_name, business_category: formData.business_category, sub_category: formData.sub_category || undefined,
-        business_address: formData.business_address, city: formData.city, area_town: formData.area_town, maps_location: formData.maps_location || undefined
+        business_address: formData.business_address, city: formData.city, area_town: formData.area_town, maps_location: formData.maps_location || undefined,
+        bank_name: formData.bank_name, account_title: formData.account_title, account_number_iban: formData.account_number_iban, branch_code: formData.branch_code || undefined
       }
     };
     
@@ -171,34 +237,34 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
     exit: { opacity: 0, y: -12, transition: { duration: 0.12 } }
   };
 
-  const inputClass = `w-full px-3.5 py-2.5 rounded-lg border border-slate-300 bg-slate-50/80 focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all text-xs font-semibold text-slate-900 placeholder:text-slate-400 outline-none shadow-2xs`;
+  const inputClass = `w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-slate-50/80 focus:bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all text-xs font-semibold text-slate-900 placeholder:text-slate-400 outline-none shadow-2xs`;
 
   return (
     <div className="max-w-xl mx-auto">
       {/* Top Navigation & Stepper Header */}
-      <div className="bg-white rounded-xl border border-slate-300 p-4 md:p-5 shadow-sm mb-4">
-        <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-200">
-          <div className="flex items-center gap-2.5">
-            <button onClick={onBack} type="button" className="p-1.5 hover:bg-slate-100 rounded-md transition-colors border border-slate-300 bg-slate-50 text-slate-700 shadow-2xs">
+      <div className="bg-white rounded-2xl border border-slate-300 p-4 sm:p-5 shadow-sm mb-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 pb-4 border-b border-slate-200">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <button onClick={onBack} type="button" className="p-2 hover:bg-slate-100 rounded-xl transition-colors border border-slate-300 bg-slate-50 text-slate-700 shadow-2xs shrink-0">
               <ArrowLeft className="w-4 h-4" />
             </button>
-            <div>
-              <h3 className="text-base font-bold text-slate-900 leading-tight">Registration</h3>
-              <p className="text-[11px] text-slate-500 font-medium">Fill in the details to proceed</p>
+            <div className="min-w-0">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-tight truncate">Registration & Checkout</h3>
+              <p className="text-[11px] text-slate-500 font-medium truncate">Fill in details to proceed to checkout</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <span className={`px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider text-white shadow-2xs ${isBlue ? 'bg-primary' : 'bg-secondary'}`}>
+          <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-end">
+            <span className={`px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-white whitespace-nowrap shadow-2xs ${isBlue ? 'bg-primary' : 'bg-secondary'}`}>
               {plan.label}
             </span>
-            <span className="text-[11px] font-extrabold text-slate-800 bg-slate-100 px-2.5 py-1 rounded-md border border-slate-300 shadow-2xs">
+            <span className="text-[10px] sm:text-[11px] font-extrabold text-slate-900 bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-300 whitespace-nowrap shadow-2xs">
               {plan.amount_pkr === 0 ? 'Free' : `Rs. ${plan.amount_pkr.toLocaleString()}`}
             </span>
           </div>
         </div>
 
-        {/* Crisp Contrast Stepper Tabs */}
-        <div className="grid grid-cols-3 gap-2">
+        {/* Responsive Stepper Tabs with Visible Titles on Mobile */}
+        <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
           {STEPS.map((step, idx) => {
             const active = idx === currentStep;
             const completed = idx < currentStep;
@@ -214,20 +280,20 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
                     setCurrentStep(idx); 
                   }
                 }}
-                className={`flex items-center gap-2 p-2 rounded-lg text-left transition-all ${
+                className={`flex items-center justify-center sm:justify-start gap-1.5 p-2 sm:p-2.5 rounded-xl text-left transition-all ${
                   active ? (isBlue ? 'bg-blue-50 border-2 border-primary text-primary font-bold shadow-2xs' : 'bg-emerald-50 border-2 border-secondary text-secondary font-bold shadow-2xs') :
                   completed ? 'bg-slate-100 border border-slate-300 text-slate-800 hover:bg-slate-200/70 font-semibold' :
                   'bg-slate-50/80 border border-slate-200 text-slate-400'
                 }`}
               >
-                <div className={`w-6 h-6 rounded-md flex items-center justify-center shrink-0 text-[11px] font-bold ${
+                <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-md flex items-center justify-center shrink-0 text-[10px] sm:text-[11px] font-bold ${
                   active ? (isBlue ? 'bg-primary text-white' : 'bg-secondary text-white') :
                   completed ? 'bg-slate-300 text-slate-800' :
                   'bg-slate-200 text-slate-400'
                 }`}>
                   {completed ? <Check className="w-3 h-3" /> : <Icon className="w-3 h-3" />}
                 </div>
-                <span className="text-[11px] truncate hidden sm:inline">{step.title}</span>
+                <span className="text-[10px] sm:text-[11px] font-bold truncate leading-tight">{step.title}</span>
               </button>
             );
           })}
@@ -235,8 +301,15 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
       </div>
       
       {/* Main Form Container - Compact & Proportional */}
-      <div className="bg-slate-50/90 rounded-xl border border-slate-300 p-5 md:p-6 shadow-sm">
+      <div className="bg-slate-50/90 rounded-2xl border border-slate-300 p-5 md:p-6 shadow-sm">
         <form id="purchase-form" onSubmit={handleSubmit}>
+          {stepError && (
+            <div className="mb-4 p-3.5 rounded-xl bg-red-50 border border-red-300 text-red-800 flex items-center gap-2 text-xs font-bold shadow-2xs">
+              <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+              <span>{stepError}</span>
+            </div>
+          )}
+
           <AnimatePresence mode="wait">
             
             {/* STEP 1: OWNER INFO */}
@@ -416,6 +489,78 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
                     </div>
                   </div>
 
+                  {/* Vendor Payout & Settlement Bank Account Section */}
+                  <div className="sm:col-span-2 p-3.5 rounded-xl bg-white border border-slate-300 space-y-3 shadow-2xs">
+                    <div className="border-b border-slate-200 pb-2">
+                      <label className="block text-[11px] font-extrabold text-slate-900 flex items-center gap-1.5">
+                        <Landmark className="w-4 h-4 text-primary" /> Vendor Payout & Bank Account Details *
+                      </label>
+                      <p className="text-[10px] text-slate-500 mt-0.5">
+                        Enter bank details for future automated payouts, disbursements, and settlements.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[10px] font-bold text-slate-800 mb-1 flex items-center gap-1">
+                          <Building className="w-3 h-3 text-primary" /> Bank Name / Institution *
+                        </label>
+                        <input 
+                          required 
+                          minLength={2}
+                          name="bank_name" 
+                          value={formData.bank_name} 
+                          onChange={handleChange} 
+                          className={inputClass} 
+                          placeholder="e.g. Meezan Bank, HBL, JazzCash, EasyPaisa" 
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[10px] font-bold text-slate-800 mb-1 flex items-center gap-1">
+                          <User className="w-3 h-3 text-primary" /> Account Title / Holder Name *
+                        </label>
+                        <input 
+                          required 
+                          minLength={2}
+                          name="account_title" 
+                          value={formData.account_title} 
+                          onChange={handleChange} 
+                          className={inputClass} 
+                          placeholder="Exact title as on bank statement" 
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[10px] font-bold text-slate-800 mb-1 flex items-center gap-1">
+                          <CreditCard className="w-3 h-3 text-primary" /> Account Number / IBAN *
+                        </label>
+                        <input 
+                          required 
+                          minLength={3}
+                          name="account_number_iban" 
+                          value={formData.account_number_iban} 
+                          onChange={handleChange} 
+                          className={inputClass} 
+                          placeholder="Account # or 24-digit IBAN (e.g. PK36...)" 
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[10px] font-bold text-slate-800 mb-1 flex items-center gap-1">
+                          <Building className="w-3 h-3 text-primary" /> Branch Name / Code (optional)
+                        </label>
+                        <input 
+                          name="branch_code" 
+                          value={formData.branch_code} 
+                          onChange={handleChange} 
+                          className={inputClass} 
+                          placeholder="e.g. Gulberg Branch (0123)" 
+                        />
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </motion.div>
             )}
@@ -450,7 +595,7 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
                       <span className="text-[11px] font-bold text-slate-900 flex items-center gap-1.5">
                         <ImageIcon className="w-3 h-3 text-primary" /> Business Logo *
                       </span>
-                      <span className="text-[10px] text-slate-500">Main brand logo (PNG, JPG up to 2MB)</span>
+                      <span className="text-[10px] text-slate-500">Main brand logo (PNG, JPG, WEBP, ICO up to 2MB)</span>
                     </div>
                     {files.business_logo && (
                       <span className="text-[10px] font-extrabold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-300 flex items-center gap-1">
@@ -477,8 +622,8 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
                     }`}>
                       <ImageIcon className="w-6 h-6 text-slate-500 mb-1" />
                       <span className="text-[11px] font-bold text-slate-800">Choose Business Logo</span>
-                      <span className="text-[10px] text-slate-500 mt-0.5">Click to browse files</span>
-                      <input type="file" accept="image/*" onChange={handleLogoChange} className="hidden" />
+                      <span className="text-[10px] text-slate-500 mt-0.5">Click to browse files (PNG, JPG, WEBP, ICO)</span>
+                      <input type="file" accept="image/*,.ico" onChange={handleLogoChange} className="hidden" />
                     </label>
                   )}
                 </div>
@@ -554,9 +699,9 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
             ) : (
               <button 
                 type="submit" 
-                className={`flex items-center gap-1.5 px-5 py-2 rounded-lg font-bold text-xs text-white transition-all shadow-sm ${isBlue ? 'bg-primary hover:bg-blue-700' : 'bg-secondary hover:bg-emerald-700'}`}
+                className={`flex items-center gap-1.5 px-5.5 py-2.5 rounded-xl font-extrabold text-xs sm:text-sm text-white transition-all shadow-sm ${isBlue ? 'bg-primary hover:bg-blue-700' : 'bg-secondary hover:bg-emerald-700'}`}
               >
-                Complete <Check className="w-3.5 h-3.5" />
+                Proceed to Checkout <ArrowRight className="w-4 h-4" />
               </button>
             )}
           </div>

@@ -21,6 +21,10 @@ class DeliveryProductData(BaseModel):
     city: str = Field(min_length=2, max_length=100)
     area_town: str = Field(min_length=2, max_length=100)
     maps_location: Optional[str] = Field(None, max_length=500)
+    bank_name: Optional[str] = Field(None, max_length=150)
+    account_title: Optional[str] = Field(None, max_length=150)
+    account_number_iban: Optional[str] = Field(None, max_length=100)
+    branch_code: Optional[str] = Field(None, max_length=100)
 
 class ErpProductData(BaseModel):
     model_config = ConfigDict(extra="ignore")
@@ -44,6 +48,10 @@ class ErpProductData(BaseModel):
     teacher_staff_count: Optional[int] = Field(None, ge=0, le=10000)
     campus_count: Optional[int] = Field(1, ge=1, le=1000)
     current_system: Optional[str] = Field(None, max_length=200)
+    bank_name: Optional[str] = Field(None, max_length=150)
+    account_title: Optional[str] = Field(None, max_length=150)
+    account_number_iban: Optional[str] = Field(None, max_length=100)
+    branch_code: Optional[str] = Field(None, max_length=100)
 
 # --- Requests ---
 
