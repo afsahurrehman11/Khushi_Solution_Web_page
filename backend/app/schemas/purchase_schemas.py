@@ -24,7 +24,6 @@ class DeliveryProductData(BaseModel):
     bank_name: Optional[str] = Field(None, max_length=150)
     account_title: Optional[str] = Field(None, max_length=150)
     account_number_iban: Optional[str] = Field(None, max_length=100)
-    branch_code: Optional[str] = Field(None, max_length=100)
 
 class ErpProductData(BaseModel):
     model_config = ConfigDict(extra="ignore")
@@ -51,7 +50,6 @@ class ErpProductData(BaseModel):
     bank_name: Optional[str] = Field(None, max_length=150)
     account_title: Optional[str] = Field(None, max_length=150)
     account_number_iban: Optional[str] = Field(None, max_length=100)
-    branch_code: Optional[str] = Field(None, max_length=100)
 
 # --- Requests ---
 

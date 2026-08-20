@@ -34,7 +34,7 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
     name: '', email: '', phone: '', whatsapp: '',
     business_name: '', business_category: 'food_restaurant', sub_category: '',
     business_address: '', city: '', area_town: '', maps_location: '',
-    bank_name: '', account_title: '', account_number_iban: '', branch_code: ''
+    bank_name: '', account_title: '', account_number_iban: ''
   });
   
   const [files, setFiles] = useState<{ business_logo: File | null, business_photos: File[] }>({
@@ -219,7 +219,7 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
       product_data: {
         business_name: formData.business_name, business_category: formData.business_category, sub_category: formData.sub_category || undefined,
         business_address: formData.business_address, city: formData.city, area_town: formData.area_town, maps_location: formData.maps_location || undefined,
-        bank_name: formData.bank_name, account_title: formData.account_title, account_number_iban: formData.account_number_iban, branch_code: formData.branch_code || undefined
+        bank_name: formData.bank_name, account_title: formData.account_title, account_number_iban: formData.account_number_iban
       }
     };
     
@@ -531,7 +531,7 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
                         />
                       </div>
 
-                      <div>
+                      <div className="sm:col-span-2">
                         <label className="block text-[10px] font-bold text-slate-800 mb-1 flex items-center gap-1">
                           <CreditCard className="w-3 h-3 text-primary" /> Account Number / IBAN *
                         </label>
@@ -543,19 +543,6 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
                           onChange={handleChange} 
                           className={inputClass} 
                           placeholder="Account # or 24-digit IBAN (e.g. PK36...)" 
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-[10px] font-bold text-slate-800 mb-1 flex items-center gap-1">
-                          <Building className="w-3 h-3 text-primary" /> Branch Name / Code (optional)
-                        </label>
-                        <input 
-                          name="branch_code" 
-                          value={formData.branch_code} 
-                          onChange={handleChange} 
-                          className={inputClass} 
-                          placeholder="e.g. Gulberg Branch (0123)" 
                         />
                       </div>
                     </div>

@@ -28,7 +28,7 @@ export default function ErpPurchaseForm({ plan, onSubmit, onBack, accentClass }:
     institution_name: '', institution_type: 'school', institution_email: '', institution_phone: '',
     complete_address: '', city: '', area_town: '',
     student_count: '', teacher_staff_count: '', campus_count: '1',
-    bank_name: '', account_title: '', account_number_iban: '', branch_code: ''
+    bank_name: '', account_title: '', account_number_iban: ''
   });
   
   const [files, setFiles] = useState<{ institution_images: File[] }>({
@@ -163,7 +163,7 @@ export default function ErpPurchaseForm({ plan, onSubmit, onBack, accentClass }:
         student_count: formData.student_count ? parseInt(formData.student_count) : undefined,
         teacher_staff_count: formData.teacher_staff_count ? parseInt(formData.teacher_staff_count) : undefined,
         campus_count: formData.campus_count ? parseInt(formData.campus_count) : 1,
-        bank_name: formData.bank_name, account_title: formData.account_title, account_number_iban: formData.account_number_iban, branch_code: formData.branch_code || undefined
+        bank_name: formData.bank_name, account_title: formData.account_title, account_number_iban: formData.account_number_iban
       }
     };
 
@@ -400,7 +400,7 @@ export default function ErpPurchaseForm({ plan, onSubmit, onBack, accentClass }:
                         />
                       </div>
 
-                      <div>
+                      <div className="sm:col-span-2">
                         <label className="block text-[10px] font-bold text-slate-800 mb-1 flex items-center gap-1">
                           <CreditCard className="w-3 h-3 text-secondary" /> Account Number / IBAN *
                         </label>
@@ -412,19 +412,6 @@ export default function ErpPurchaseForm({ plan, onSubmit, onBack, accentClass }:
                           onChange={handleChange} 
                           className={inputClass} 
                           placeholder="Account # or 24-digit IBAN" 
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-[10px] font-bold text-slate-800 mb-1 flex items-center gap-1">
-                          <Building className="w-3 h-3 text-secondary" /> Branch Name / Code (optional)
-                        </label>
-                        <input 
-                          name="branch_code" 
-                          value={formData.branch_code} 
-                          onChange={handleChange} 
-                          className={inputClass} 
-                          placeholder="e.g. Main Campus Branch" 
                         />
                       </div>
                     </div>

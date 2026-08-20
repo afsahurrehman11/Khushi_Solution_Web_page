@@ -44,7 +44,7 @@ export function getContactInfo() {
   const cleanWaNumber = rawWa.replace(/\D/g, '');
 
   return {
-    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'contact@khushisolutions.com',
+    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'khushisolutions7@gmail.com',
     phone,
     whatsappNumber: rawWa,
     whatsappLink: `https://wa.me/${cleanWaNumber}`,
