@@ -40,13 +40,13 @@ export const navItems = [
 /* Contact details & social links from environment variables with fallbacks */
 export function getContactInfo() {
   const phone = process.env.NEXT_PUBLIC_CONTACT_PHONE || '0566343231';
-  const rawWa = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || phone;
-  const cleanWaNumber = rawWa.replace(/\D/g, '');
+  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '+92 309 5671234';
+  const cleanWaNumber = whatsappNumber.replace(/\D/g, '');
 
   return {
-    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'khushisolutions7@gmail.com',
+    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'support@khushisolutions.com',
     phone,
-    whatsappNumber: rawWa,
+    whatsappNumber,
     whatsappLink: `https://wa.me/${cleanWaNumber}`,
     whatsappCommunity: process.env.NEXT_PUBLIC_WHATSAPP_COMMUNITY || 'https://chat.whatsapp.com/KhushiSolutionsCommunity',
     address: process.env.NEXT_PUBLIC_COMPANY_ADDRESS || 'Sheikhupura, Pakistan',

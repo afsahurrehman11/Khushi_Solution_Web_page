@@ -86,13 +86,29 @@ function ContactSectionContent() {
                   </div>
                 </a>
 
+                <a href={`tel:${contact.phone.replace(/\s+/g, '')}`} className="flex items-center gap-4 p-4 rounded-xl border border-border bg-white/50 hover:bg-white hover:shadow-sm transition-all group">
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-slate-500/10 text-slate-700 group-hover:scale-110 transition-transform">
+                    <Building className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-xs font-bold text-text-primary uppercase tracking-wider">Office Phone</h4>
+                      <span className="text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200">Office Number</span>
+                    </div>
+                    <p className="text-sm text-text-secondary font-medium">{contact.phone}</p>
+                  </div>
+                </a>
+
                 <a href={contact.whatsappLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-4 rounded-xl border border-border bg-white/50 hover:bg-white hover:shadow-sm transition-all group">
                   <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-emerald-500/10 text-emerald-600 group-hover:scale-110 transition-transform">
                     <MessageSquare className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-text-primary uppercase tracking-wider">WhatsApp Chat</h4>
-                    <p className="text-sm text-text-secondary font-medium">{contact.phone}</p>
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-xs font-bold text-text-primary uppercase tracking-wider">WhatsApp Chat</h4>
+                      <span className="text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200">WhatsApp Number</span>
+                    </div>
+                    <p className="text-sm text-text-secondary font-medium">{contact.whatsappNumber}</p>
                   </div>
                 </a>
 

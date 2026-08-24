@@ -164,9 +164,17 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href={`tel:${contact.phone.replace(/\s+/g, '')}`} className="text-xs text-text-secondary hover:text-emerald-600 transition-colors flex items-center gap-1.5">
+                <a href={`tel:${contact.phone.replace(/\s+/g, '')}`} className="text-xs text-text-secondary hover:text-primary transition-colors flex items-center gap-1.5">
                   <Phone className="w-3 h-3 text-text-muted" />
                   <span>{contact.phone}</span>
+                  <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-slate-100 text-slate-500 border border-slate-200 ml-auto">Office</span>
+                </a>
+              </li>
+              <li>
+                <a href={contact.whatsappLink} target="_blank" rel="noopener noreferrer" className="text-xs text-text-secondary hover:text-emerald-600 transition-colors flex items-center gap-1.5">
+                  <MessageSquare className="w-3 h-3 text-emerald-600" />
+                  <span>{contact.whatsappNumber}</span>
+                  <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 ml-auto">WhatsApp</span>
                 </a>
               </li>
               <li className="text-xs text-text-muted mt-1">

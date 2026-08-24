@@ -71,12 +71,12 @@ export function getFallbackPlans(productId: string): Plan[] {
     {
       plan_key: 'commission',
       label: 'Commission Model',
-      amount_pkr: 5000,
+      amount_pkr: 5600,
       description: 'Reduced registration fee with a category-based revenue commission.',
       categories: [
         { key: 'food_restaurant', label: 'Food & Restaurant', commission_pct: 15, display: 'Food & Restaurant • 15% commission' },
-        { key: 'grocery', label: 'Grocery', commission_pct: 15, display: 'Grocery • 15% commission' },
-        { key: 'pharmacy', label: 'Pharmacy', commission_pct: 15, display: 'Pharmacy • 15% commission' },
+        { key: 'grocery', label: 'Grocery', commission_pct: 5, display: 'Grocery • 5% commission' },
+        { key: 'pharmacy', label: 'Pharmacy', commission_pct: 5, display: 'Pharmacy • 5% commission' },
         { key: 'general_retail', label: 'General Retail', commission_pct: 15, display: 'General Retail • 15% commission' },
         { key: 'other', label: 'Other Category', commission_pct: 15, display: 'Other • 15% commission' },
       ],
