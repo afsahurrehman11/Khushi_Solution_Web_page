@@ -20,11 +20,36 @@ class PurchaseService:
 
     async def create_purchase(self, req: PurchaseCreateRequest, request: Request) -> PurchaseCreateResponse:
         # Calculate amount
-        amount_pkr = get_plan_amount(req.product.value, req.plan_key)
+        original_amount_pkr = get_plan_amount(req.product.value, req.plan_key)
+        final_amount_pkr = original_amount_pkr
+        discount_applied_pkr = 0
+        discount_percentage = None
+        applied_affiliate_code = None
+        
+        # Affiliate validation & discount
+        if req.affiliate_code:
+            from app.db.mongodb import get_db
+            db = get_db()
+            affiliate = await db["affiliates"].find_one({
+                "code": req.affiliate_code,
+                "product": req.product.value,
+                "is_active": True
+            })
+            if affiliate:
+                discount_percentage = affiliate.get("discount_percentage", 15)
+                discount_applied_pkr = int(original_amount_pkr * (discount_percentage / 100))
+                final_amount_pkr = original_amount_pkr - discount_applied_pkr
+                applied_affiliate_code = req.affiliate_code
+                
+                # Increment usage count
+                await db["affiliates"].update_one(
+                    {"_id": affiliate["_id"]},
+                    {"$inc": {"usage_count": 1}}
+                )
         
         # Initial status
         status = "PENDING"
-        if amount_pkr == 0:
+        if final_amount_pkr == 0:
             status = "PAID" # Direct transition for free plans
             
         purchase_id = generate_purchase_id()
@@ -34,7 +59,7 @@ class PurchaseService:
         user_agent = request.headers.get("user-agent")
         req_id = getattr(request.state, "request_id", None)
         
-        # Create model
+        # Create model (amount_pkr must be the final payable amount for AssanPay)
         purchase_model = PurchaseModel(
             purchase_id=purchase_id,
             product=req.product.value,
@@ -42,13 +67,18 @@ class PurchaseService:
             status=status,
             customer=req.customer.model_dump(),
             product_data=req.product_data.model_dump(),
-            amount_pkr=amount_pkr,
+            amount_pkr=final_amount_pkr,
+            original_amount_pkr=original_amount_pkr,
+            final_amount_pkr=final_amount_pkr,
+            discount_applied_pkr=discount_applied_pkr,
+            discount_percentage=discount_percentage,
+            affiliate_code=applied_affiliate_code,
             ip_address=client_ip,
             user_agent=user_agent
         )
         
         await self.purchase_repo.create(purchase_model)
-        logger.info(f"purchases.created | purchase_id={purchase_id} product={req.product.value} plan={req.plan_key} amount={amount_pkr} status={status}")
+        logger.info(f"purchases.created | purchase_id={purchase_id} product={req.product.value} plan={req.plan_key} final_amount={final_amount_pkr} status={status}")
         
         # Audit log
         audit = AuditLogModel(
@@ -56,10 +86,14 @@ class PurchaseService:
             purchase_id=purchase_id,
             product=req.product.value,
             plan_key=req.plan_key,
-            amount_pkr=amount_pkr,
+            amount_pkr=final_amount_pkr,
             ip_address=client_ip,
             request_id=req_id,
-            metadata={"status": status}
+            metadata={
+                "status": status,
+                "affiliate_code": applied_affiliate_code,
+                "discount_applied_pkr": discount_applied_pkr
+            }
         )
         await self.audit_repo.write(audit)
         
@@ -70,6 +104,9 @@ class PurchaseService:
             product=req.product,
             plan_key=req.plan_key,
             plan_label=plan_label,
-            amount_pkr=amount_pkr,
-            status=status
+            amount_pkr=final_amount_pkr,
+            status=status,
+            affiliate_code=applied_affiliate_code,
+            discount_applied_pkr=discount_applied_pkr,
+            final_amount_pkr=final_amount_pkr
         )

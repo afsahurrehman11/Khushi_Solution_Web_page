@@ -59,6 +59,7 @@ class PurchaseCreateRequest(BaseModel):
     plan_key: str
     customer: CustomerInfo
     product_data: Union[DeliveryProductData, ErpProductData]
+    affiliate_code: Optional[str] = None
 
 # --- Responses ---
 
@@ -70,3 +71,6 @@ class PurchaseCreateResponse(BaseModel):
     amount_pkr: int
     currency: str = "PKR"
     status: str
+    affiliate_code: Optional[str] = None
+    discount_applied_pkr: Optional[int] = None
+    final_amount_pkr: Optional[int] = None

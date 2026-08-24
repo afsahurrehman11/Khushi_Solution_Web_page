@@ -27,3 +27,6 @@ venv/
 Thumbs.db
 .vscode/
 .idea/
+
+# Sensitive data
+affiliate_codes_list.txt

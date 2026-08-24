@@ -7,6 +7,7 @@ import {
   Navigation, Compass, CheckCircle2, X, Plus, Landmark, CreditCard
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import AffiliateCodeInput from './AffiliateCodeInput';
 
 interface DeliveryPurchaseFormProps {
   plan: Plan;
@@ -40,6 +41,8 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
   const [files, setFiles] = useState<{ business_logo: File | null, business_photos: File[] }>({
     business_logo: null, business_photos: []
   });
+
+  const [affiliateCode, setAffiliateCode] = useState<string | null>(null);
 
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [photoPreviews, setPhotoPreviews] = useState<string[]>([]);
@@ -220,7 +223,8 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
         business_name: formData.business_name, business_category: formData.business_category, sub_category: formData.sub_category || undefined,
         business_address: formData.business_address, city: formData.city, area_town: formData.area_town, maps_location: formData.maps_location || undefined,
         bank_name: formData.bank_name, account_title: formData.account_title, account_number_iban: formData.account_number_iban
-      }
+      },
+      affiliate_code: affiliateCode || undefined
     };
     
     onSubmit(payload, {
@@ -555,6 +559,12 @@ export default function DeliveryPurchaseForm({ plan, onSubmit, onBack, accentCla
             {/* STEP 3: MEDIA & SUBMIT */}
             {currentStep === 2 && (
               <motion.div key="step2" variants={containerVariants} initial="hidden" animate="visible" exit="exit" className="space-y-4">
+                <AffiliateCodeInput 
+                  originalPrice={plan.amount_pkr}
+                  onValidCode={(code) => setAffiliateCode(code)}
+                  onInvalidCode={() => setAffiliateCode(null)}
+                />
+                
                 <div className="mb-2 pb-2.5 border-b border-slate-200">
                   <h4 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
                     <Upload className="w-4 h-4 text-primary" /> Business Media & Previews

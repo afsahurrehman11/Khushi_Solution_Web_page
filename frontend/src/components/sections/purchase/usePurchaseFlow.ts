@@ -134,6 +134,7 @@ export function usePurchaseFlow(productId: string) {
         plan_key: selectedPlan.plan_key,
         customer: formData.customer,
         product_data: formData.product_data,
+        affiliate_code: formData.affiliate_code,
       };
 
       let res;
