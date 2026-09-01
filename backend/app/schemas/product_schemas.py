@@ -16,6 +16,7 @@ class PlanInfo(BaseModel):
     plan_key: str
     label: str
     amount_pkr: int
+    monthly_amount_pkr: Optional[int] = None
     currency: str = "PKR"
     description: str
     is_custom_price: Optional[bool] = False

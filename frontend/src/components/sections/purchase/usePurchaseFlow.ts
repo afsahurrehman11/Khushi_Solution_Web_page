@@ -20,6 +20,7 @@ export interface Plan {
   plan_key: string;
   label: string;
   amount_pkr: number;
+  monthly_amount_pkr?: number;
   description: string;
   is_custom_price?: boolean;
   categories?: { key: string; label: string; commission_pct: number; display: string }[];
@@ -29,26 +30,27 @@ export interface Plan {
 export function getFallbackPlans(productId: string): Plan[] {
   if (productId === 'khushi-erp') {
     return [
-      {
-        plan_key: 'base_free',
-        label: 'Free Starter Plan',
-        amount_pkr: 0,
-        description: 'Complete educational institution & student management system.',
-        is_custom_price: false,
-        features: [
-          { name: 'Student & Class Management', included: true },
-          { name: 'Fee Vouchers & Fee Accounting', included: true },
-          { name: 'Parent Mobile App & Push Alerts', included: true },
-          { name: 'AI Facial Recognition Attendance', included: false },
-          { name: 'HR & Staff Salary Payroll', included: false },
-        ],
-      },
+      // {
+      //   plan_key: 'base_free',
+      //   label: 'Free Starter Plan',
+      //   amount_pkr: 0,
+      //   description: 'Complete educational institution & student management system.',
+      //   is_custom_price: false,
+      //   features: [
+      //     { name: 'Student & Class Management', included: true },
+      //     { name: 'Fee Vouchers & Fee Accounting', included: true },
+      //     { name: 'Parent Mobile App & Push Alerts', included: true },
+      //     { name: 'AI Facial Recognition Attendance', included: false },
+      //     { name: 'HR & Staff Salary Payroll', included: false },
+      //   ],
+      // },
       {
         plan_key: 'enterprise_paid',
         label: 'Enterprise Pro Plan',
-        amount_pkr: 0,
+        amount_pkr: 35000,
+        monthly_amount_pkr: 2500,
         description: 'Full-scale school management with AI facial attendance & automated HR payroll.',
-        is_custom_price: true,
+        is_custom_price: false,
         features: [
           { name: 'Student & Class Management', included: true },
           { name: 'Fee Vouchers & Fee Accounting', included: true },

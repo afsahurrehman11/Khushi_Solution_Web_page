@@ -35,6 +35,7 @@ async def get_pricing(product_id: str, request: Request):
             plan_key=plan_key,
             label=plan_data["label"],
             amount_pkr=plan_data["registration_fee_pkr"],
+            monthly_amount_pkr=plan_data.get("monthly_fee_pkr"),
             description=plan_data["description"],
             is_custom_price=plan_data.get("is_custom_price", False),
             categories=categories,

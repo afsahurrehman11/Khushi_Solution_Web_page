@@ -62,27 +62,28 @@ DELIVERY_PLANS: dict = {
 # ── Khushi ERP Plans ─────────────────────────────────────────────────────────
 
 ERP_PLANS: dict = {
-    "base_free": {
-        "label": "Free Starter Plan",
-        "registration_fee_pkr": 0,
-        "description": "Complete educational institution & student management system.",
-        "is_free": True,
-        "is_custom_price": False,
-        "categories": None,
-        "features": [
-            {"name": "Student & Class Management", "included": True},
-            {"name": "Fee Vouchers & Fee Accounting", "included": True},
-            {"name": "Parent Mobile App & Push Alerts", "included": True},
-            {"name": "AI Facial Recognition Attendance", "included": False},
-            {"name": "HR & Staff Salary Payroll", "included": False},
-        ],
-    },
+    # "base_free": {
+    #     "label": "Free Starter Plan",
+    #     "registration_fee_pkr": 0,
+    #     "description": "Complete educational institution & student management system.",
+    #     "is_free": True,
+    #     "is_custom_price": False,
+    #     "categories": None,
+    #     "features": [
+    #         {"name": "Student & Class Management", "included": True},
+    #         {"name": "Fee Vouchers & Fee Accounting", "included": True},
+    #         {"name": "Parent Mobile App & Push Alerts", "included": True},
+    #         {"name": "AI Facial Recognition Attendance", "included": False},
+    #         {"name": "HR & Staff Salary Payroll", "included": False},
+    #     ],
+    # },
     "enterprise_paid": {
         "label": "Enterprise Pro Plan",
-        "registration_fee_pkr": 0,
+        "registration_fee_pkr": 35000,
+        "monthly_fee_pkr": 2500,
         "description": "Full-scale school management with AI facial attendance & automated HR payroll.",
         "is_free": False,
-        "is_custom_price": True,
+        "is_custom_price": False,
         "categories": None,
         "features": [
             {"name": "Student & Class Management", "included": True},

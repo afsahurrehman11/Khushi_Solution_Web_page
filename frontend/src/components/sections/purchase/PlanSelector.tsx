@@ -43,12 +43,16 @@ export default function PlanSelector({ plans, onSelect, accentClass }: PlanSelec
     return Layers;
   };
 
+  const gridClass = plans.length === 1 
+    ? 'grid grid-cols-1 max-w-md mx-auto px-4'
+    : 'grid grid-cols-1 md:grid-cols-2 gap-5 max-w-3xl mx-auto px-4';
+
   return (
     <motion.div 
       variants={container}
       initial="hidden"
       animate="show"
-      className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-3xl mx-auto px-4"
+      className={gridClass}
     >
       {plans.map((plan, index) => {
         const isHighlight = plan.plan_key === 'non_commission' || plan.plan_key === 'enterprise_paid';
@@ -99,18 +103,28 @@ export default function PlanSelector({ plans, onSelect, accentClass }: PlanSelec
             </div>
 
             {/* Price */}
-            <div className="mb-3 pb-3 border-b border-slate-200/80 flex items-baseline gap-1.5">
+            <div className="mb-3 pb-3 border-b border-slate-200/80 flex flex-col gap-1.5">
               {isCustomPrice ? (
                 <span className={`text-2xl font-extrabold tracking-tight ${titleColor}`}>
                   Custom Quote
                 </span>
               ) : (
-                <>
-                  <span className={`text-3xl font-extrabold tracking-tight ${titleColor}`}>
-                    {plan.amount_pkr === 0 ? 'Free' : `Rs. ${plan.amount_pkr.toLocaleString()}`}
-                  </span>
-                  {plan.amount_pkr > 0 && <span className="text-slate-500 text-xs font-semibold">/ one-time</span>}
-                </>
+                <div className="flex flex-col gap-0.5">
+                  <div className="flex items-baseline gap-1.5">
+                    <span className={`text-3xl font-extrabold tracking-tight ${titleColor}`}>
+                      {plan.amount_pkr === 0 ? 'Free' : `Rs. ${plan.amount_pkr.toLocaleString()}`}
+                    </span>
+                    {plan.amount_pkr > 0 && <span className="text-slate-500 text-xs font-semibold">/ one-time</span>}
+                  </div>
+                  {plan.monthly_amount_pkr && (
+                    <div className="flex items-baseline gap-1.5 mt-1">
+                      <span className={`text-xl font-bold tracking-tight text-slate-700`}>
+                        + Rs. {plan.monthly_amount_pkr.toLocaleString()}
+                      </span>
+                      <span className="text-slate-500 text-xs font-semibold">/ month</span>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
             
